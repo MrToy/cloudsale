@@ -12,6 +12,7 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "build": "cd android && ./gradlew assembleRelease",
     "test": "jest"
   },
   "jest": {
@@ -19,6 +20,8 @@
   },
   "dependencies": {
     "react": "16.3.1",
-    "react-native": "~0.55.2"
+    "react-native": "~0.55.2",
+    "react-native-swiper": "^1.5.13",
+    "react-navigation": "^1.5.11"
   }
 }
