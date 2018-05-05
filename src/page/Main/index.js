@@ -1,40 +1,37 @@
 import React from 'react';
-import { Image, StatusBar, Text, View,StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { scale } from '../../utils/dimension';
-import Swiper from './Swiper'
+import NavMenus from './NavMenus';
+import Swiper from './Swiper';
+import FloorTitle from '../../components/FloorTitle'
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-	},
-})
 
 export default class extends React.Component {
 	static navigationOptions = {
-		title: 'Home',
+		title: '智诺超市',
 		headerStyle: {
 			backgroundColor: '#781EFD',
-			height: scale(65),
-		},
+            height: scale(45),
+        },
 		headerTintColor: '#fff',
 		headerTitleStyle: {
-            fontWeight: 'bold',
             textAlign:'center',
-            width:"100%"
+            alignSelf:'center',
+            flex:1,
+            fontSize:scale(17)
 		},
 	}
 	render() {
 		return (
-			<View style={styles.container}>
-				<StatusBar backgroundColor="rgba(0,0,0,0)" translucent={true} />
-                <View style={{ width:"100%", height: scale(163),marginBottom:10 }}>
+			<View style={{backgroundColor: '#f1f1f1'}}>
+				<StatusBar backgroundColor="#781EFD" />
+                <View style={{ width:"100%", height: scale(163),marginBottom:scale(10) }}>
 				    <Swiper />
                 </View>
-				<View>
-					<Text>todo....</Text>
+				<View style={{ width:"100%", height: scale(140),marginBottom:scale(10),backgroundColor:'#fff'}}>
+					<NavMenus />
 				</View>
+                <FloorTitle label="限时抢购" />
 			</View>
 		);
 	}

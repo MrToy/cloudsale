@@ -3,13 +3,14 @@
 import React from 'react';
 import { Image } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
     render() {
         return (
             <Swiper
+                autoplay={true}
                 activeDotColor="#781EFD"
+                dotColor="#fff"
                 showsButtons={false}
                 showsPagination={true}>
                 <Image style={{ width: "100%", height: "100%" }} source={{ uri: 'https://img13.joybuy.com/tuangou/jfs/t17401/254/2246754990/101991/13c95f27/5aeac8a0N9e6d9484.png' }} />
