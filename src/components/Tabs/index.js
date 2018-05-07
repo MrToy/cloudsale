@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
@@ -17,17 +17,17 @@ export default class extends React.Component {
             tintColor: color
         };
         return (
-            <TouchableOpacity
-                activeOpacity={0.9}
+            <TouchableWithoutFeedback
                 key={route.key}
-                style={{ width: 100 / total + '%', alignItems: "center", justifyContent: "center" }}
                 onPress={() => jumpToIndex(index)}
             >
-                <View style={{ width: scale(29), height: scale(25),alignItems: "center", marginBottom: scale(2), marginTop: scale(2) }}>
-                    {this.props.renderIcon(TabScene)}
+                <View style={{ width: 100 / total + '%', alignItems: "center", justifyContent: "center" }}>
+                    <View style={{ width: scale(29), height: scale(25), alignItems: "center", marginBottom: scale(2), marginTop: scale(2) }}>
+                        {this.props.renderIcon(TabScene)}
+                    </View>
+                    <Text style={{ color, fontSize: scale(10), textAlign: "center" }}>{this.props.getLabel(TabScene)}</Text>
                 </View>
-                <Text style={{ color, fontSize: scale(10), textAlign: "center" }}>{this.props.getLabel(TabScene)}</Text>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
         );
     };
     render() {

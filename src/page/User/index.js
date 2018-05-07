@@ -11,11 +11,9 @@ export default class extends React.Component {
             height: scale(45),
         },
         tabBarIcon:({focused,tintColor})=>(
-            focused?(
-                <Image style={{width:"100%",height:"100%",resizeMode:"contain"}} source={require('../../images/me_select_icon.png')} />
-            ):(
-                <Image style={{width:"100%",height:"100%",resizeMode:"contain"}} source={require('../../images/me_icon.png')} />
-            )
+            <Image
+                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+                source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
         ),
 		headerTintColor: '#fff',
 		headerTitleStyle: {

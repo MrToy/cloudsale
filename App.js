@@ -17,6 +17,7 @@ const TabScreens = TabNavigator({
 		tabBarPosition: 'bottom',
 		tabBarComponent:Tabs,
 		swipeEnabled:false,
+		animationEnabled:false,
 		tabBarOptions:{
 			activeTintColor:"#781EFD",
 			inactiveTintColor:"#6A617A"

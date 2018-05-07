@@ -50,6 +50,7 @@ android/app/build
 android/build
 android/gradle
 android/keystores
+ios/build
 
 # Node
 node_modules
