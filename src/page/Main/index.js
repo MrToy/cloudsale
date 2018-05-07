@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View,Image } from 'react-native';
 import { scale } from '../../utils/dimension';
 import NavMenus from './NavMenus';
 import Swiper from './Swiper';
@@ -8,7 +8,15 @@ import FloorTitle from '../../components/FloorTitle'
 
 export default class extends React.Component {
 	static navigationOptions = {
-		title: '智诺超市',
+        title: '首页',
+        tabBarLabel:'首页',
+        tabBarIcon:({focused,tintColor})=>(
+            focused?(
+                <Image style={{width:"100%",height:"100%",resizeMode:"contain"}} source={require('../../images/home_select_icon.png')} />
+            ):(
+                <Image style={{width:"100%",height:"100%",resizeMode:"contain"}} source={require('../../images/home_icon.png')} />
+            )
+        ),
 		headerStyle: {
 			backgroundColor: '#781EFD',
             height: scale(45),
@@ -31,7 +39,7 @@ export default class extends React.Component {
 				<View style={{ width:"100%", height: scale(140),marginBottom:scale(10),backgroundColor:'#fff'}}>
 					<NavMenus />
 				</View>
-                <FloorTitle label="限时抢购" />
+                <FloorTitle label="限时抢购" color="#781EFD" />
 			</View>
 		);
 	}

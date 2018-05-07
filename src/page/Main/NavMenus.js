@@ -26,7 +26,7 @@ export default class extends React.Component {
                 {navs.map((it,i) => (
                     <View key={i} style={{ width: "20%", height: "50%",alignItems:"center",justifyContent:"center"}}>
                         <Image style={{ width: scale(25), height: scale(25),marginBottom:scale(7) }} source={it.image} />
-                        <Text>{it.text}</Text>
+                        <Text style={{fontSize:scale(10)}}>{it.text}</Text>
                     </View>
                 ))}
             </View>
