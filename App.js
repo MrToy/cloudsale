@@ -7,6 +7,7 @@ import Cart from './src/page/Cart'
 import User from './src/page/User'
 import Search from './src/page/Search'
 import SearchResult from './src/page/SearchResult'
+import {scale} from './src/utils/dimension'
 
 console.disableYellowBox = true;
 
@@ -20,6 +21,7 @@ const TabScreens = TabNavigator({
 		tabBarComponent:FootTab,
 		swipeEnabled:false,
 		animationEnabled:false,
+		lazy:true,
 		tabBarOptions:{
 			activeTintColor:"#781EFD",
 			inactiveTintColor:"#6A617A"
@@ -37,5 +39,20 @@ export default StackNavigator({
 	},
 	SearchResult:{
 		screen:SearchResult
+	}
+},{
+	navigationOptions:{
+		headerStyle: {
+			backgroundColor: '#781EFD',
+			height: scale(45),
+			elevation:0
+		},
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			textAlign: 'center',
+			alignSelf: 'center',
+			flex: 1,
+			fontSize: scale(17)
+		}
 	}
 })

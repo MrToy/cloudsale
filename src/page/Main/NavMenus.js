@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Image, Text, View, TouchableNativeFeedback } from 'react-native';
+import { Image, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
@@ -24,12 +24,12 @@ export default class extends React.Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                 {navs.map((it, i) => (
-                    <TouchableNativeFeedback key={i}>
+                    <TouchableWithoutFeedback key={i}>
                         <View style={{ width: "20%", height: "50%", alignItems: "center", justifyContent: "center" }}>
                             <Image style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={it.image} />
                             <Text style={{ fontSize: scale(10) }}>{it.text}</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableWithoutFeedback>
                 ))}
             </View>
         );

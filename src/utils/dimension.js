@@ -8,5 +8,5 @@ export function scale(n){
     if(!scaleRate){
         scaleRate=Dimensions.get('window').width/designWidth
     }
-    return n*scaleRate
+    return Math.ceil(n*scaleRate)
 }

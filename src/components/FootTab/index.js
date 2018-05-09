@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View, TouchableNativeFeedback } from 'react-native';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
@@ -17,7 +17,7 @@ export default class extends React.Component {
             tintColor: color
         };
         return (
-            <TouchableNativeFeedback
+            <TouchableWithoutFeedback
                 key={route.key}
                 onPress={() => jumpToIndex(index)}
             >
@@ -27,14 +27,14 @@ export default class extends React.Component {
                     </View>
                     <Text style={{ color, fontSize: scale(10), textAlign: "center" }}>{this.props.getLabel(TabScene)}</Text>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableWithoutFeedback>
         );
     };
     render() {
         const { navigation } = this.props;
         const { routes } = navigation.state;
         return (
-            <View style={{ flexDirection: 'row', width: "100%", height: scale(49), borderTopColor: '#b2b2b2', borderTopWidth: scale(1), backgroundColor: "rgba(250,250,250,0.90)" }}>
+            <View style={{ flexDirection: 'row', width: "100%", height: scale(49), borderTopColor: '#b2b2b2', borderTopWidth: 1, backgroundColor: "rgba(250,250,250,0.90)" }}>
                 {routes && routes.map((route, index) => this.renderItem(route, index, routes.length))}
             </View>
         );

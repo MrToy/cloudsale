@@ -1,14 +1,11 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Text, Image } from 'react-native';
-import { scale } from '../../utils/dimension';
-import headerStyle from '../../components/Header/style'
+import { Text, View } from 'react-native';
 
 
 export default class extends React.Component {
     static navigationOptions = {
         title: '搜索',
         headerRight:()=>{},
-        ...headerStyle
     }
     render() {
         return (

@@ -1,8 +1,7 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Text, Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { scale } from '../../utils/dimension';
-import headerStyle from '../../components/Header/style'
-import SearchButton from '../Main/SearchButton'
+import SearchButton from '../Main/SearchButton';
 
 export default class extends React.Component {
     static navigationOptions = {
@@ -11,8 +10,7 @@ export default class extends React.Component {
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
-        ),
-        ...headerStyle
+        )
     }
     render() {
         return (

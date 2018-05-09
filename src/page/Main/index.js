@@ -5,7 +5,6 @@ import NavMenus from './NavMenus';
 import Swiper from './Swiper';
 import FloorTitle from '../../components/FloorTitle'
 import SearchButton from './SearchButton'
-import headerStyle from '../../components/Header/style'
 
 
 export default class extends React.Component {
@@ -16,8 +15,7 @@ export default class extends React.Component {
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/home_select_icon.png') : require('../../images/home_icon.png')} />
-        ),
-        ...headerStyle
+        )
     }
     render() {
         return (
