@@ -25,7 +25,7 @@ export default class extends React.Component {
                             onChange={v => this.setState({ searchKey: v })}
                             underlineColorAndroid='transparent' />
                     </View>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.navigate('SearchResult')}>
                         <View style={{marginLeft:scale(6),width:scale(38),height:scale(24),borderRadius:scale(3),backgroundColor:'#F3F2F8',alignItems: "center", justifyContent: "center",borderWidth:1,borderColor:'#ECECEC'}}>
                             <Text style={{fontSize:scale(11),color:'#6A617A'}}>搜索</Text>
                         </View>

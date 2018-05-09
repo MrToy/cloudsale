@@ -51,6 +51,7 @@ android/build
 android/gradle
 android/keystores
 ios/build
+ios/jsbundle
 
 # Node
 node_modules
