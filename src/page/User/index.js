@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View,Text,Image } from 'react-native';
+import { StatusBar, StyleSheet, View,Text,Image,Button } from 'react-native';
 import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
@@ -15,7 +15,7 @@ export default class extends React.Component {
 	render() {
 		return (
 			<View style={{backgroundColor: '#f1f1f1'}}>
-                <Text>个人中心</Text>
+                <Button title="关于我们" onPress={()=>this.props.navigation.navigate('AboutUs')} />
 			</View>
 		);
 	}

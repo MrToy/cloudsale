@@ -1,13 +1,15 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import FootTab from './src/components/FootTab'
+import FootTab from './src/components/FootTab';
+import { scale } from './src/utils/dimension';
+import Cart from './src/page/Cart';
+import List from './src/page/List';
 import Main from './src/page/Main';
-import List from './src/page/List'
-import Cart from './src/page/Cart'
-import User from './src/page/User'
-import Search from './src/page/Search'
-import SearchResult from './src/page/SearchResult'
-import {scale} from './src/utils/dimension'
+import Search from './src/page/Search';
+import SearchResult from './src/page/SearchResult';
+import User from './src/page/User';
+import AboutUs from './src/page/AboutUs'
+
 
 console.disableYellowBox = true;
 
@@ -39,6 +41,9 @@ export default StackNavigator({
 	},
 	SearchResult:{
 		screen:SearchResult
+	},
+	AboutUs:{
+		screen:AboutUs
 	}
 },{
 	navigationOptions:{
