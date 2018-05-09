@@ -1,31 +1,25 @@
 import React from 'react';
 import { StatusBar, StyleSheet, View, Text, Image } from 'react-native';
 import { scale } from '../../utils/dimension';
+import headerStyle from '../../components/Header/style'
+import SearchButton from '../Main/SearchButton'
 
 export default class extends React.Component {
     static navigationOptions = {
-        title: '列表页',
-        tabBarLabel: '分类',
+        title: '分类',
         tabBarIcon: ({ focused, tintColor }) => (
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
         ),
-        headerStyle: {
-            backgroundColor: '#781EFD',
-            height: scale(45),
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            textAlign: 'center',
-            alignSelf: 'center',
-            flex: 1,
-            fontSize: scale(17)
-        },
+        ...headerStyle
     }
     render() {
         return (
             <View style={{ backgroundColor: '#f1f1f1' }}>
+                <View style={{height:scale(34),alignItems:"center",justifyContent:"center",backgroundColor:"#fff",paddingLeft:scale(11),paddingRight:scale(11)}}>
+                    <SearchButton navigation={this.props.navigation} placeholder="酸奶" style={{backgroundColor:"#F3F2F8"}} />
+                </View>
                 <Text>列表页</Text>
             </View>
         );

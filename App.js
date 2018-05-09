@@ -1,21 +1,23 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import Tabs from './src/components/Tabs'
+import FootTab from './src/components/FootTab'
 import Main from './src/page/Main';
 import List from './src/page/List'
 import Cart from './src/page/Cart'
 import User from './src/page/User'
+import Search from './src/page/Search'
+import SearchResult from './src/page/SearchResult'
 
 console.disableYellowBox = true;
 
 const TabScreens = TabNavigator({
-	Tab1: { screen: Main },
-	Tab2: { screen: List },
-	Tab3: { screen: Cart },
-	Tab4: { screen: User },
+	Main: { screen: Main },
+	List: { screen: List },
+	Cart: { screen: Cart },
+	User: { screen: User },
 }, {
 		tabBarPosition: 'bottom',
-		tabBarComponent:Tabs,
+		tabBarComponent:FootTab,
 		swipeEnabled:false,
 		animationEnabled:false,
 		tabBarOptions:{
@@ -30,4 +32,10 @@ export default StackNavigator({
 	Home: {
 		screen: TabScreens,
 	},
+	Search:{
+		screen:Search
+	},
+	SearchResult:{
+		screen:SearchResult
+	}
 })

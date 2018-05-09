@@ -8,7 +8,6 @@ export default class extends React.Component {
     render() {
         return (
             <Swiper
-                autoplay={true}
                 activeDotColor="#781EFD"
                 dotColor="#fff"
                 showsButtons={false}
