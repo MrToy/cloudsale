@@ -16,8 +16,13 @@
 {
   NSURL *jsCodeLocation;
 
+  //jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  #ifdef DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-
+  #else
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"jsbundle/main" withExtension:@"jsbundle"];
+  #endif
+  
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"cloudsale"
                                                initialProperties:nil
