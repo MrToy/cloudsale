@@ -12,8 +12,8 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "android:build": "cd android && ./gradlew assembleRelease",
-    "ios:build":"react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/jsbundle/main.jsbundle --assets-dest ios/jsbundle/",
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:ios":"react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/jsbundle/main.jsbundle --assets-dest ios/jsbundle/",
     "test": "jest"
   },
   "jest": {
