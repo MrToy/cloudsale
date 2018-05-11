@@ -35,7 +35,7 @@ export default class extends React.Component {
         const { navigation } = this.props;
         const { routes } = navigation.state;
         return (
-            <View style={{ flexDirection: 'row', width: "100%", height: scale(49), borderTopColor: '#b2b2b2', borderTopWidth: 0.5, backgroundColor: "rgba(250,250,250,0.90)" }}>
+            <View style={{ flexDirection: 'row', width: "100%", height: scale(49), borderTopColor: '#b2b2b2', borderTopWidth: 0.2, backgroundColor: "rgba(250,250,250,0.90)" }}>
                 {routes && routes.map((route, index) => this.renderItem(route, index, routes.length))}
             </View>
         );

@@ -21,7 +21,7 @@ export default class extends React.Component {
         return (
             <View>
                 <StatusBar backgroundColor="#781EFD" barStyle="light-content" />
-                <ScrollView style={{ backgroundColor: '#f1f1f1' }}>
+                <ScrollView style={{ backgroundColor: '#f1f1f1',height:"100%" }}>
                     <View style={{ width: "100%", height: scale(163), marginBottom: scale(10) }}>
                         <Swiper />
                     </View>

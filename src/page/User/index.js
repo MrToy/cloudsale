@@ -6,7 +6,7 @@ import { scale } from '../../utils/dimension';
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f1f1f1'
+        backgroundColor: '#f1f1f1',height:"100%"
     },
     userInfo: {
         height: scale(93), backgroundColor: "#fff", marginTop: scale(6), flexDirection: "row", alignItems: "center"
@@ -60,6 +60,26 @@ class ListMenuItem extends React.Component {
     }
 }
 
+class NavMenuItem extends React.Component {
+    static propTypes = {
+        image: PropTypes.object,
+        text: PropTypes.string,
+        onPress:PropTypes.func,
+        style:PropTypes.object
+    }
+    render() {
+        const { image, text, onPress,style } = this.props
+        return (
+            <TouchableNativeFeedbackEx onPress={onPress}>
+                <View style={[styles.navItem,style]}>
+                    <Image style={styles.navItemImg} source={image} />
+                    <Text style={styles.navItemText}>{text}</Text>
+                </View>
+            </TouchableNativeFeedbackEx>
+        )
+    }
+}
+
 export default class extends React.Component {
     static navigationOptions = {
         title: '个人中心',
@@ -81,31 +101,33 @@ export default class extends React.Component {
                     </View>
                 </View>
                 <View style={styles.navBar}>
-                    <View style={styles.navItem}>
-                        <Image style={styles.navItemImg} source={require('../../images/wait_pay_icon.png')} />
-                        <Text style={styles.navItemText}>待付款</Text>
-                    </View>
-                    <View style={styles.navItem}>
-                        <Image style={styles.navItemImg} source={require('../../images/wait_receive_icon.png')} />
-                        <Text style={styles.navItemText}>待收货</Text>
-                    </View>
-                    <View style={styles.navItem}>
-                        <Image style={styles.navItemImg} source={require('../../images/wait_evaluate_icon.png')} />
-                        <Text style={styles.navItemText}>待评价</Text>
-                    </View>
-                    <View style={styles.navItem}>
-                        <Image style={styles.navItemImg} source={require('../../images/shouhou_icon.png')} />
-                        <Text style={styles.navItemText}>退换/售后</Text>
-                    </View>
-                    <View style={[styles.navItem,{borderLeftWidth:scale(0.5),borderLeftColor:"#F2F2F2"}]}>
-                        <Image style={styles.navItemImg} source={require('../../images/all_order_icon.png')} />
-                        <Text style={styles.navItemText}>全部订单</Text>
-                    </View>
+                    <NavMenuItem 
+                        text="待付款"
+                        image={require('../../images/wait_pay_icon.png')} />
+                    <NavMenuItem 
+                        text="待收货"
+                        image={require('../../images/wait_receive_icon.png')} />
+                    <NavMenuItem 
+                        text="待评价"
+                        image={require('../../images/wait_evaluate_icon.png')} />
+                    <NavMenuItem 
+                        text="退换/售后"
+                        image={require('../../images/shouhou_icon.png')} />
+                    <NavMenuItem
+                        style={{borderLeftWidth:scale(0.5),borderLeftColor:"#F2F2F2"}}
+                        text="全部订单"
+                        image={require('../../images/all_order_icon.png')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
-                    <ListMenuItem image={require('../../images/my_message_icon.png')} text="我的消息" />
-                    <ListMenuItem image={require('../../images/my_collection_icon.png')} text="我的收藏" />
-                    <ListMenuItem image={require('../../images/my_foot_icon.png')} text="足迹" />
+                    <ListMenuItem
+                        text="我的消息"
+                        image={require('../../images/my_message_icon.png')}  />
+                    <ListMenuItem 
+                        text="我的收藏"
+                        image={require('../../images/my_collection_icon.png')} />
+                    <ListMenuItem 
+                         text="足迹"
+                         image={require('../../images/my_foot_icon.png')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem 
