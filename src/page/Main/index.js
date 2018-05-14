@@ -5,6 +5,7 @@ import NavMenus from './NavMenus';
 import Swiper from './Swiper';
 import FloorTitle from '../../components/FloorTitle'
 import SearchButton from './SearchButton'
+import CategoryGrid from './CategoryGrid'
 
 
 export default class extends React.Component {
@@ -17,18 +18,43 @@ export default class extends React.Component {
                 source={focused ? require('../../images/home_select_icon.png') : require('../../images/home_icon.png')} />
         )
     }
+    state={
+        banner:[],
+        category:[],
+        categoryList:[],
+        choice:[],
+        hot:[]
+    }
+    componentDidMount(){
+        this.fetchCommodity()
+    }
+    async fetchCommodity(){
+        var res=await fetch("https://www.bjzntq.com:8888/Commodity/GetHomeData",{method:"POST"}).then(res=>res.json())
+        if(res.result!=200){
+            return
+        }
+        this.setState(res.data)
+    }
     render() {
+        const {banner,category,categoryList,choice,hot}=this.state
         return (
             <View>
                 <StatusBar backgroundColor="#781EFD" barStyle="light-content" />
                 <ScrollView style={{ backgroundColor: '#f1f1f1',height:"100%" }}>
-                    <View style={{ width: "100%", height: scale(163), marginBottom: scale(10) }}>
-                        <Swiper />
+                    <View style={{height: scale(163), marginBottom: scale(10) }}>
+                        {banner.length?(
+                            <Swiper list={banner} />
+                        ):null}
                     </View>
-                    <View style={{ width: "100%", height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
-                        <NavMenus />
+                    <View style={{height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
+                        <NavMenus list={category} />
                     </View>
-                    <FloorTitle label="限时抢购" color="#781EFD" />
+                    <FloorTitle label="热门频道" color="#66ABF3" />
+                    <View style={{backgroundColor:'#fff',paddingBottom:scale(9),marginBottom:scale(7)}}>
+                        <CategoryGrid list={hot} />
+                    </View>
+                    <FloorTitle label="精选类目" color="#E339D3" />
+                    <FloorTitle label="精选商品" color="#AEA649" />
                 </ScrollView>
                 <View style={{ position: 'absolute', top: scale(5), width: "100%", alignItems: "center",paddingLeft:scale(11),paddingRight:scale(11) }}>
                     <SearchButton navigation={this.props.navigation} placeholder="搜索商品/店铺" />

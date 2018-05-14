@@ -1,5 +1,3 @@
-
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, View,Image,TouchableWithoutFeedback } from 'react-native';

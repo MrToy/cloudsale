@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, Text, View, ScrollView, StyleSheet } from 'react-native';
-import TouchableNativeFeedbackEx from '../../components/TouchableNativeFeedbackEx';
+import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
 
@@ -55,11 +55,11 @@ class ListMenu extends React.Component {
         return (
             <ScrollView>
                 {list.map((it, i) => (
-                    <TouchableNativeFeedbackEx key={i} onPress={()=>this.setState({selected:i})}>
+                    <TouchableEx key={i} onPress={()=>this.setState({selected:i})}>
                         <View style={[styles.menuItem,i==selected&&styles.menuItemActive]}>
                             <Text style={[styles.menuItemText,i==selected&&styles.menuItemTextActive]}>{it.text}</Text>
                         </View>
-                    </TouchableNativeFeedbackEx>
+                    </TouchableEx>
                 ))}
             </ScrollView>
         );
