@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
@@ -8,50 +6,33 @@ import ArrowItem from './ArrowItem'
 
 export default class extends React.Component {
     render() {
-        var { list } = this.props
+        var { data } = this.props
         return (
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", height: scale(234) }}>
-                {list[0] ? (
+            <View style={{backgroundColor: data.category_background }}>
+                <View style={{ flexDirection: 'row' }}>
                     <TouchableEx>
                         <View style={{ width: scale(168), height: scale(234), backgroundColor: "#FAF5E2", padding: scale(11) }}>
-                            <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#C49572" }}>{list[0].name}</Text>
-                            <ArrowItem text={list[0].description} color="#C59581" style={{ marginTop: scale(3) }} />
-                            <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: list[0].imageUrl }} />
+                            <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: data.category_title_color }}>{data.category_name}</Text>
+                            <ArrowItem text="进入频道" />
+                            <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: data.category_icon }} />
                         </View>
                     </TouchableEx>
-                ) : null}
-                <View style={{ width: scale(202), height: scale(234), justifyContent: "space-between" }}>
-                    {list[1] ? (
-                        <TouchableEx>
-                            <View style={{ width: scale(202), height: scale(90), backgroundColor: '#FEEAE3', paddingLeft: scale(12), alignItems: "center", flexDirection: 'row', justifyContent: "space-between" }}>
-                                <View>
-                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#E96E47" }}>{list[1].name}</Text>
-                                    <ArrowItem text={list[1].description} color="#E2987F" style={{ marginTop: scale(3) }} />
-                                </View>
-                                <Image style={{ width: scale(90), height: scale(75), marginRight: scale(7) }} source={{ uri: list[1].imageUrl }} />
-                            </View>
-                        </TouchableEx>
-                    ) : null}
-                    <View style={{ width: scale(202), height: scale(139), flexDirection: 'row', justifyContent: "space-between" }}>
-                        {list[2] ? (
-                            <TouchableEx>
-                                <View style={{ width: scale(100), height: scale(139), backgroundColor: "#FAE4E9", padding: scale(9) }}>
-                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#E96E47" }}>{list[2].name}</Text>
-                                    <ArrowItem text={list[2].description} color="#F58CA9" style={{ marginTop: scale(3) }} />
-                                    <Image style={{ width: scale(85), height: scale(69), marginTop: scale(12) }} source={{ uri: list[2].imageUrl }} />
-                                </View>
-                            </TouchableEx>
-                        ) : null}
-                        {list[3] ? (
-                            <TouchableEx>
-                                <View style={{ width: scale(95), height: scale(139), backgroundColor: "#E2DAFF", padding: scale(9) }}>
-                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#7E6ACE" }}>{list[3].name}</Text>
-                                    <ArrowItem text={list[3].description} color="#8168E7" style={{ marginTop: scale(3) }} />
-                                    <Image style={{ width: scale(81), height: scale(69), marginTop: scale(12) }} source={{ uri: list[3].imageUrl }} />
-                                </View>
-                            </TouchableEx>
-                        ) : null}
-                    </View>
+                    {data.subcategoryList.map((it, i) => (
+                        <View key={i}>
+                            <Text>{it.subcategory_name}</Text>
+                            <Text>{it.subcategory_description}</Text>
+                            <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: it.subcategory_image }} />
+                        </View>
+                    ))}
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    {data.commodityList.map((it, i) => (
+                        <View key={i}>
+                            <Text>{it.name}</Text>
+                            <Text>¥{it.original_price}</Text>
+                            <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: it.image_url }} />
+                        </View>
+                    ))}
                 </View>
             </View>
         );

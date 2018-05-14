@@ -6,6 +6,7 @@ import Swiper from './Swiper';
 import FloorTitle from '../../components/FloorTitle'
 import SearchButton from './SearchButton'
 import CategoryGrid from './CategoryGrid'
+import ChannelGrid from './ChannelGrid'
 
 
 export default class extends React.Component {
@@ -51,9 +52,12 @@ export default class extends React.Component {
                     </View>
                     <FloorTitle label="热门频道" color="#66ABF3" />
                     <View style={{backgroundColor:'#fff',paddingBottom:scale(9),marginBottom:scale(7)}}>
-                        <CategoryGrid list={hot} />
+                        <ChannelGrid list={hot} />
                     </View>
                     <FloorTitle label="精选类目" color="#E339D3" />
+                    {categoryList.map((category,i)=>(
+                        <CategoryGrid key={i} data={category} />
+                    ))}
                     <FloorTitle label="精选商品" color="#AEA649" />
                 </ScrollView>
                 <View style={{ position: 'absolute', top: scale(5), width: "100%", alignItems: "center",paddingLeft:scale(11),paddingRight:scale(11) }}>
