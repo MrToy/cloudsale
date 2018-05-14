@@ -4,6 +4,7 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
+import ArrowItem from './ArrowItem'
 
 export default class extends React.Component {
     render() {
@@ -12,35 +13,41 @@ export default class extends React.Component {
             <View style={{ flexDirection: 'row', justifyContent: "space-between", height: scale(234) }}>
                 {list[0] ? (
                     <TouchableEx>
-                        <View style={{ width: scale(168), height: scale(234),backgroundColor:"#FAF5E2" }}>
-                            <Image style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{ uri: list[0].imageUrl }} />
-                            <Text style={{ fontSize: scale(10) }}>{list[0].name}</Text>
+                        <View style={{ width: scale(168), height: scale(234), backgroundColor: "#FAF5E2", padding: scale(11) }}>
+                            <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#C49572" }}>{list[0].name}</Text>
+                            <ArrowItem text={list[0].description} color="#C59581" style={{ marginTop: scale(3) }} />
+                            <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: list[0].imageUrl }} />
                         </View>
                     </TouchableEx>
                 ) : null}
                 <View style={{ width: scale(202), height: scale(234), justifyContent: "space-between" }}>
                     {list[1] ? (
                         <TouchableEx>
-                            <View style={{ width: scale(202), height: scale(90),backgroundColor:'#FEEAE3' }}>
-                                <Image style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{ uri: list[1].imageUrl }} />
-                                <Text style={{ fontSize: scale(10) }}>{list[1].name}</Text>
+                            <View style={{ width: scale(202), height: scale(90), backgroundColor: '#FEEAE3', paddingLeft: scale(12), alignItems: "center", flexDirection: 'row',justifyContent: "space-between" }}>
+                                <View>
+                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#E96E47" }}>{list[1].name}</Text>
+                                    <ArrowItem text={list[1].description} color="#E2987F" />
+                                </View>
+                                <Image style={{ width: scale(90), height: scale(75),marginRight:scale(7) }} source={{ uri: list[1].imageUrl }} />
                             </View>
                         </TouchableEx>
                     ) : null}
-                    <View style={{width: scale(202), height: scale(139),flexDirection: 'row', justifyContent: "space-between"}}>
+                    <View style={{ width: scale(202), height: scale(139), flexDirection: 'row', justifyContent: "space-between" }}>
                         {list[2] ? (
                             <TouchableEx>
-                                <View style={{ width: scale(100), height: scale(139),backgroundColor:"#FAE4E9" }}>
+                                <View style={{ width: scale(100), height: scale(139), backgroundColor: "#FAE4E9", padding: scale(9) }}>
+                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#E96E47" }}>{list[2].name}</Text>
+                                    <ArrowItem text={list[2].description} color="#F58CA9" />
                                     <Image style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{ uri: list[2].imageUrl }} />
-                                    <Text style={{ fontSize: scale(10) }}>{list[2].name}</Text>
                                 </View>
                             </TouchableEx>
                         ) : null}
                         {list[3] ? (
                             <TouchableEx>
-                                <View style={{ width: scale(95), height: scale(139),backgroundColor:"#E2DAFF" }}>
+                                <View style={{ width: scale(95), height: scale(139), backgroundColor: "#E2DAFF", padding: scale(9) }}>
+                                    <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#7E6ACE" }}>{list[3].name}</Text>
+                                    <ArrowItem text={list[3].description} color="#8168E7" />
                                     <Image style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{ uri: list[3].imageUrl }} />
-                                    <Text style={{ fontSize: scale(10) }}>{list[3].name}</Text>
                                 </View>
                             </TouchableEx>
                         ) : null}
