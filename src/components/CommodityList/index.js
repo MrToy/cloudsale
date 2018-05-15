@@ -11,17 +11,19 @@ class CommodityList extends React.Component {
         list: PropTypes.array
     }
     render() {
-        var { type, list } = this.props
+        var { type, list,navigation } = this.props
         type = type || "grid"
         if(type=='grid'){
             return (
                 <View style={{flexWrap:"wrap",flexDirection:"row"}}>
                     {list.map((it, i) => (
                         <View key={i} style={{ width: scale(186), backgroundColor: "#fff",marginRight:i%2==0?scale(3):0,marginBottom:scale(3) }}>
-                            <TouchableEx>
-                                <Image style={{ width: scale(160), height: scale(160), marginTop: scale(22),marginLeft:scale(15),marginRight:scale(15),marginBottom:scale(13) }} source={{ uri: it.image_url }} />
+                            <TouchableEx onPress={()=>navigation.navigate('Detail',{id:it.id})}>
+                                <View>
+                                    <Image style={{ width: scale(160), height: scale(160), marginTop: scale(22),marginLeft:scale(15),marginRight:scale(15),marginBottom:scale(13) }} source={{ uri: it.image_url }} />
+                                    <Text numberOfLines={2} style={{ fontSize: scale(10), lineHeight: scale(14),height:scale(28), color: "#6A617A",margin:scale(8),marginBottom:0 }}>{it.name}</Text>
+                                </View>
                             </TouchableEx>
-                            <Text numberOfLines={2} style={{ fontSize: scale(10), lineHeight: scale(14),height:scale(28), color: "#6A617A",margin:scale(8),marginBottom:0 }}>{it.name}</Text>
                             <View style={{flexDirection:"row",justifyContent:"space-between",margin:scale(6),height:scale(35),alignItems:"center"}}>
                                 <Text style={{ fontSize: scale(13), lineHeight: scale(18), color: "#E339D3" }}>¥{it.deduct_price}</Text>
                                 <TouchableEx>

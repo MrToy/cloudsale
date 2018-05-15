@@ -14,7 +14,7 @@ const InfoText = `        智诺致力于成为一家为社会创造最大价值
 export default class extends React.Component {
     static navigationOptions = {
         title: '关于我们',
-        headerRight: () => { },
+        headerRight:<View />,
     }
     render() {
         return (

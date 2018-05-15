@@ -10,6 +10,7 @@ import SearchResult from './src/page/SearchResult';
 import User from './src/page/User';
 import AboutUs from './src/page/AboutUs'
 import Feedback from './src/page/Feedback'
+import Detail from './src/page/Detail'
 
 
 console.disableYellowBox = true;
@@ -48,6 +49,9 @@ export default StackNavigator({
 	},
 	Feedback:{
 		screen:Feedback
+	},
+	Detail:{
+		screen:Detail
 	}
 },{
 	navigationOptions:{

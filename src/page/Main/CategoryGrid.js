@@ -8,10 +8,11 @@ import ArrowItem from './ArrowItem';
 export default class extends React.Component {
     static propTypes = {
         style:PropTypes.object,
-        data:PropTypes.object
+        data:PropTypes.object,
+        navigation:PropTypes.object,
     }
     render() {
-        var { data,style } = this.props
+        var { data,style,navigation } = this.props
         return (
             <View style={[{backgroundColor: data.category_background, padding: scale(11) },style]}>
                 <View style={{ flexDirection: 'row' }}>
@@ -32,13 +33,15 @@ export default class extends React.Component {
                 </View>
                 <View style={{ flexDirection: 'row',marginTop:scale(10) }}>
                     {data.commodityList.map((it, i) => (
-                        <View key={i} style={{width:scale(112),height:scale(71),marginRight:scale(7),flexDirection: 'row',alignItems:"center",padding:scale(3),backgroundColor:"#fff"}}>
-                            <View>
-                                <Text style={{width:scale(45),color:"#6A607B",fontSize:scale(12)}} numberOfLines={2}>{it.name}</Text>
-                                <Text style={{fontSize:scale(11),color:"#E339D3"}}>¥{it.original_price}</Text>
+                        <TouchableEx key={i} onPress={()=>navigation.navigate('Detail',{id:it.commodity_id})}>
+                            <View style={{width:scale(112),height:scale(71),marginRight:scale(7),flexDirection: 'row',alignItems:"center",padding:scale(3),backgroundColor:"#fff"}}>
+                                <View>
+                                    <Text style={{width:scale(45),color:"#6A607B",fontSize:scale(12)}} numberOfLines={2}>{it.name}</Text>
+                                    <Text style={{fontSize:scale(11),color:"#E339D3"}}>¥{it.original_price}</Text>
+                                </View>
+                                <Image style={{ width: scale(59), height: scale(59) }} source={{ uri: it.image_url }} />
                             </View>
-                            <Image style={{ width: scale(59), height: scale(59) }} source={{ uri: it.image_url }} />
-                        </View>
+                        </TouchableEx>
                     ))}
                 </View>
             </View>

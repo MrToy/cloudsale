@@ -6,7 +6,7 @@ import { scale } from '../../utils/dimension';
 export default class extends React.Component {
     static navigationOptions = {
         title: '意见反馈',
-        headerRight: () => { },
+        headerRight:<View />,
     }
     render() {
         return (

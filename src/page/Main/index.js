@@ -49,15 +49,15 @@ export default class extends React.Component {
                         ):null}
                     </View>
                     <View style={{height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
-                        <NavMenus list={category} />
+                        <NavMenus list={category} navigation={this.props.navigation} />
                     </View>
                     <FloorTitle label="热门频道" color="#66ABF3" />
                     <View style={{backgroundColor:'#fff',paddingBottom:scale(9),marginBottom:scale(7)}}>
-                        <ChannelGrid list={hot} />
+                        <ChannelGrid list={hot} navigation={this.props.navigation} />
                     </View>
                     <FloorTitle label="精选类目" color="#E339D3" />
                     {categoryList.map((category,i)=>(
-                        <CategoryGrid key={i} data={category} style={{marginBottom:scale(6)}} />
+                        <CategoryGrid key={i} data={category} style={{marginBottom:scale(6)}} navigation={this.props.navigation} />
                     ))}
                     <FloorTitle label="精选商品" color="#AEA649" />
                     <CommodityList list={choice} />

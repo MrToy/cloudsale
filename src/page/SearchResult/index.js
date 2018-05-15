@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 export default class extends React.Component {
     static navigationOptions = {
         title: '搜索',
-        headerRight:()=>{},
+        headerRight:<View />,
     }
     render() {
         return (

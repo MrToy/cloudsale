@@ -7,7 +7,7 @@ import { scale } from '../../utils/dimension';
 export default class extends React.Component {
     static navigationOptions = {
         title: '搜索',
-        headerRight: () => { },
+        headerRight:<View />,
     }
     state = {
         searchKey: ""
