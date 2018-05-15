@@ -7,6 +7,7 @@ import FloorTitle from '../../components/FloorTitle'
 import SearchButton from './SearchButton'
 import CategoryGrid from './CategoryGrid'
 import ChannelGrid from './ChannelGrid'
+import CommodityList from '../../components/CommodityList'
 
 
 export default class extends React.Component {
@@ -59,6 +60,7 @@ export default class extends React.Component {
                         <CategoryGrid key={i} data={category} />
                     ))}
                     <FloorTitle label="精选商品" color="#AEA649" />
+                    <CommodityList list={choice} />
                 </ScrollView>
                 <View style={{ position: 'absolute', top: scale(5), width: "100%", alignItems: "center",paddingLeft:scale(11),paddingRight:scale(11) }}>
                     <SearchButton navigation={this.props.navigation} placeholder="搜索商品/店铺" />
