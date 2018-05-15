@@ -57,7 +57,7 @@ export default class extends React.Component {
                     </View>
                     <FloorTitle label="精选类目" color="#E339D3" />
                     {categoryList.map((category,i)=>(
-                        <CategoryGrid key={i} data={category} />
+                        <CategoryGrid key={i} data={category} style={{marginBottom:scale(6)}} />
                     ))}
                     <FloorTitle label="精选商品" color="#AEA649" />
                     <CommodityList list={choice} />

@@ -12,7 +12,7 @@ export default class extends React.Component {
                 showsButtons={false}
                 showsPagination={true}
                 renderPagination={(index, total, context) => (
-                    <View style={{ bottom: scale(17), flexDirection: "row", justifyContent: "center" }}>
+                    <View style={{ position:"absolute",width:"100%",bottom: scale(17), flexDirection: "row", justifyContent: "center" }}>
                         {Array(total).fill(0).map((_, i) => (
                             <View key={i} style={{ width: scale(8), height: scale(8), borderRadius: scale(8), backgroundColor: index == i ? "#781EFD" : "#fff", marginLeft: i == 0 ? 0 : scale(8) }}></View>
                         ))}
