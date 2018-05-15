@@ -26,6 +26,7 @@ class CardTitle extends React.Component {
 
 class BottomBar extends React.Component {
     render() {
+        const {navigation,id}=this.props
         return (
             <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
                 <View>
@@ -40,7 +41,7 @@ class BottomBar extends React.Component {
                             <Text style={{ fontSize: scale(15), color: "#781EFD" }}>加入购物车</Text>
                         </View>
                     </TouchableEx>
-                    <TouchableEx>
+                    <TouchableEx onPress={()=>navigation.navigate('OrderSubmit',{id})}>
                         <View style={{ backgroundColor: "#781EFD", height: "100%", width: scale(126), justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontSize: scale(15), color: "#fff" }}>立即购买</Text>
                         </View>
@@ -118,7 +119,7 @@ export default class extends React.Component {
                     <CardTitle label="猜你喜欢" />
                     <CardTitle label="商品介绍" />
                 </ScrollView>
-                <BottomBar />
+                <BottomBar navigation={navigation} id={detail.id} />
             </View>
         );
     }

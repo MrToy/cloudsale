@@ -137,7 +137,7 @@ export default class extends React.Component {
                         image={require('../../images/feedback_icon.png')}
                         onPress={() => this.props.navigation.navigate('Feedback')} />
                     <ListMenuItem
-                        text="我的消息"
+                        text="关于我们"
                         image={require('../../images/about_us_icon.png')}
                         onPress={() => this.props.navigation.navigate('AboutUs')} />
                 </View>

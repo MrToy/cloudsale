@@ -11,6 +11,7 @@ import User from './src/page/User';
 import AboutUs from './src/page/AboutUs'
 import Feedback from './src/page/Feedback'
 import Detail from './src/page/Detail'
+import OrderSubmit from './src/page/OrderSubmit'
 
 
 console.disableYellowBox = true;
@@ -52,6 +53,9 @@ export default StackNavigator({
 	},
 	Detail:{
 		screen:Detail
+	},
+	OrderSubmit:{
+		screen:OrderSubmit
 	}
 },{
 	navigationOptions:{
