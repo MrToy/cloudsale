@@ -6,6 +6,7 @@ import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import Swiper from '../Main/Swiper';
 import CommodityList from '../../components/CommodityList'
+import FitImage from 'react-native-fit-image'
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -26,17 +27,18 @@ const styles = StyleSheet.create({
 class InfoCard extends React.Component {
     static propTypes = {
         label: PropTypes.string.isRequired,
-        color: PropTypes.string
+        color: PropTypes.string,
+        noPadding: PropTypes.bool
     }
     render() {
-        var { label, color } = this.props
+        var { label, color,noPadding } = this.props
         color = color || '#781EFD'
         return (
-            <View style={{ marginBottom: scale(6), paddingTop: scale(6), paddingBottom: scale(6), backgroundColor: '#fff' }}>
+            <View style={{ marginBottom: scale(6), paddingTop: scale(6), backgroundColor: '#fff' }}>
                 <View style={{ borderLeftColor: color, borderLeftWidth: scale(2), height: scale(23), justifyContent: "center" }}>
                     <Text style={{ color, marginLeft: scale(10), fontSize: scale(13) }}>{label}</Text>
                 </View>
-                <View style={{ borderTopColor: "#eee", borderTopWidth: 1, marginLeft: scale(12), marginTop: scale(5), marginRight: scale(12), paddingTop: scale(9), paddingBottom: scale(9) }}>
+                <View style={[{ borderTopColor: "#eee", borderTopWidth: 1, marginTop: scale(5) }, !noPadding && { marginRight: scale(12), marginLeft: scale(12),paddingTop: scale(13), paddingBottom: scale(13) }]}>
                     {this.props.children}
                 </View>
             </View>
@@ -46,7 +48,7 @@ class InfoCard extends React.Component {
 
 class BottomBar extends React.Component {
     render() {
-        const { navigation, id } = this.props
+        const { onBuy } = this.props
         return (
             <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
                 <TouchableEx>
@@ -67,7 +69,7 @@ class BottomBar extends React.Component {
                             <Text style={{ fontSize: scale(15), color: "#781EFD" }}>加入购物车</Text>
                         </View>
                     </TouchableEx>
-                    <TouchableEx onPress={() => navigation.navigate('OrderSubmit', { id })}>
+                    <TouchableEx onPress={onBuy}>
                         <View style={{ backgroundColor: "#781EFD", height: "100%", width: scale(126), justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontSize: scale(15), color: "#fff" }}>立即购买</Text>
                         </View>
@@ -100,16 +102,19 @@ export default class extends React.Component {
             })
         }).then(res => res.json())
         this.setState({
-            // banner: res.data.banner || [],
-            // specifications: res.data.specifications || [],
-            // services: res.data.service,
             specifica: res.data.specifications[0] && res.data.specifications[0].id,
-            detail: res.data
+            detail: res.data,
+        })
+    }
+    onBuy(){
+        this.props.navigation.navigate('OrderSubmit', { 
+            id:this.state.detail.id,
+            count:this.state.selectedNum,
+            specifica:this.state.specifica
         })
     }
     render() {
-        const { navigation } = this.props
-        const banner = (this.state.detail.banner||[]).map(it => ({
+        const banner = (this.state.detail.banner || []).map(it => ({
             imageUrl: it.image_url,
             id: it.id
         }))
@@ -133,7 +138,7 @@ export default class extends React.Component {
                     <InfoCard label={`已选 ${selectedNum}个`}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(11) }}>
                             <Text style={{ marginRight: scale(19) }}>规格</Text>
-                            {(detail.specifications||[]).map(it => (
+                            {(detail.specifications || []).map(it => (
                                 <TouchableEx key={it.id} onPress={() => this.setState({ specifica: it.id })}>
                                     <View style={[styles.selectItem, specifica == it.id && styles.selectItemActive]}>
                                         <Text style={[styles.selectItemText, specifica == it.id && styles.selectItemTextActive]}>{it.value}</Text>
@@ -162,7 +167,7 @@ export default class extends React.Component {
                     </InfoCard>
                     <InfoCard label="服务">
                         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                            {(detail.service||[]).map(it => (
+                            {(detail.service || []).map(it => (
                                 <Text style={{ marginRight: scale(10), fontSize: scale(12), color: "6A617A", lineHeight: scale(22) }}>· {it.service_name}</Text>
                             ))}
                         </View>
@@ -186,18 +191,29 @@ export default class extends React.Component {
                             </View>
                             <TouchableEx>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Image style={{marginRight:scale(5)}} source={require("../../images/shop_collection_icon.png")} />
-                                    <Text style={{marginRight:scale(5)}}>收藏店铺</Text>
+                                    <Image style={{ marginRight: scale(5) }} source={require("../../images/shop_collection_icon.png")} />
+                                    <Text style={{ marginRight: scale(5) }}>收藏店铺</Text>
                                 </View>
                             </TouchableEx>
                         </View>
                     </InfoCard>
-                    <InfoCard label="猜你喜欢">
-                        <CommodityList list={[]} />
+                    <InfoCard label="猜你喜欢" noPadding>
+                        <View style={{backgroundColor:"#f1f1f1"}}>
+                        <CommodityList list={(detail.recommend || []).map(it => ({
+                            id: it.id,
+                            imageUrl: it.image_url,
+                            name: it.small_text,
+                            price: it.deduct_price
+                        }))} />
+                        </View>
                     </InfoCard>
-                    <InfoCard label="商品介绍" />
+                    <InfoCard label="商品介绍" noPadding>
+                        {(detail.introduce_images||[]).map(it=>(
+                            <FitImage source={{uri:it.image_url}} />
+                        ))}
+                    </InfoCard>
                 </ScrollView>
-                <BottomBar navigation={navigation} id={detail.id} />
+                <BottomBar onBuy={this.onBuy.bind(this)} />
             </View>
         );
     }

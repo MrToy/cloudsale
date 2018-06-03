@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Image, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, View, Image, ScrollView,AsyncStorage } from 'react-native';
 import { scale } from '../../utils/dimension';
 import NavMenus from './NavMenus';
 import Swiper from './Swiper';
@@ -8,7 +8,7 @@ import SearchButton from './SearchButton'
 import CategoryGrid from './CategoryGrid'
 import ChannelGrid from './ChannelGrid'
 import CommodityList from '../../components/CommodityList'
-
+import {setUserInfo} from '../../components/User'
 
 export default class extends React.Component {
     static navigationOptions = {
@@ -29,6 +29,15 @@ export default class extends React.Component {
     }
     componentDidMount() {
         this.fetchCommodity()
+        setUserInfo({
+            "username": "北极",
+            "province": "",
+            "user_id": 12,
+            "city": "",
+            "gender": 0,
+            "avatarUrl": "",
+            "tokeninfo": "12$北极$$0$$$"
+        })
     }
     async fetchCommodity() {
         var res = await fetch("https://www.bjzntq.com:8888/Commodity/GetHomeData", { method: "POST" }).then(res => res.json())
@@ -62,7 +71,7 @@ export default class extends React.Component {
                     <FloorTitle label="精选商品" color="#AEA649" />
                     <CommodityList list={choice.map(it => ({
                         id: it.id,
-                        imageUrl:it.image_url,
+                        imageUrl: it.image_url,
                         name: it.name,
                         price: it.deduct_price
                     }))} />

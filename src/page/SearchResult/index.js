@@ -26,7 +26,7 @@ export default class extends React.Component {
                 keyword
             })
         }).then(res => res.json())
-        this.setState({list:res.data})
+        this.setState({list:res.data||[]})
     }
     render() {
         return (
