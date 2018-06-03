@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image, Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Image, Text, View, ScrollView, StyleSheet,FlatList } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
+import PropTypes from 'prop-types';
 
 
 const styles = StyleSheet.create({
@@ -19,45 +20,38 @@ const styles = StyleSheet.create({
         width: scale(71), backgroundColor: "#F1F0F5"
     },
     rightBox: {
-        width: scale(71), flex: 1, backgroundColor: "#fff",paddingLeft:10,paddingRight:10,paddingTop:3,paddingBottom:3
+        width: scale(71), flex: 1, backgroundColor: "#fff", paddingLeft: 10, paddingRight: 10, paddingTop: 3, paddingBottom: 3
     },
-    menuItem:{
+    menuItem: {
         borderBottomColor: "#E9E8ED", borderBottomWidth: 1, height: scale(40), alignItems: "center", justifyContent: "center"
     },
-    menuItemActive:{
-        backgroundColor:"#fff"
+    menuItemActive: {
+        backgroundColor: "#fff"
     },
-    menuItemText:{
-        color:"#6A617A",fontSize:scale(11)
+    menuItemText: {
+        color: "#6A617A", fontSize: scale(11)
     },
-    menuItemTextActive:{
-        color:"#781EFD"
+    menuItemTextActive: {
+        color: "#781EFD"
     },
 })
 
 
+
 class ListMenu extends React.Component {
-    state = {
-        selected: 0,
-        list: [
-            { text: "精选热卖" },
-            { text: "休闲食品" },
-            { text: "牛奶饮料" },
-            { text: "生鲜果蔬" },
-            { text: "美妆护肤" },
-            { text: "日用百货" },
-            { text: "学习用品" },
-            { text: "电子数码" },
-        ]
+    static propTypes = {
+        list: PropTypes.array,
+        onChange:PropTypes.func,
+        index:PropTypes.number
     }
     render() {
-        const { list, selected } = this.state
+        const { list,onChange,index } = this.props
         return (
             <ScrollView>
                 {list.map((it, i) => (
-                    <TouchableEx key={i} onPress={()=>this.setState({selected:i})}>
-                        <View style={[styles.menuItem,i==selected&&styles.menuItemActive]}>
-                            <Text style={[styles.menuItemText,i==selected&&styles.menuItemTextActive]}>{it.text}</Text>
+                    <TouchableEx key={i} onPress={() => onChange(i)}>
+                        <View style={[styles.menuItem, i == index && styles.menuItemActive]}>
+                            <Text style={[styles.menuItemText, i == index && styles.menuItemTextActive]}>{it.text}</Text>
                         </View>
                     </TouchableEx>
                 ))}
@@ -66,7 +60,35 @@ class ListMenu extends React.Component {
     }
 }
 
+class CateList extends React.Component {
+    render(){
+        var {categoryThumb,categoryDetail}=this.props.data
+        return (
+            <View>
+                <Image source={{uri:categoryThumb}} style={{width:"100%",height:scale(84),marginBottom:scale(14)}} />
+                {categoryDetail.map(it=>(
+                    <View key={it.categoryId}>
+                        <Text style={{color:"#6A617A",fontSize:scale(11),lineHeight:scale(16),marginBottom:scale(4)}}>{it.subCategoryName}</Text>
+                        <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-between"}}>
+                            {it.subCategoryItem.map(itit=>(
+                                <View key={itit.categoryId} style={{marginBottom:scale(7)}}>
+                                    <Image source={{uri:itit.categoryThumb}} style={{width:scale(92),height:scale(92),resizeMode:"contain",backgroundColor:"#F8F8F8"}} />
+                                    <Text style={{textAlign:"center",marginTop:scale(4),fontSize: scale(11),color: "#6A617A"}}>{itit.categoryName}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                ))}
+            </View>
+        )
+    }
+}
+
 export default class extends React.Component {
+    state = {
+        list: [],
+        cateIndex:0
+    }
     static navigationOptions = {
         title: '分类',
         tabBarIcon: ({ focused, tintColor }) => (
@@ -75,7 +97,36 @@ export default class extends React.Component {
                 source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
         )
     }
+    // constructor(props){
+    //     super(props)
+    //     this.onVisibleChange=this.onVisibleChange.bind(this)
+    // }
+    async fetchList() {
+        var res = await fetch("https://www.bjzntq.com:8888//Commodity/getCategoryList/", { method: "POST" }).then(res => res.json())
+        if (res.result != 200) {
+            return
+        }
+        this.setState({
+            list: res.data
+        })
+    }
+    onIndex(i){
+        this.setState({cateIndex:i})
+        this._CateList.scrollToIndex({index:i})
+    }
+    // onVisibleChange(info){
+    //     console.log(info)
+    //     if(info.viewableItems.length){
+    //         this.setState({cateIndex:info.viewableItems[0].index})
+    //     }
+    // }
+    componentDidMount() {
+        this.fetchList()
+    }
     render() {
+        let menuList = this.state.list.map(it => ({
+            text: it.categoryName
+        }))
         return (
             <View style={styles.container}>
                 <View style={styles.searchBarBox}>
@@ -83,14 +134,15 @@ export default class extends React.Component {
                 </View>
                 <View style={styles.listBox}>
                     <View style={styles.leftBox}>
-                        <ListMenu />
+                        <ListMenu list={menuList} index={this.state.cateIndex} onChange={i=>this.onIndex(i)} />
                     </View>
                     <View style={styles.rightBox}>
-                        <ScrollView>
-                            <View>
-                                <Text>todo...</Text>
-                            </View>
-                        </ScrollView>
+                        <FlatList
+                            // contentContainerStyle={{paddingBottom:300,flexGrow: 1}}
+                            ref={c=> this._CateList = c}
+                            data={this.state.list}
+                            // onViewableItemsChanged={this.onVisibleChange}
+                            renderItem={({item}) => <CateList data={item} key={item.categoryId} />} />
                     </View>
                 </View>
             </View>

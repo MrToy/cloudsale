@@ -24,8 +24,8 @@ export default class extends React.Component {
                         </View>
                     </TouchableEx>
                     {data.subcategoryList.map((it, i) => (
-                        <TouchableEx onPress={() => navigation.navigate('SearchResult')}>
-                            <View key={i} style={{ width: scale(112), height: scale(149), marginLeft: scale(7), backgroundColor: "#fff", alignItems: "center" }}>
+                        <TouchableEx key={i} onPress={() => navigation.navigate('SearchResult')}>
+                            <View style={{ width: scale(112), height: scale(149), marginLeft: scale(7), backgroundColor: "#fff", alignItems: "center" }}>
                                 <Text style={{ fontSize: scale(13), lineHeight: scale(18), color: "#6A607B", marginTop: scale(8) }}>{it.subcategory_name}</Text>
                                 <Text style={{ fontSize: scale(11), lineHeight: scale(16), color: "#E339D3" }}>{it.subcategory_description}</Text>
                                 <Image style={{ width: scale(85), height: scale(85), marginTop: scale(10) }} source={{ uri: it.subcategory_image }} />

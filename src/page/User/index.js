@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 
 class ListMenuItem extends React.Component {
     static propTypes = {
-        image: PropTypes.object,
+        image: PropTypes.any,
         text: PropTypes.string,
         onPress: PropTypes.func,
     }
@@ -62,7 +62,7 @@ class ListMenuItem extends React.Component {
 
 class NavMenuItem extends React.Component {
     static propTypes = {
-        image: PropTypes.object,
+        image: PropTypes.any,
         text: PropTypes.string,
         onPress: PropTypes.func,
         style: PropTypes.object
