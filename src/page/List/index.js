@@ -111,7 +111,7 @@ export default class extends React.Component {
         })
     }
     onIndex(i){
-        this._CateList.scrollToIndex({index:i,viewOffset:-1})
+        this._CateList.scrollToIndex({index:i,viewOffset:-1,animated:false})
         this.setState({cateIndex:i})
     }
     onVisibleChange(info){
