@@ -34,7 +34,12 @@ export default class extends React.Component {
                 <View style={{height:scale(34), alignItems: "center", justifyContent: "center", backgroundColor: "#fff", paddingLeft: scale(11), paddingRight: scale(11)}}>
                     <SearchButton navigation={this.props.navigation} placeholder={this.state.keyword} style={{ backgroundColor: "#F3F2F8" }} />
                 </View>
-                <CommodityList list={this.state.list} />
+                <CommodityList list={this.state.list.map(it=>({
+                    id: it.commodity_id,
+                    imageUrl:it.commodity_image,
+                    name: it.commodity_name,
+                    price: it.deduct_price
+                }))} />
             </View>
         )
     }

@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, Text, View, ScrollView, StyleSheet,FlatList } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
-import PropTypes from 'prop-types';
 
 
 const styles = StyleSheet.create({
@@ -97,10 +97,10 @@ export default class extends React.Component {
                 source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
         )
     }
-    // constructor(props){
-    //     super(props)
-    //     this.onVisibleChange=this.onVisibleChange.bind(this)
-    // }
+    constructor(props){
+        super(props)
+        this.onVisibleChange=this.onVisibleChange.bind(this)
+    }
     async fetchList() {
         var res = await fetch("https://www.bjzntq.com:8888//Commodity/getCategoryList/", { method: "POST" }).then(res => res.json())
         if (res.result != 200) {
@@ -111,20 +111,19 @@ export default class extends React.Component {
         })
     }
     onIndex(i){
+        this._CateList.scrollToIndex({index:i,viewOffset:-1})
         this.setState({cateIndex:i})
-        this._CateList.scrollToIndex({index:i})
     }
-    // onVisibleChange(info){
-    //     console.log(info)
-    //     if(info.viewableItems.length){
-    //         this.setState({cateIndex:info.viewableItems[0].index})
-    //     }
-    // }
+    onVisibleChange(info){
+        if(info.viewableItems.length){
+            this.setState({cateIndex:info.viewableItems[0].index})
+        }
+    }
     componentDidMount() {
         this.fetchList()
     }
     render() {
-        let menuList = this.state.list.map(it => ({
+        var menuList = this.state.list.map(it => ({
             text: it.categoryName
         }))
         return (
@@ -138,10 +137,9 @@ export default class extends React.Component {
                     </View>
                     <View style={styles.rightBox}>
                         <FlatList
-                            // contentContainerStyle={{paddingBottom:300,flexGrow: 1}}
                             ref={c=> this._CateList = c}
                             data={this.state.list}
-                            // onViewableItemsChanged={this.onVisibleChange}
+                            onViewableItemsChanged={this.onVisibleChange}
                             renderItem={({item}) => <CateList data={item} key={item.categoryId} />} />
                     </View>
                 </View>
