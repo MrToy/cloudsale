@@ -1,4 +1,4 @@
-package com.cloudsale;
+package com.zntq.ZhiNuoShop;
 
 import android.app.Application;
 
