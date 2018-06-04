@@ -1223,7 +1223,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.cloudsale.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
 				PRODUCT_NAME = cloudsale;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1243,7 +1243,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.cloudsale.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
 				PRODUCT_NAME = cloudsale;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

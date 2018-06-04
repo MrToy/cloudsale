@@ -7,6 +7,7 @@ import { scale } from '../../utils/dimension';
 import Swiper from '../Main/Swiper';
 import CommodityList from '../../components/CommodityList'
 import FitImage from 'react-native-fit-image'
+import NumberPicker from '../../components/NumberPicker'
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -146,29 +147,15 @@ export default class extends React.Component {
                                 </TouchableEx>
                             ))}
                         </View>
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={{ flexDirection: "row" , alignItems: "center"}}>
                             <Text style={{ marginRight: scale(19) }}>数量</Text>
-                            <View style={{ flexDirection: "row", alignItems: "center", width: scale(107), height: scale(27.5), borderColor: "#C8BEDB", borderWidth: 1 }}>
-                                <TouchableEx onPress={selectedNum > 1 && (() => this.setState({ selectedNum: selectedNum - 1 }))}>
-                                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                        <Image source={require("../../images/minus_icon.png")} />
-                                    </View>
-                                </TouchableEx>
-                                <View style={{ width: scale(46), borderLeftWidth: 1, borderRightWidth: 1, borderColor: "#C8BEDB", height: "100%", justifyContent: "center", alignItems: "center" }}>
-                                    <Text>{selectedNum}</Text>
-                                </View>
-                                <TouchableEx onPress={() => this.setState({ selectedNum: selectedNum + 1 })}>
-                                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", height: "100%" }}>
-                                        <Image source={require("../../images/plus_icon.png")} />
-                                    </View>
-                                </TouchableEx>
-                            </View>
+                            <NumberPicker value={selectedNum} onChange={val=>this.setState({ selectedNum: val})} />
                         </View>
                     </InfoCard>
                     <InfoCard label="服务">
                         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                            {(detail.service || []).map(it => (
-                                <Text style={{ marginRight: scale(10), fontSize: scale(12), color: "6A617A", lineHeight: scale(22) }}>· {it.service_name}</Text>
+                            {(detail.service || []).map((it,i) => (
+                                <Text key={i} style={{ marginRight: scale(10), fontSize: scale(12), color: "#6A617A", lineHeight: scale(22) }}>· {it.service_name}</Text>
                             ))}
                         </View>
                     </InfoCard>
@@ -208,8 +195,8 @@ export default class extends React.Component {
                         </View>
                     </InfoCard>
                     <InfoCard label="商品介绍" noPadding>
-                        {(detail.introduce_images||[]).map(it=>(
-                            <FitImage source={{uri:it.image_url}} />
+                        {(detail.introduce_images||[]).map((it,i)=>(
+                            <FitImage key={i} source={{uri:it.image_url}} />
                         ))}
                     </InfoCard>
                 </ScrollView>
