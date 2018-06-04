@@ -8,7 +8,7 @@ export default class extends React.Component {
     render() {
         return (
             <Swiper
-                autoplay={true}
+                autoplay={!__DEV__?true:false}
                 showsButtons={false}
                 showsPagination={true}
                 renderPagination={(index, total, context) => {

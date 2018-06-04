@@ -12,7 +12,8 @@ import AboutUs from './src/page/AboutUs'
 import Feedback from './src/page/Feedback'
 import Detail from './src/page/Detail'
 import OrderSubmit from './src/page/OrderSubmit'
-
+import {setUserInfo} from './src/components/User'
+import * as WeChat from 'react-native-wechat'
 
 console.disableYellowBox = true;
 
@@ -35,7 +36,7 @@ const TabScreens = TabNavigator({
 
 
 
-export default StackNavigator({
+const Routes= StackNavigator({
 	Home: {
 		screen: TabScreens,
 	},
@@ -73,3 +74,26 @@ export default StackNavigator({
 		}
 	}
 })
+
+export default class extends React.Component{
+	componentDidMount(){
+		setUserInfo({
+            "username": "北极",
+            "province": "",
+            "user_id": 12,
+            "city": "",
+            "gender": 0,
+            "avatarUrl": "",
+            "tokeninfo": "12$北极$$0$$$"
+		})
+		this.initWeChat()
+	}
+	async initWeChat(){
+		var ok=await WeChat.registerApp('wxd71c7825d6c2ecdd')
+		console.log(await WeChat.getApiVersion())
+		console.log(ok)
+	}
+	render(){
+		return <Routes />
+	}
+}
