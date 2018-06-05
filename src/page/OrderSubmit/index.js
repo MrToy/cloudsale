@@ -8,12 +8,18 @@ export default class extends React.Component {
         title: '确认订单',
         headerRight: <View />,
     }
+    state={
+        list:[]
+    }
+    componentDidMount(){
+        const list = this.props.navigation.getParam('list')
+        this.setState({list:list||[]})
+    }
     render() {
-        const id = this.props.navigation.getParam('id')
         return (
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                 <ScrollView>
-                    <Text style={{ fontSize: scale(13), lineHeight: scale(36), marginLeft: scale(15) }}>{id}</Text>
+                    <Text style={{ fontSize: scale(13), lineHeight: scale(36), marginLeft: scale(15) }}></Text>
                 </ScrollView>
                 <View>
                     <View>

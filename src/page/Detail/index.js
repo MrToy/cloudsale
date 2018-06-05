@@ -149,7 +149,7 @@ export default class extends React.Component {
                         </View>
                         <View style={{ flexDirection: "row" , alignItems: "center"}}>
                             <Text style={{ marginRight: scale(19) }}>数量</Text>
-                            <NumberPicker value={selectedNum} onChange={val=>this.setState({ selectedNum: val})} />
+                            <NumberPicker value={selectedNum} onChange={val=>this.setState({ selectedNum: val})} min={1} />
                         </View>
                     </InfoCard>
                     <InfoCard label="服务">
