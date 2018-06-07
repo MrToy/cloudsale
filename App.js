@@ -86,7 +86,13 @@ export default class extends React.Component{
             "avatarUrl": "",
             "tokeninfo": "12$北极$$0$$$"
 		})
-		WeChat.registerApp('wxd71c7825d6c2ecdd')
+		this.initWechat()
+	}
+	async initWechat(){
+		var ok=await WeChat.registerApp('wxd71c7825d6c2ecdd')
+		if(ok){
+			console.log("微信sdk初始化成功")
+		}
 	}
 	render(){
 		return <Routes />
