@@ -6,11 +6,21 @@
  */
 
 #import "AppDelegate.h"
+#import "AlipayModule.h"
+#import <React/RCTLinkingManager.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+          options:(NSDictionary<NSString*, id> *)options
+{
+  [AlipayModule handleCallback:url];//支付宝回调
+  [RCTLinkingManager application:application openURL:url options:options];//微信回调
+  return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

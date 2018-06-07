@@ -35,6 +35,12 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* cloudsaleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* cloudsaleTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		39B52CA020C8D38400CF0D1B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52C9F20C8D38400CF0D1B /* CoreMotion.framework */; };
+		39B52CA220C8D38F00CF0D1B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52CA120C8D38F00CF0D1B /* CoreTelephony.framework */; };
+		39B52CA420C8D39800CF0D1B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52CA320C8D39700CF0D1B /* libc++.tbd */; };
+		39B52CA620C8D3A000CF0D1B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52CA520C8D3A000CF0D1B /* libz.tbd */; };
+		39B52CA820C8E5E900CF0D1B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52CA720C8E5E900CF0D1B /* SystemConfiguration.framework */; };
+		39B52CAA20C8E60400CF0D1B /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B52CA920C8E60400CF0D1B /* libsqlite3.0.tbd */; };
 		39E146E120A2F60F0018CA34 /* jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 39E146E020A2F60E0018CA34 /* jsbundle */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		62BF7A1CDC4E48DE94FE62A6 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 879574829BE643D48F03A6DB /* libRCTWeChat.a */; };
@@ -364,6 +370,13 @@
 		2D02E47B1E0B4A5D006451C7 /* ZhiNuoShop-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ZhiNuoShop-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* ZhiNuoShop-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZhiNuoShop-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		39B52C7520C8D36600CF0D1B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		39B52C9F20C8D38400CF0D1B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		39B52CA120C8D38F00CF0D1B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		39B52CA320C8D39700CF0D1B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		39B52CA520C8D3A000CF0D1B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		39B52CA720C8E5E900CF0D1B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		39B52CA920C8E60400CF0D1B /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		39E146E020A2F60E0018CA34 /* jsbundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsbundle; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		6CA4886924004067B1E31AC0 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
@@ -388,6 +401,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39B52CAA20C8E60400CF0D1B /* libsqlite3.0.tbd in Frameworks */,
+				39B52CA220C8D38F00CF0D1B /* CoreTelephony.framework in Frameworks */,
+				39B52CA820C8E5E900CF0D1B /* SystemConfiguration.framework in Frameworks */,
+				39B52CA620C8D3A000CF0D1B /* libz.tbd in Frameworks */,
+				39B52CA420C8D39800CF0D1B /* libc++.tbd in Frameworks */,
+				39B52CA020C8D38400CF0D1B /* CoreMotion.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -475,13 +494,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00E356EF1AD99517003FC87E /* ZhiNuoShopTests */ = {
+		00E356EF1AD99517003FC87E /* cloudsaleTests */ = {
 			isa = PBXGroup;
 			children = (
 				00E356F21AD99517003FC87E /* cloudsaleTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = ZhiNuoShopTests;
+			path = cloudsaleTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -512,7 +531,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* ZhiNuoShop */ = {
+		13B07FAE1A68108700A75B9A /* cloudsale */ = {
 			isa = PBXGroup;
 			children = (
 				39E146E020A2F60E0018CA34 /* jsbundle */,
@@ -523,7 +542,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = ZhiNuoShop;
+			name = cloudsale;
 			sourceTree = "<group>";
 		};
 		146834001AC3E56700842450 /* Products */ = {
@@ -552,6 +571,13 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39B52CA920C8E60400CF0D1B /* libsqlite3.0.tbd */,
+				39B52CA720C8E5E900CF0D1B /* SystemConfiguration.framework */,
+				39B52CA520C8D3A000CF0D1B /* libz.tbd */,
+				39B52CA320C8D39700CF0D1B /* libc++.tbd */,
+				39B52CA120C8D38F00CF0D1B /* CoreTelephony.framework */,
+				39B52C9F20C8D38400CF0D1B /* CoreMotion.framework */,
+				39B52C7520C8D36600CF0D1B /* libsqlite3.tbd */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 			);
 			name = Frameworks;
@@ -635,9 +661,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* ZhiNuoShop */,
+				13B07FAE1A68108700A75B9A /* cloudsale */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* ZhiNuoShopTests */,
+				00E356EF1AD99517003FC87E /* cloudsaleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				39B52A4C20C5186300CF0D1B /* Recovered References */,
