@@ -8,7 +8,7 @@ import Alipay from 'react-native-yunpeng-alipay'
 import * as WeChat from 'react-native-wechat';
 import md5 from 'md5'
 
-export default class extends React.Component {
+export default class OrderSubmitPage extends React.Component {
     static navigationOptions = {
         title: '确认订单',
         headerRight: <View />,
@@ -133,7 +133,7 @@ export default class extends React.Component {
                             <View style={{ flexDirection: "row", alignItems: "center", height: scale(39) }}>
                                 <Text>{it.shopName}</Text>
                             </View>
-                            {it.goodsList.map((itit, ii) => (
+                            {(it.goodsList||[]).map((itit, ii) => (
                                 <View key={ii} style={{ flexDirection: "row", alignItems: "center", borderTopColor: "#ECECEC", borderTopWidth: 1 }}>
                                     <Image source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80) }} />
                                     <View>

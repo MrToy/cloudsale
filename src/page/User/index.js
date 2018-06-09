@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         height: scale(93), backgroundColor: "#fff", marginTop: scale(6), flexDirection: "row", alignItems: "center"
     },
     userInfoImage: {
-        width: scale(65), height: scale(65), borderRadius: scale(65), marginLeft: scale(23)
+        width: scale(65), height: scale(65), borderRadius: scale(32.5), marginLeft: scale(23)
     },
     userInfoTextBox: {
         marginLeft: scale(13)
