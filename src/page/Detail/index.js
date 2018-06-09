@@ -108,24 +108,11 @@ export default class extends React.Component {
         })
     }
     onBuy(){
-        var list=[
-            {
-                shopName:this.state.detail.shop_name,
-                goodsList:[
-                    {
-                        deductPrice:this.state.detail.deduct_price,
-                        price:this.state.detail.original_price,
-                        count:this.state.selectedNum,
-                        specificationsId:this.state.specifica,
-                        specificationsValue:this.state.detail.specifications.find(it=>it.id==this.state.specifica).value,
-                        commodityId:this.state.detail.id,
-                        thumb:this.state.detail.banner[0].image_url,
-                        commodityName:this.state.detail.small_text
-                    }
-                ]
-            }
-        ]
-        this.props.navigation.navigate('OrderSubmit', {list})
+        this.props.navigation.navigate('OrderSubmit', { 
+            id:this.state.detail.id,
+            count:this.state.selectedNum,
+            specifica:this.state.specifica
+        })
     }
     render() {
         const banner = (this.state.detail.banner || []).map(it => ({
@@ -162,7 +149,7 @@ export default class extends React.Component {
                         </View>
                         <View style={{ flexDirection: "row" , alignItems: "center"}}>
                             <Text style={{ marginRight: scale(19) }}>数量</Text>
-                            <NumberPicker value={selectedNum} onChange={val=>this.setState({ selectedNum: val})} />
+                            <NumberPicker value={selectedNum} onChange={val=>this.setState({ selectedNum: val})} min={1} />
                         </View>
                     </InfoCard>
                     <InfoCard label="服务">

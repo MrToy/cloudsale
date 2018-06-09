@@ -1,33 +1,41 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View,Text,Image } from 'react-native';
+import { StatusBar, StyleSheet, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../utils/dimension';
-import {getUserInfo} from '../../components/User'
+import { getUserInfo } from '../../components/User'
+import Checkbox from '../../components/Checkbox'
+import NumberPicker from '../../components/NumberPicker'
+import Touchable from 'react-native-platform-touchable'
 
 export default class extends React.Component {
 	static navigationOptions = {
 		title: '购物车',
-        tabBarIcon:({focused,tintColor})=>(
-            <Image
-                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-                source={focused ? require('../../images/cart_select_icon.png') : require('../../images/cart_icon.png')} />
-        ),
+		tabBarIcon: ({ focused, tintColor }) => (
+			<Image
+				style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+				source={focused ? require('../../images/cart_select_icon.png') : require('../../images/cart_icon.png')} />
+		),
 	}
-	state={
-		list:[]
+	state = {
+		list: [],
+		selects: {}
 	}
-	componentDidMount(){
-		this.fetchList()
+	componentDidMount() {
+		this._subscribe = this.props.navigation.addListener("didFocus", () => {
+			this.fetchList()
+		})
 	}
-	async fetchList(){
-		var user=await getUserInfo()
+	componentWillUnmount() {
+		this._subscribe.remove()
+	}
+	async fetchList() {
+		var user = await getUserInfo()
 		var res = await fetch("https://www.bjzntq.com:8888/Commodity/getCartCommodity/", {
-            method: "POST",
-            body: JSON.stringify({
-                tokeninfo:user.tokeninfo,
-            })
+			method: "POST",
+			body: JSON.stringify({
+				tokeninfo: user.tokeninfo,
+			})
 		}).then(res => res.json())
-		console.log(res)
-        this.setState({list:res.data||[]})
+		this.setState({ list: res.data || [] })
 	}
 	onSelect(id, v) {
 		this.setState({
@@ -80,14 +88,14 @@ export default class extends React.Component {
 		this.state.list[i].goodsList[ii].count = val
 		this.setState({ list })
 	}
-	getList(){
+	submit(){
 		var selects = this.state.selects
 		var list = []
 		for (let j = 0; j < this.state.list.length; j++) {
 			let goodsList=[]
 			for (let i = 0; i < this.state.list[j].goodsList.length; i++) {
 				if(selects[this.state.list[j].goodsList[i].commodityId]){
-					goodsList.push(this.state.list[j].goodsList[i])
+					list.push(this.state.list[j].goodsList[i])
 				}
 			}
 			if(goodsList.length){
@@ -97,10 +105,6 @@ export default class extends React.Component {
 				})
 			}
 		}
-		return list
-	}
-	submit(){
-		var list=this.getList()
 		this.props.navigation.navigate('OrderSubmit', { list })
 	}
 	render() {
@@ -138,7 +142,7 @@ export default class extends React.Component {
 					<Checkbox value={this.isSelectGroupAll()} onChange={v => this.onSelectGroupAll(v)} />
 					<Text>全选 (0)</Text>
 					<Text>¥ 100</Text>
-					<Touchable onPress={this.getList().length?this.submit.bind(this):null}>
+					<Touchable onPress={this.submit.bind(this)}>
 						<Text>结算</Text>
 					</Touchable>
 				</View>

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import TouchableEx from '../../components/TouchableEx';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
 
@@ -49,11 +48,11 @@ class ListMenu extends React.Component {
         return (
             <ScrollView>
                 {list.map((it, i) => (
-                    <TouchableEx key={i} onPress={() => onChange(i)}>
+                    <TouchableWithoutFeedback key={i} onPress={() => onChange(i)}>
                         <View style={[styles.menuItem, i == index && styles.menuItemActive]}>
                             <Text style={[styles.menuItemText, i == index && styles.menuItemTextActive]}>{it.text}</Text>
                         </View>
-                    </TouchableEx>
+                    </TouchableWithoutFeedback>
                 ))}
             </ScrollView>
         );
