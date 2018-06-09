@@ -47,7 +47,6 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		AD8E78DB55A542968F97D712 /* libAlipayModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F76628D13254543896B5F52 /* libAlipayModule.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		F03B41436AB145FFAABD3B41 /* RCTWeChatTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D3C8B957999430A95AE439B /* RCTWeChatTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -359,7 +358,7 @@
 		0D3C8B957999430A95AE439B /* RCTWeChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RCTWeChatTests.xctest; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* cloudsale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = cloudsale.app; path = ZhiNuoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* ZhiNuoShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZhiNuoShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = cloudsale/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = cloudsale/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -422,7 +421,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				AD8E78DB55A542968F97D712 /* libAlipayModule.a in Frameworks */,
 				62BF7A1CDC4E48DE94FE62A6 /* libRCTWeChat.a in Frameworks */,
-				F03B41436AB145FFAABD3B41 /* RCTWeChatTests.xctest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,7 +674,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* cloudsale.app */,
+				13B07F961A680F5B00A75B9A /* ZhiNuoShop.app */,
 				00E356EE1AD99517003FC87E /* cloudsaleTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ZhiNuoShop-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ZhiNuoShop-tvOSTests.xctest */,
@@ -729,7 +727,7 @@
 			);
 			name = ZhiNuoShop;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* cloudsale.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* ZhiNuoShop.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ZhiNuoShop-tvOS */ = {
@@ -784,6 +782,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 9HSBVJLFSS;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1352,9 +1351,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9HSBVJLFSS;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
@@ -1369,6 +1370,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
 				PRODUCT_NAME = ZhiNuoShop;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1378,8 +1380,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9HSBVJLFSS;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-yunpeng-alipay/ios/AlipayModule/**",
@@ -1394,6 +1398,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
 				PRODUCT_NAME = ZhiNuoShop;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
