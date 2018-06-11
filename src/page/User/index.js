@@ -80,7 +80,7 @@ class NavMenuItem extends React.Component {
     }
 }
 
-export default class extends React.Component {
+export default class PageUser extends React.Component {
     static navigationOptions = {
         title: '个人中心',
         tabBarLabel: '我的',
@@ -93,7 +93,7 @@ export default class extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableEx>
+                <TouchableEx onPress={()=>this.props.navigation.navigate('UserLogin')}>
                     <View style={styles.userInfo}>
                         <Image style={styles.userInfoImage} source={{ uri: "http://passport.jd.com/new/misc/skin/df/i/no-img_mid_.jpg" }} />
                         <View style={styles.userInfoTextBox}>
@@ -105,20 +105,25 @@ export default class extends React.Component {
                 <View style={styles.navBar}>
                     <NavMenuItem
                         text="待付款"
-                        image={require('../../images/wait_pay_icon.png')} />
+                        image={require('../../images/wait_pay_icon.png')}
+                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:0})} />
                     <NavMenuItem
                         text="待收货"
-                        image={require('../../images/wait_receive_icon.png')} />
+                        image={require('../../images/wait_receive_icon.png')}
+                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:1})} />
                     <NavMenuItem
                         text="待评价"
-                        image={require('../../images/wait_evaluate_icon.png')} />
+                        image={require('../../images/wait_evaluate_icon.png')}
+                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:2})}  />
                     <NavMenuItem
                         text="退换/售后"
-                        image={require('../../images/shouhou_icon.png')} />
+                        image={require('../../images/shouhou_icon.png')} 
+                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:3})} />
                     <NavMenuItem
                         style={{ borderLeftWidth: scale(0.5), borderLeftColor: "#F2F2F2" }}
                         text="全部订单"
-                        image={require('../../images/all_order_icon.png')} />
+                        image={require('../../images/all_order_icon.png')}
+                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:4})}  />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem

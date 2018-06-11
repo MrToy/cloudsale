@@ -128,7 +128,7 @@ export default class extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.searchBarBox}>
-                    <SearchButton navigation={this.props.navigation} placeholder="酸奶" style={{ backgroundColor: "#F3F2F8" }} />
+                    <SearchButton onPress={()=>this.props.navigation.navigate('Search')} placeholder="酸奶" style={{ backgroundColor: "#F3F2F8" }} />
                 </View>
                 <View style={styles.listBox}>
                     <View style={styles.leftBox}>

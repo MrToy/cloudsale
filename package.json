@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "jest-react-native": "^18.0.0",
     "react-test-renderer": "16.3.1"
   },
@@ -13,6 +13,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "build:android": "cd android && ./gradlew assembleRelease",
+    "install:adroid": "adb -s M960SDR5SA2HB install ./android/app/build/outputs/apk/release/app-release.apk",
     "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/jsbundle/main.jsbundle --assets-dest ios/jsbundle/",
     "test": "jest"
   },
@@ -31,7 +32,7 @@
     "react-native-swiper": "^1.5.13",
     "react-native-wechat": "^1.9.9",
     "react-native-yunpeng-alipay": "^2.0.0",
-    "react-navigation": "^1.5.11",
+    "react-navigation": "^1.5.12",
     "redux": "^4.0.0"
   }
 }

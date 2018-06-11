@@ -67,7 +67,7 @@ export default class extends React.Component {
                     }))} />
                 </ScrollView>
                 <View style={{ position: 'absolute', top: scale(5), width: "100%", alignItems: "center", paddingLeft: scale(11), paddingRight: scale(11) }}>
-                    <SearchButton navigation={this.props.navigation} placeholder="搜索商品/店铺" />
+                    <SearchButton onPress={()=>this.props.navigation.navigate('Search')} placeholder="搜索商品/店铺" />
                 </View>
             </View>
         );

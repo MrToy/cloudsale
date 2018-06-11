@@ -12,6 +12,8 @@ import AboutUs from './src/page/AboutUs'
 import Feedback from './src/page/Feedback'
 import Detail from './src/page/Detail'
 import OrderSubmit from './src/page/OrderSubmit'
+import UserOrder from './src/page/User/Order'
+import UserLogin from './src/page/User/Login'
 import {setUserInfo} from './src/components/User'
 import * as WeChat from 'react-native-wechat'
 
@@ -57,6 +59,12 @@ const Routes= StackNavigator({
 	},
 	OrderSubmit:{
 		screen:OrderSubmit
+	},
+	UserOrder:{
+		screen:UserOrder
+	},
+	UserLogin:{
+		screen:UserLogin
 	}
 },{
 	navigationOptions:{
