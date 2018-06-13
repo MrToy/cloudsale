@@ -1,5 +1,7 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
+import {setUserInfo} from './src/components/User'
+import * as WeChat from 'react-native-wechat'
 import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
 import Cart from './src/page/Cart';
@@ -14,8 +16,7 @@ import Detail from './src/page/Detail'
 import OrderSubmit from './src/page/OrderSubmit'
 import UserOrder from './src/page/User/Order'
 import UserLogin from './src/page/User/Login'
-import {setUserInfo} from './src/components/User'
-import * as WeChat from 'react-native-wechat'
+import UserSignin from './src/page/User/Signin'
 
 console.disableYellowBox = true;
 
@@ -65,6 +66,9 @@ const Routes= StackNavigator({
 	},
 	UserLogin:{
 		screen:UserLogin
+	},
+	UserSignin:{
+		screen:UserSignin
 	}
 },{
 	navigationOptions:{
