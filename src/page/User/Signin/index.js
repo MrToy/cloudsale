@@ -73,7 +73,7 @@ export default class PageUserSignin extends React.Component {
                     <Text style={{ color: "#fff", fontSize: scale(15) }}>立即注册</Text>
                 </Touchable>
                 <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"flex-end" }}>
-                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.replace('UserLogin')}>
+                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.goBack()}>
                         <Text style={{ fontSize: scale(14),lineHeight:scale(20), color: '#6A617A'}}>使用已有账号登录</Text>
                     </TouchableWithoutFeedback>
                 </View>

@@ -43,13 +43,22 @@ export default class PageUserLogin extends React.Component {
                 <Touchable onPress={this.login.bind(this)} style={{ height: scale(50), borderRadius: scale(25), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", marginBottom: scale(16) }}>
                     <Text style={{ color: "#fff", fontSize: scale(15) }}>登录</Text>
                 </Touchable>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
                     <TouchableWithoutFeedback>
-                        <Text style={{ fontSize: scale(14), color: '#6A617A',flex:1 }}>忘记密码 ?</Text>
+                        <View style={{flex: 1 }}>
+                            <Text style={{ fontSize: scale(14), color: '#6A617A'}}>忘记密码 ?</Text>
+                        </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>this.props.navigation.replace('UserSignin')}>
-                        <Text style={{ fontSize: scale(14), color: '#6A617A' }}>立即注册</Text>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UserSignin')}>
+                        <View>
+                            <Text style={{ fontSize: scale(14), color: '#6A617A' }}>立即注册</Text>
+                        </View>
                     </TouchableWithoutFeedback>
+                </View>
+                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
+                    <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, borderStyle: "dotted", flex: 1 }}></View>
+                    <Text style={{ marginLeft: scale(23), marginRight: scale(23) }}>其他登录方式</Text>
+                    <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, flex: 1 }}></View>
                 </View>
             </View>
         )

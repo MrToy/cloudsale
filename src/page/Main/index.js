@@ -30,11 +30,21 @@ export default class extends React.Component {
         this.fetchCommodity()
     }
     async fetchCommodity() {
-        var res = await fetch("https://www.bjzntq.com:8888/Commodity/GetHomeData", { method: "POST" }).then(res => res.json())
-        if (res.result != 200) {
-            return
+        var data
+        try{
+            data=JSON.parse(await AsyncStorage.getItem('main.data'))
+        }catch(err){
+            //
         }
-        this.setState(res.data)
+        if(!data){
+            var res = await fetch("https://www.bjzntq.com:8888/Commodity/GetHomeData", { method: "POST" }).then(res => res.json())
+            if (res.result != 200) {
+                return
+            }
+            data=res.data
+        }
+        this.setState(data)
+        await AsyncStorage.setItem('main.data', JSON.stringify(data))
     }
     render() {
         const { banner, category, categoryList, choice, hot } = this.state
