@@ -70,10 +70,12 @@ class CateList extends React.Component {
                         <Text style={{color:"#6A617A",fontSize:scale(11),lineHeight:scale(16),marginBottom:scale(4)}}>{it.subCategoryName}</Text>
                         <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-between"}}>
                             {it.subCategoryItem.map(itit=>(
-                                <View key={itit.categoryId} style={{marginBottom:scale(7)}}>
-                                    <Image source={{uri:itit.categoryThumb}} style={{width:scale(92),height:scale(92),resizeMode:"contain",backgroundColor:"#F8F8F8"}} />
-                                    <Text style={{textAlign:"center",marginTop:scale(4),fontSize: scale(11),color: "#6A617A"}}>{itit.categoryName}</Text>
-                                </View>
+                                <TouchableWithoutFeedback key={itit.categoryId} onPress={()=>this.props.onItemPress(it.categoryId,itit.categoryId)}>
+                                    <View  style={{marginBottom:scale(7)}}>
+                                        <Image source={{uri:itit.categoryThumb}} style={{width:scale(92),height:scale(92),resizeMode:"contain",backgroundColor:"#F8F8F8"}} />
+                                        <Text style={{textAlign:"center",marginTop:scale(4),fontSize: scale(11),color: "#6A617A"}}>{itit.categoryName}</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
                             ))}
                         </View>
                     </View>
@@ -90,7 +92,7 @@ export default class extends React.Component {
     }
     static navigationOptions = {
         title: '分类',
-        tabBarIcon: ({ focused, tintColor }) => (
+        tabBarIcon: ({ focused }) => (
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
@@ -139,7 +141,7 @@ export default class extends React.Component {
                             ref={c=> this._CateList = c}
                             data={this.state.list}
                             onViewableItemsChanged={this.onVisibleChange}
-                            renderItem={({item}) => <CateList data={item} key={item.categoryId} />} />
+                            renderItem={({item}) => <CateList data={item} key={item.categoryId} onItemPress={(id,subid)=>this.props.navigation.navigate('SearchResult',{categoryId:id,subcategoryId:subid})} />} />
                     </View>
                 </View>
             </View>
