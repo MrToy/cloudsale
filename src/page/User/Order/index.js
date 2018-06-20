@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableWithoutFeedback, FlatList, Image } from 'react-native';
-import { getUserInfo } from '../../../components/User';
+import { getUserInfo } from '../../../utils/user';
 import { scale } from '../../../utils/dimension';
 import SearchButton from '../../Main/SearchButton';
 import Touchable from 'react-native-platform-touchable'

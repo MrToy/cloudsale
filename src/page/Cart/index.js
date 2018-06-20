@@ -1,10 +1,10 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Image, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
+import Checkbox from '../../components/Checkbox';
+import NumberPicker from '../../components/NumberPicker';
 import { scale } from '../../utils/dimension';
-import { getUserInfo } from '../../components/User'
-import Checkbox from '../../components/Checkbox'
-import NumberPicker from '../../components/NumberPicker'
-import Touchable from 'react-native-platform-touchable'
+import { getUserInfo } from '../../utils/user';
 
 export default class CartPage extends React.Component {
 	static navigationOptions = {

@@ -1,11 +1,10 @@
 import React from 'react';
-import { Text, View, TouchableWithoutFeedback, FlatList, Image } from 'react-native';
-import { getUserInfo } from '../../../components/User';
+import { Alert, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
-import SearchButton from '../../Main/SearchButton';
-import Touchable from 'react-native-platform-touchable'
-import Toast from 'react-native-root-toast'
-import TextInput from './TextInput'
+import TextInput from './TextInput';
+import { setUserInfo } from '../../../utils/user'
+import request from '../../../utils/request';
 
 export default class PageUserLogin extends React.Component {
     static navigationOptions = {
@@ -17,19 +16,24 @@ export default class PageUserLogin extends React.Component {
         pass: ""
     }
     async login() {
-        var res = await fetch("https://www.bjzntq.com:8888/Account/appUserLogin/", {
-            method: "POST",
-            body: JSON.stringify({
+        try {
+            var res = await request("https://www.bjzntq.com:8888/Account/appUserLogin/", {
                 "accountname": this.state.user,
                 "password": this.state.pass
             })
-        }).then(res => res.json())
-        if (res.result != 200) {
-            Toast.show(res.message, {
-                position: Toast.positions.CENTER
-            })
+        } catch (err) {
+            Alert.alert(err.message)
             return
         }
+        console.log(res)
+        await setUserInfo(res.data)
+        Alert.alert(res.message, null, [
+            {
+                text: 'OK', onPress: () => {
+                    this.props.navigation.navigate('Main')
+                }
+            }
+        ])
     }
     render() {
         return (
@@ -45,8 +49,8 @@ export default class PageUserLogin extends React.Component {
                 </Touchable>
                 <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
                     <TouchableWithoutFeedback>
-                        <View style={{flex: 1 }}>
-                            <Text style={{ fontSize: scale(14), color: '#6A617A'}}>忘记密码 ?</Text>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: scale(14), color: '#6A617A' }}>忘记密码 ?</Text>
                         </View>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('UserSignin')}>
@@ -55,11 +59,11 @@ export default class PageUserLogin extends React.Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
+                {/* <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
                     <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, flex: 1 }}></View>
                     <Text style={{ marginLeft: scale(23), marginRight: scale(23) }}>其他登录方式</Text>
                     <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, flex: 1 }}></View>
-                </View>
+                </View> */}
             </View>
         )
     }

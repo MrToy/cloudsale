@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
-import { getUserInfo } from '../../components/User';
+import { getUserInfo } from '../../utils/user';
 import { scale } from '../../utils/dimension';
 import { alipay, wechatPay } from '../../utils/pay';
 

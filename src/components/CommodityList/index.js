@@ -5,7 +5,7 @@ import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import { withNavigation } from 'react-navigation'
 import Toast from 'react-native-root-toast'
-import {getUserInfo} from '../User'
+import {getUserInfo} from '../../utils/user'
 
 class CommodityList extends React.Component {
     static propTypes = {

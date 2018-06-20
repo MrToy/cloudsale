@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View,Alert } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
+import { getUserInfo,clearUserInfo } from '../../utils/user'
 
 const styles = StyleSheet.create({
     container: {
@@ -90,40 +91,70 @@ export default class PageUser extends React.Component {
                 source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
         ),
     }
+    state = {
+        user: null
+    }
+    componentDidMount() {
+        this.fetchUser()
+    }
+    async fetchUser() {
+        var user = await getUserInfo()
+        this.setState({ user })
+    }
+    async logout(){
+        this.setState({ user:null })
+        await clearUserInfo()
+        Alert.alert("退出成功",null,[
+            {text: 'OK', onPress: () => {
+                this.props.navigation.navigate('Main')
+            }}
+        ])
+    }
     render() {
+        var { user } = this.state
         return (
             <View style={styles.container}>
-                <TouchableEx onPress={()=>this.props.navigation.navigate('UserLogin')}>
+                {user ? (
                     <View style={styles.userInfo}>
                         <Image style={styles.userInfoImage} source={{ uri: "http://passport.jd.com/new/misc/skin/df/i/no-img_mid_.jpg" }} />
                         <View style={styles.userInfoTextBox}>
-                            <Text style={styles.userInfoTextName}>Name</Text>
+                            <Text style={styles.userInfoTextName}>{user.username}</Text>
                             <Text style={styles.userInfoTextAddr}>我的收货地址</Text>
                         </View>
                     </View>
-                </TouchableEx>
+                ) : (
+                        <TouchableEx onPress={() => this.props.navigation.navigate('UserLogin')}>
+                            <View style={styles.userInfo}>
+                                <Image style={styles.userInfoImage} source={{ uri: "http://passport.jd.com/new/misc/skin/df/i/no-img_mid_.jpg" }} />
+                                <View style={styles.userInfoTextBox}>
+                                    <Text style={styles.userInfoTextName}>Name</Text>
+                                    <Text style={styles.userInfoTextAddr}>我的收货地址</Text>
+                                </View>
+                            </View>
+                        </TouchableEx>
+                    )}
                 <View style={styles.navBar}>
                     <NavMenuItem
                         text="待付款"
                         image={require('../../images/wait_pay_icon.png')}
-                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:0})} />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 0 })} />
                     <NavMenuItem
                         text="待收货"
                         image={require('../../images/wait_receive_icon.png')}
-                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:1})} />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 1 })} />
                     <NavMenuItem
                         text="待评价"
                         image={require('../../images/wait_evaluate_icon.png')}
-                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:2})}  />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 2 })} />
                     <NavMenuItem
                         text="退换/售后"
-                        image={require('../../images/shouhou_icon.png')} 
-                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:3})} />
+                        image={require('../../images/shouhou_icon.png')}
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 3 })} />
                     <NavMenuItem
                         style={{ borderLeftWidth: scale(0.5), borderLeftColor: "#F2F2F2" }}
                         text="全部订单"
                         image={require('../../images/all_order_icon.png')}
-                        onPress={()=>this.props.navigation.navigate('UserOrder', {type:4})}  />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 4 })} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem
@@ -146,6 +177,14 @@ export default class PageUser extends React.Component {
                         image={require('../../images/about_us_icon.png')}
                         onPress={() => this.props.navigation.navigate('AboutUs')} />
                 </View>
+                {user && (
+                    <View style={{ marginTop: 6 }}>
+                        <ListMenuItem
+                            text="退出登录"
+                            image={require('../../images/feedback_icon.png')}
+                            onPress={this.logout.bind(this)} />
+                    </View>
+                )}
             </View>
         );
     }
