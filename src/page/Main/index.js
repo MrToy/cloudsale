@@ -48,6 +48,7 @@ export default class extends React.Component {
     }
     render() {
         const { banner, category, categoryList, choice, hot } = this.state
+        const {navigation}=this.props
         return (
             <View>
                 <StatusBar backgroundColor="#781EFD" barStyle="light-content" />
@@ -58,15 +59,18 @@ export default class extends React.Component {
                         ) : null}
                     </View>
                     <View style={{ height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
-                        <NavMenus list={category} navigation={this.props.navigation} />
+                        <NavMenus list={category} onItemPress={id => navigation.navigate('SearchResult',{categoryId:id})} />
                     </View>
                     <FloorTitle label="热门频道" color="#66ABF3" />
                     <View style={{ backgroundColor: '#fff', paddingBottom: scale(9), marginBottom: scale(7) }}>
-                        <ChannelGrid list={hot} navigation={this.props.navigation} />
+                        <ChannelGrid list={hot} onItemPress={id => navigation.navigate('SearchResult',{categoryId:id})} />
                     </View>
                     <FloorTitle label="精选类目" color="#E339D3" />
                     {categoryList.map((category, i) => (
-                        <CategoryGrid key={i} data={category} style={{ marginBottom: scale(6) }} navigation={this.props.navigation} />
+                        <CategoryGrid key={i} data={category} style={{ marginBottom: scale(6) }}
+                            onItemPress={id => navigation.navigate('SearchResult',{categoryId:id})}
+                            onSubItemPress={(id,subid)=>navigation.navigate('SearchResult',{categoryId:id,subcategoryId:subid})}
+                            onGoodsPress={id=>navigation.navigate('Detail',{id})} />
                     ))}
                     <FloorTitle label="精选商品" color="#AEA649" />
                     <CommodityList list={choice.map(it => ({
@@ -77,7 +81,7 @@ export default class extends React.Component {
                     }))} />
                 </ScrollView>
                 <View style={{ position: 'absolute', top: scale(5), width: "100%", alignItems: "center", paddingLeft: scale(11), paddingRight: scale(11) }}>
-                    <SearchButton onPress={()=>this.props.navigation.navigate('Search')} placeholder="搜索商品/店铺" />
+                    <SearchButton onPress={()=>navigation.navigate('Search')} placeholder="搜索商品/店铺" />
                 </View>
             </View>
         );

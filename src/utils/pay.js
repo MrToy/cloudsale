@@ -18,8 +18,8 @@ export async function wechatPay(token, id) {
         })
         return
     }
-    var _sign=md5(`${res.data.prepayid}${res.data.appid}${res.data.partnerid}${res.data.timestamp}bjzntq2017`)
-    if(res.data.sign!=_sign){
+    var _sign = md5(`${res.data.prepayid}${res.data.appid}${res.data.partnerid}${res.data.timestamp}bjzntq2017`)
+    if (res.data.sign != _sign) {
         Alert.alert("签名错误")
         return
     }
@@ -33,7 +33,7 @@ export async function wechatPay(token, id) {
             sign: res.data.paySign
         })
     } catch (err) {
-        Alert.alert(err.message||"微信支付错误")
+        Alert.alert(err.message || "支付错误")
         return
     }
     Alert.alert("支付成功")
@@ -48,11 +48,14 @@ export async function alipay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Toast.show(res.message, {
-            position: Toast.positions.CENTER
-        })
+        Alert.alert(res.message || "支付错误")
         return
     }
-    var res = Alipay.pay(res.data)
+    try {
+        var res = Alipay.pay(res.data)
+    } catch (err) {
+        Alert.alert(err.message || "支付错误")
+        return
+    }
     Alert.alert("支付成功")
 }

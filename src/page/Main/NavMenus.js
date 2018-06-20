@@ -8,11 +8,11 @@ import { scale } from '../../utils/dimension';
 
 export default class extends React.Component {
     render() {
-        var { list,navigation } = this.props
+        var { list,onItemPress } = this.props
         return (
             <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                 {list.map((it, i) => (
-                    <TouchableEx key={i} onPress={()=>navigation.navigate('SearchResult')}>
+                    <TouchableEx key={i} onPress={()=>onItemPress(it.id)}>
                         <View style={{ width: "20%", height: "50%", alignItems: "center", justifyContent: "center" }}>
                             <FastImage style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{uri:it.imageUrl}} />
                             <Text style={{ fontSize: scale(10) }}>{it.name}</Text>

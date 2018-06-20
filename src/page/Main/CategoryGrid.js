@@ -12,11 +12,11 @@ export default class extends React.Component {
         navigation: PropTypes.object,
     }
     render() {
-        var { data, style, navigation } = this.props
+        var { data, style, onItemPress,onSubItemPress,onGoodsPress } = this.props
         return (
             <View style={[{ backgroundColor: data.category_background, padding: scale(11) }, style]}>
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableEx onPress={() => navigation.navigate('SearchResult')}>
+                    <TouchableEx onPress={() => onItemPress(data.category_id)}>
                         <View style={{ width: scale(112), height: scale(149) }}>
                             <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: data.category_title_color, marginBottom: scale(5) }}>{data.category_name}</Text>
                             <ArrowItem text="进入频道" />
@@ -24,7 +24,7 @@ export default class extends React.Component {
                         </View>
                     </TouchableEx>
                     {data.subcategoryList.map((it, i) => (
-                        <TouchableEx key={i} onPress={() => navigation.navigate('SearchResult')}>
+                        <TouchableEx key={i} onPress={() => onSubItemPress(data.category_id,it.subcategory_id)}>
                             <View style={{ width: scale(112), height: scale(149), marginLeft: scale(7), backgroundColor: "#fff", alignItems: "center" }}>
                                 <Text style={{ fontSize: scale(13), lineHeight: scale(18), color: "#6A607B", marginTop: scale(8) }}>{it.subcategory_name}</Text>
                                 <Text style={{ fontSize: scale(11), lineHeight: scale(16), color: "#E339D3" }}>{it.subcategory_description}</Text>
@@ -35,7 +35,7 @@ export default class extends React.Component {
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: scale(10) }}>
                     {data.commodityList.map((it, i) => (
-                        <TouchableEx key={i} onPress={() => navigation.navigate('Detail', { id: it.commodity_id })}>
+                        <TouchableEx key={i} onPress={() => onGoodsPress(it.commodity_id)}>
                             <View style={{ width: scale(112), height: scale(71), marginRight: scale(7), flexDirection: 'row', alignItems: "center", padding: scale(3), backgroundColor: "#fff" }}>
                                 <View>
                                     <Text style={{ width: scale(45), color: "#6A607B", fontSize: scale(12) }} numberOfLines={2}>{it.name}</Text>
