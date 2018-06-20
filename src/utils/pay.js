@@ -2,6 +2,7 @@ import md5 from 'md5';
 import Toast from 'react-native-root-toast';
 import * as WeChat from 'react-native-wechat';
 import Alipay from 'react-native-yunpeng-alipay';
+import { Alert } from 'react-native';
 
 export async function wechatPay(token, id) {
     var res = await fetch("https://www.bjzntq.com:8888/APP/Pay/AppOrderWxPay/", {
@@ -34,9 +35,7 @@ export async function wechatPay(token, id) {
             sign: res.data.paySign
         })
     } catch (err) {
-        Toast.show(err.message, {
-            position: Toast.positions.CENTER
-        })
+        Alert.alert(err.message||"微信支付错误")
     }
     console.log(data)
 }
