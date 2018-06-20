@@ -88,8 +88,8 @@ export default class OrderSubmitPage extends React.Component {
                 prepayId: res.data.prepay_id,
                 nonceStr: res.data.nonceStr,
                 timeStamp: res.data.timeStamp,
-                package: "com.zntq.ZhiNuoShop",
-                sign: res.data.paySign
+                package: "Sign=WXPay",
+                sign: res.data.sign
             })
         } catch (err) {
             Toast.show(err.message, {

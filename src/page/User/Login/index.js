@@ -56,7 +56,7 @@ export default class PageUserLogin extends React.Component {
                     </TouchableWithoutFeedback>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(68) }}>
-                    <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, borderStyle: "dotted", flex: 1 }}></View>
+                    <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, flex: 1 }}></View>
                     <Text style={{ marginLeft: scale(23), marginRight: scale(23) }}>其他登录方式</Text>
                     <View style={{ borderColor: "#C8BEDB", borderTopWidth: 1, flex: 1 }}></View>
                 </View>
