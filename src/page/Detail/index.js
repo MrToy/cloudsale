@@ -108,6 +108,10 @@ export default class extends React.Component {
         })
     }
     onBuy(){
+        if(!this.state.detail.original_price){
+            return
+        }
+        var selectedSpecification=this.state.detail.specifications.find(it=>it.id==this.state.specifica)
         var list=[
             {
                 shopName:this.state.detail.shop_name,
@@ -117,7 +121,7 @@ export default class extends React.Component {
                         price:this.state.detail.original_price,
                         count:this.state.selectedNum,
                         specificationsId:this.state.specifica,
-                        specificationsValue:this.state.detail.specifications.find(it=>it.id==this.state.specifica).value,
+                        specificationsValue:selectedSpecification?selectedSpecification.value:null,
                         commodityId:this.state.detail.id,
                         thumb:this.state.detail.banner[0].image_url,
                         commodityName:this.state.detail.small_text

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
-import {setUserInfo} from './src/components/User'
 import * as WeChat from 'react-native-wechat'
 import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
@@ -89,15 +88,6 @@ const Routes= StackNavigator({
 
 export default class extends React.Component{
 	componentDidMount(){
-		setUserInfo({
-            "username": "北极",
-            "province": "",
-            "user_id": 12,
-            "city": "",
-            "gender": 0,
-            "avatarUrl": "",
-            "tokeninfo": "12$北极$$0$$$"
-		})
 		this.initWechat()
 	}
 	async initWechat(){

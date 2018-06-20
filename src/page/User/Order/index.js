@@ -73,6 +73,10 @@ export default class PageUserOrder extends React.Component {
     }
     async fetchList() {
         var user = await getUserInfo()
+        if(!user){
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
         var res = await fetch("https://www.bjzntq.com:8888/Order/GetAllOrders/", {
             method: "POST",
             body: JSON.stringify({

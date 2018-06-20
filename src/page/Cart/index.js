@@ -29,6 +29,9 @@ export default class CartPage extends React.Component {
 	}
 	async fetchList() {
 		var user = await getUserInfo()
+		if(!user){
+            return
+        }
 		var res = await fetch("https://www.bjzntq.com:8888/Commodity/getCartCommodity/", {
 			method: "POST",
 			body: JSON.stringify({

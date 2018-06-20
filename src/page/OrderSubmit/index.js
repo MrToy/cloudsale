@@ -34,6 +34,10 @@ export default class OrderSubmitPage extends React.Component {
     }
     async onConfirm(type) {
         var user = await getUserInfo()
+        if(!user){
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
         var orderId = this.state.orderId
         if (!orderId) {
             orderId = await this.createOrder(user.tokeninfo)

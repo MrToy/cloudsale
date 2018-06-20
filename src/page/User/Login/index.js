@@ -25,12 +25,11 @@ export default class PageUserLogin extends React.Component {
             Alert.alert(err.message)
             return
         }
-        console.log(res)
         await setUserInfo(res.data)
         Alert.alert(res.message, null, [
             {
                 text: 'OK', onPress: () => {
-                    this.props.navigation.navigate('Main')
+                    this.props.navigation.goBack()
                 }
             }
         ])

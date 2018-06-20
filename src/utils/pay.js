@@ -1,8 +1,7 @@
 import md5 from 'md5';
-import Toast from 'react-native-root-toast';
+import { Alert } from 'react-native';
 import * as WeChat from 'react-native-wechat';
 import Alipay from 'react-native-yunpeng-alipay';
-import { Alert } from 'react-native';
 
 export async function wechatPay(token, id) {
     var res = await fetch("https://www.bjzntq.com:8888/APP/Pay/AppOrderWxPay/", {
@@ -13,9 +12,7 @@ export async function wechatPay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Toast.show(res.message, {
-            position: Toast.positions.CENTER
-        })
+        Alert.alert(res.message)
         return
     }
     var _sign = md5(`${res.data.prepayid}${res.data.appid}${res.data.partnerid}${res.data.timestamp}bjzntq2017`)
@@ -33,7 +30,7 @@ export async function wechatPay(token, id) {
             sign: res.data.paySign
         })
     } catch (err) {
-        Alert.alert(err.message || "支付错误")
+        Alert.alert(err.message || "支付失败")
         return
     }
     Alert.alert("支付成功")
@@ -48,13 +45,13 @@ export async function alipay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Alert.alert(res.message || "支付错误")
+        Alert.alert(res.message || "支付失败")
         return
     }
     try {
-        var res = Alipay.pay(res.data)
+        var res = await Alipay.pay(res.data)
     } catch (err) {
-        Alert.alert(err.message || "支付错误")
+        Alert.alert(err.message || "支付失败")
         return
     }
     Alert.alert("支付成功")

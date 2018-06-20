@@ -19,6 +19,10 @@ class CommodityList extends React.Component {
     }
     async addCart(id){
         var user=await getUserInfo()
+        if(!user){
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
         var res = await fetch("https://www.bjzntq.com:8888/Commodity/addCart/", {
             method: "POST",
             body: JSON.stringify({
