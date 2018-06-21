@@ -25,7 +25,9 @@ export default class extends React.Component {
                             autoFocus
                             value={this.state.searchKey}
                             onChangeText={text => this.setState({ searchKey: text })}
-                            underlineColorAndroid='transparent' />
+                            underlineColorAndroid='transparent'
+                            returnKeyType="search"
+                            onSubmitEditing={this.onSearch.bind(this)} />
                     </View>
                     {this.state.searchKey ? (
                         <TouchableWithoutFeedback onPress={this.onSearch.bind(this)}>
