@@ -33,7 +33,6 @@ export default class extends React.Component {
     };
     render() {
         const { navigation } = this.props;
-        console.log(this.props)
         const { routes } = navigation.state;
         return (
             <View style={{ flexDirection: 'row', width: "100%", height: scale(49), borderTopColor: '#b2b2b2', borderTopWidth: 0.2, backgroundColor: "rgba(250,250,250,0.90)" }}>

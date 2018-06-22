@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View,AsyncStorage } from 'react-native';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
 
@@ -103,13 +103,23 @@ export default class extends React.Component {
         this.onVisibleChange=this.onVisibleChange.bind(this)
     }
     async fetchList() {
-        var res = await fetch("https://www.bjzntq.com:8888//Commodity/getCategoryList/", { method: "POST" }).then(res => res.json())
-        if (res.result != 200) {
-            return
+        var data
+        try{
+            data=JSON.parse(await AsyncStorage.getItem('list.data'))
+        }catch(err){
+            //
+        }
+        if(!data){
+            var res = await fetch("https://www.bjzntq.com:8888//Commodity/getCategoryList/", { method: "POST" }).then(res => res.json())
+            if (res.result != 200) {
+                return
+            }
+            data=res.data
         }
         this.setState({
-            list: res.data
+            list:data
         })
+        await AsyncStorage.setItem('list.data', JSON.stringify(data))
     }
     onIndex(i){
         this._CateList.scrollToIndex({index:i,viewOffset:-1,animated:false})

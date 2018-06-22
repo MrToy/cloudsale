@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import * as WeChat from 'react-native-wechat'
 import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
@@ -39,7 +39,7 @@ const TabScreens = createBottomTabNavigator({
 
 
 
-const Routes= StackNavigator({
+const Routes= createStackNavigator({
 	Home: {
 		screen: TabScreens,
 	},
