@@ -33,7 +33,7 @@ export default class OrderSubmitPage extends React.Component {
         return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
     }
     async onConfirm(type) {
-        var user = await getUserInfo()
+        var user = getUserInfo()
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return

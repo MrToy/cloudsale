@@ -72,7 +72,7 @@ export default class PageUserOrder extends React.Component {
         })
     }
     async fetchList() {
-        var user = await getUserInfo()
+        var user = getUserInfo()
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return

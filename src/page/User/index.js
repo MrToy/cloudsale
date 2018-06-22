@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, StyleSheet, Text, View,Alert } from 'react-native';
+import { Image, StyleSheet, Text, View, Alert } from 'react-native';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
-import { getUserInfo,clearUserInfo } from '../../utils/user'
+import { getUserInfo, clearUserInfo } from '../../utils/user'
+import Touchable from 'react-native-platform-touchable'
+import { NavigationActions, StackActions } from 'react-navigation'
 
 const styles = StyleSheet.create({
     container: {
@@ -19,10 +21,7 @@ const styles = StyleSheet.create({
         marginLeft: scale(13)
     },
     userInfoTextName: {
-        fontSize: scale(17), color: "#484848", lineHeight: scale(24)
-    },
-    userInfoTextAddr: {
-        fontSize: scale(14), color: "#616161", lineHeight: scale(20), marginTop: scale(5)
+        fontSize: scale(17), color: "#484848"
     },
     navBar: {
         height: scale(64), backgroundColor: "#fff", marginTop: scale(7), flexDirection: "row"
@@ -48,7 +47,7 @@ class ListMenuItem extends React.Component {
     render() {
         const { image, text, onPress } = this.props
         return (
-            <TouchableEx onPress={onPress}>
+            <Touchable onPress={onPress}>
                 <View style={{ height: scale(46), backgroundColor: "#fff", flexDirection: "row", marginTop: scale(0.5), alignItems: "center" }}>
                     <Image style={{ width: scale(20), height: scale(20), resizeMode: "contain", marginLeft: scale(17) }} source={image} />
                     <Text style={{ color: "#6A617A", fontSize: scale(14), marginLeft: scale(14) }}>{text}</Text>
@@ -56,7 +55,7 @@ class ListMenuItem extends React.Component {
                         <Image style={{ width: scale(15), height: scale(21), resizeMode: "contain", marginRight: scale(13) }} source={require('../../images/right_indicator.png')} />
                     </View>
                 </View>
-            </TouchableEx>
+            </Touchable>
         )
     }
 }
@@ -82,32 +81,42 @@ class NavMenuItem extends React.Component {
 }
 
 export default class PageUser extends React.Component {
-    static navigationOptions = {
+    static navigationOptions = ({navigation})=>({
         title: '个人中心',
         tabBarLabel: '我的',
-        tabBarIcon: ({ focused, tintColor }) => (
+        headerRight: (
+            <Touchable onPress={()=>navigation.navigate('UserOrder', { type: 4 })} style={{marginRight:scale(12)}}>
+                <Image style={{width:scale(20),height:scale(20)}} source={require('../../images/setting.png')} />
+            </Touchable>
+        ),
+        tabBarIcon: ({ focused }) => (
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
         ),
-    }
+    })
     state = {
         user: null
     }
     componentDidMount() {
         this.fetchUser()
     }
-    async fetchUser() {
-        var user = await getUserInfo()
+    fetchUser() {
+        var user = getUserInfo()
         this.setState({ user })
     }
-    async logout(){
-        this.setState({ user:null })
+    async logout() {
+        this.setState({ user: null })
         await clearUserInfo()
-        Alert.alert("退出成功",null,[
-            {text: 'OK', onPress: () => {
-                this.props.navigation.navigate('Main')
-            }}
+        Alert.alert("退出成功", null, [
+            {
+                text: 'OK', onPress: () => {
+                    this.props.navigation.navigate(StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'Home' })],
+                    }))
+                }
+            }
         ])
     }
     render() {
@@ -116,19 +125,17 @@ export default class PageUser extends React.Component {
             <View style={styles.container}>
                 {user ? (
                     <View style={styles.userInfo}>
-                        <Image style={styles.userInfoImage} source={{ uri: "http://passport.jd.com/new/misc/skin/df/i/no-img_mid_.jpg" }} />
+                        <Image style={styles.userInfoImage} source={user.avatarUrl ? { uri: user.avatarUrl } : require('../../images/avatar.png')} />
                         <View style={styles.userInfoTextBox}>
                             <Text style={styles.userInfoTextName}>{user.username}</Text>
-                            <Text style={styles.userInfoTextAddr}>我的收货地址</Text>
                         </View>
                     </View>
                 ) : (
                         <TouchableEx onPress={() => this.props.navigation.navigate('UserLogin')}>
                             <View style={styles.userInfo}>
-                                <Image style={styles.userInfoImage} source={{ uri: "http://passport.jd.com/new/misc/skin/df/i/no-img_mid_.jpg" }} />
+                                <Image style={styles.userInfoImage} source={require('../../images/avatar.png')} />
                                 <View style={styles.userInfoTextBox}>
-                                    <Text style={styles.userInfoTextName}>Name</Text>
-                                    <Text style={styles.userInfoTextAddr}>我的收货地址</Text>
+                                    <Text style={styles.userInfoTextName}>请点击登录</Text>
                                 </View>
                             </View>
                         </TouchableEx>
@@ -166,6 +173,9 @@ export default class PageUser extends React.Component {
                     <ListMenuItem
                         text="足迹"
                         image={require('../../images/my_foot_icon.png')} />
+                    <ListMenuItem
+                        text="地址管理"
+                        image={require('../../images/addr.png')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem

@@ -28,7 +28,7 @@ export default class CartPage extends React.Component {
 		this._subscribe.remove()
 	}
 	async fetchList() {
-		var user = await getUserInfo()
+		var user = getUserInfo()
 		if(!user){
             return
         }

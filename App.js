@@ -1,8 +1,9 @@
 import React from 'react';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
 import * as WeChat from 'react-native-wechat'
 import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
+import {initUser} from './src/utils/user'
 import Cart from './src/page/Cart';
 import List from './src/page/List';
 import Main from './src/page/Main';
@@ -19,7 +20,7 @@ import UserSignin from './src/page/User/Signin'
 
 console.disableYellowBox = true;
 
-const TabScreens = TabNavigator({
+const TabScreens = createBottomTabNavigator({
 	Main: { screen: Main },
 	List: { screen: List },
 	Cart: { screen: Cart },
@@ -88,13 +89,8 @@ const Routes= StackNavigator({
 
 export default class extends React.Component{
 	componentDidMount(){
-		this.initWechat()
-	}
-	async initWechat(){
-		var ok=await WeChat.registerApp('wxd71c7825d6c2ecdd')
-		if(ok){
-			console.log("微信sdk初始化成功")
-		}
+		initUser()
+		WeChat.registerApp('wxd71c7825d6c2ecdd')
 	}
 	render(){
 		return <Routes />

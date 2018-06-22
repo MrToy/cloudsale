@@ -5,6 +5,7 @@ import { scale } from '../../../utils/dimension';
 import TextInput from './TextInput';
 import { setUserInfo } from '../../../utils/user'
 import request from '../../../utils/request';
+import { NavigationActions, StackActions } from 'react-navigation'
 
 export default class PageUserLogin extends React.Component {
     static navigationOptions = {
@@ -29,7 +30,10 @@ export default class PageUserLogin extends React.Component {
         Alert.alert(res.message, null, [
             {
                 text: 'OK', onPress: () => {
-                    this.props.navigation.goBack()
+                    this.props.navigation.dispatch(StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'Home' })],
+                    }))
                 }
             }
         ])

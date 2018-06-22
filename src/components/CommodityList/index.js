@@ -18,7 +18,7 @@ class CommodityList extends React.Component {
         }))
     }
     async addCart(id){
-        var user=await getUserInfo()
+        var user=getUserInfo()
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return
