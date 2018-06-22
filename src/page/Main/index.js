@@ -11,13 +11,13 @@ import CommodityList from '../../components/CommodityList'
 
 export default class extends React.Component {
     static navigationOptions = {
-        title: '首页',
         tabBarLabel: '首页',
         tabBarIcon: ({ focused, tintColor }) => (
             <Image
                 style={{ width: "100%", height: "100%", resizeMode: "contain" }}
                 source={focused ? require('../../images/home_select_icon.png') : require('../../images/home_icon.png')} />
-        )
+        ),
+        title: '新云零售',
     }
     state = {
         banner: [],

@@ -3,7 +3,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import * as WeChat from 'react-native-wechat'
 import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
-import {initUser} from './src/utils/user'
+import { initUser } from './src/utils/user'
 import Cart from './src/page/Cart';
 import List from './src/page/List';
 import Main from './src/page/Main';
@@ -27,72 +27,80 @@ const TabScreens = createBottomTabNavigator({
 	User: { screen: User },
 }, {
 		tabBarPosition: 'bottom',
-		tabBarComponent:FootTab,
-		swipeEnabled:false,
-		animationEnabled:false,
-		lazy:true,
-		tabBarOptions:{
-			activeTintColor:"#781EFD",
-			inactiveTintColor:"#6A617A"
+		tabBarComponent: FootTab,
+		swipeEnabled: false,
+		animationEnabled: false,
+		lazy: true,
+		tabBarOptions: {
+			activeTintColor: "#781EFD",
+			inactiveTintColor: "#6A617A"
 		}
 	})
 
+TabScreens.navigationOptions = ({ navigation }) => {
+	const component = TabScreens.router.getComponentForState(navigation.state);
+	if (typeof component.navigationOptions === 'function') {
+		return component.navigationOptions({ navigation });
+	}
+	return component.navigationOptions;
+}
 
 
-const Routes= createStackNavigator({
+
+const Routes = createStackNavigator({
 	Home: {
 		screen: TabScreens,
 	},
-	Search:{
-		screen:Search
+	Search: {
+		screen: Search
 	},
-	SearchResult:{
-		screen:SearchResult
+	SearchResult: {
+		screen: SearchResult
 	},
-	AboutUs:{
-		screen:AboutUs
+	AboutUs: {
+		screen: AboutUs
 	},
-	Feedback:{
-		screen:Feedback
+	Feedback: {
+		screen: Feedback
 	},
-	Detail:{
-		screen:Detail
+	Detail: {
+		screen: Detail
 	},
-	OrderSubmit:{
-		screen:OrderSubmit
+	OrderSubmit: {
+		screen: OrderSubmit
 	},
-	UserOrder:{
-		screen:UserOrder
+	UserOrder: {
+		screen: UserOrder
 	},
-	UserLogin:{
-		screen:UserLogin
+	UserLogin: {
+		screen: UserLogin
 	},
-	UserSignin:{
-		screen:UserSignin
+	UserSignin: {
+		screen: UserSignin
 	}
-},{
-	navigationOptions:{
-		headerStyle: {
-			backgroundColor: '#781EFD',
-			height: scale(45),
-			elevation:0
-		},
-		headerTintColor: '#fff',
-		headerTitleStyle: {
-			textAlign: 'center',
-			alignSelf: 'center',
-			flex: 1,
-			fontSize: scale(17)
+}, {
+		navigationOptions: {
+			headerStyle: {
+				backgroundColor: '#781EFD',
+				height: scale(45),
+				elevation: 0
+			},
+			headerTintColor: '#fff',
+			headerTitleStyle: {
+				textAlign: 'center',
+				alignSelf: 'center',
+				flex: 1,
+				fontSize: scale(17)
+			}
 		}
-	}
-})
+	})
 
-export default class extends React.Component{
-	componentDidMount(){
+export default class extends React.Component {
+	componentDidMount() {
 		initUser()
 		WeChat.registerApp('wxd71c7825d6c2ecdd')
 	}
-	render(){
+	render() {
 		return <Routes />
 	}
 }
