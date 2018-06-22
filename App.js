@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import * as WeChat from 'react-native-wechat'
-import FootTab from './src/components/FootTab';
 import { scale } from './src/utils/dimension';
 import { initUser } from './src/utils/user'
 import Cart from './src/page/Cart';
@@ -27,7 +26,6 @@ const TabScreens = createBottomTabNavigator({
 	User: { screen: User },
 }, {
 		tabBarPosition: 'bottom',
-		tabBarComponent: FootTab,
 		swipeEnabled: false,
 		animationEnabled: false,
 		lazy: true,

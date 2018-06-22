@@ -93,9 +93,7 @@ export default class extends React.Component {
     static navigationOptions = {
         title: '分类',
         tabBarIcon: ({ focused }) => (
-            <Image
-                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-                source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
+            <Image source={focused ? require('../../images/category_select_icon.png') : require('../../images/category_icon.png')} />
         )
     }
     constructor(props){

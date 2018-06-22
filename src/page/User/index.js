@@ -89,10 +89,9 @@ export default class PageUser extends React.Component {
                 <Image style={{width:scale(20),height:scale(20)}} source={require('../../images/setting.png')} />
             </Touchable>
         ),
+        headerLeft: <View />,
         tabBarIcon: ({ focused }) => (
-            <Image
-                style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-                source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
+            <Image source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
         ),
     })
     state = {

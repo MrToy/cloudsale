@@ -9,10 +9,8 @@ import { getUserInfo } from '../../utils/user';
 export default class CartPage extends React.Component {
 	static navigationOptions = {
 		title: '购物车',
-		tabBarIcon: ({ focused, tintColor }) => (
-			<Image
-				style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-				source={focused ? require('../../images/cart_select_icon.png') : require('../../images/cart_icon.png')} />
+		tabBarIcon: ({ focused }) => (
+			<Image style={{marginRight:3}} source={focused ? require('../../images/cart_select_icon.png') : require('../../images/cart_icon.png')} />
 		),
 	}
 	state = {
