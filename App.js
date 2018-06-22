@@ -1,29 +1,29 @@
 import React from 'react';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-import * as WeChat from 'react-native-wechat'
-import { scale } from './src/utils/dimension';
-import { initUser } from './src/utils/user'
+import * as WeChat from 'react-native-wechat';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import AboutUs from './src/page/AboutUs';
 import Cart from './src/page/Cart';
+import Detail from './src/page/Detail';
+import Feedback from './src/page/Feedback';
 import List from './src/page/List';
 import Main from './src/page/Main';
+import OrderSubmit from './src/page/OrderSubmit';
 import Search from './src/page/Search';
 import SearchResult from './src/page/SearchResult';
 import User from './src/page/User';
-import AboutUs from './src/page/AboutUs'
-import Feedback from './src/page/Feedback'
-import Detail from './src/page/Detail'
-import OrderSubmit from './src/page/OrderSubmit'
-import UserOrder from './src/page/User/Order'
-import UserLogin from './src/page/User/Login'
-import UserSignin from './src/page/User/Signin'
+import UserLogin from './src/page/User/Login';
+import UserOrder from './src/page/User/Order';
+import UserSignin from './src/page/User/Signin';
+import { scale } from './src/utils/dimension';
+import { initUser } from './src/utils/user';
 
 console.disableYellowBox = true;
 
 const TabScreens = createBottomTabNavigator({
-	Main: { screen: Main },
-	List: { screen: List },
-	Cart: { screen: Cart },
-	User: { screen: User },
+	Main,
+	List,
+	Cart,
+	User,
 }, {
 		tabBarPosition: 'bottom',
 		swipeEnabled: false,
@@ -32,10 +32,13 @@ const TabScreens = createBottomTabNavigator({
 		tabBarOptions: {
 			activeTintColor: "#781EFD",
 			inactiveTintColor: "#6A617A"
-		}
+		},
 	})
 
+
+
 TabScreens.navigationOptions = ({ navigation }) => {
+	// console.log(TabScreens.router.getScreenOptions(navigation))
 	const component = TabScreens.router.getComponentForState(navigation.state);
 	if (typeof component.navigationOptions === 'function') {
 		return component.navigationOptions({ navigation });
@@ -46,36 +49,16 @@ TabScreens.navigationOptions = ({ navigation }) => {
 
 
 const Routes = createStackNavigator({
-	Home: {
-		screen: TabScreens,
-	},
-	Search: {
-		screen: Search
-	},
-	SearchResult: {
-		screen: SearchResult
-	},
-	AboutUs: {
-		screen: AboutUs
-	},
-	Feedback: {
-		screen: Feedback
-	},
-	Detail: {
-		screen: Detail
-	},
-	OrderSubmit: {
-		screen: OrderSubmit
-	},
-	UserOrder: {
-		screen: UserOrder
-	},
-	UserLogin: {
-		screen: UserLogin
-	},
-	UserSignin: {
-		screen: UserSignin
-	}
+	Home: TabScreens,
+	Search,
+	SearchResult,
+	AboutUs,
+	Feedback,
+	Detail,
+	OrderSubmit,
+	UserOrder,
+	UserLogin,
+	UserSignin,
 }, {
 		navigationOptions: {
 			headerStyle: {
