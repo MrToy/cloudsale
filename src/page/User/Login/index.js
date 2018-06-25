@@ -28,18 +28,7 @@ export default class PageUserLogin extends React.Component {
             return
         }
         await UserStore.setUserInfo(res.data)
-        Toast.show(res.message,{
-            position:Toast.positions.CENTER
-        })
-        this.props.navigation.dispatch(StackActions.reset({
-            index: 0,
-            actions: [
-                NavigationActions.navigate({
-                    routeName: 'Home',
-                    action: NavigationActions.navigate({ routeName: 'Main' }),
-                })
-            ],
-        }))
+        this.props.navigation.goBack()
         
     }
     render() {
