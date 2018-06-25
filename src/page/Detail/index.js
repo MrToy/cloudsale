@@ -1,13 +1,12 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ScrollView, Text, View, Image, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import FitImage from 'react-native-fit-image';
+import CommodityList from '../../components/CommodityList';
+import NumberPicker from '../../components/NumberPicker';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import Swiper from '../Main/Swiper';
-import CommodityList from '../../components/CommodityList'
-import FitImage from 'react-native-fit-image'
-import NumberPicker from '../../components/NumberPicker'
 
 const styles = StyleSheet.create({
     selectItem: {

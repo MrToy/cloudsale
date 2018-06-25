@@ -2,10 +2,12 @@ import React from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
-import { getUserInfo } from '../../utils/user';
 import { scale } from '../../utils/dimension';
 import { alipay, wechatPay } from '../../utils/pay';
+import UserStore from '../../utils/user'
+import {observer} from "mobx-react"
 
+@observer
 export default class OrderSubmitPage extends React.Component {
     static navigationOptions = {
         title: '确认订单',
@@ -33,7 +35,7 @@ export default class OrderSubmitPage extends React.Component {
         return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
     }
     async onConfirm(type) {
-        var user = getUserInfo()
+        var user = UserStore.user
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return

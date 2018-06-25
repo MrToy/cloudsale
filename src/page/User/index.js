@@ -1,12 +1,12 @@
+import { observer } from "mobx-react";
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, StyleSheet, Text, View, Alert } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
-import { getUserInfo, clearUserInfo } from '../../utils/user'
-import Touchable from 'react-native-platform-touchable'
-import { NavigationActions, StackActions } from 'react-navigation'
-import Toast from 'react-native-root-toast'
+import UserStore from '../../utils/user';
+
 
 const styles = StyleSheet.create({
     container: {
@@ -81,12 +81,13 @@ class NavMenuItem extends React.Component {
     }
 }
 
+@observer
 export default class PageUser extends React.Component {
     static navigationOptions = ({navigation})=>({
         title: '个人中心',
         tabBarLabel: '我的',
         headerRight: (
-            <Touchable onPress={()=>navigation.navigate('UserOrder', { type: 4 })} style={{marginRight:scale(12)}}>
+            <Touchable onPress={()=>navigation.navigate('UserSetting')} style={{marginRight:scale(12)}}>
                 <Image style={{width:scale(20),height:scale(20)}} source={require('../../images/setting.png')} />
             </Touchable>
         ),
@@ -95,34 +96,8 @@ export default class PageUser extends React.Component {
             <Image source={focused ? require('../../images/me_select_icon.png') : require('../../images/me_icon.png')} />
         ),
     })
-    state = {
-        user: null
-    }
-    componentDidMount() {
-        this.fetchUser()
-    }
-    fetchUser() {
-        var user = getUserInfo()
-        this.setState({ user })
-    }
-    async logout() {
-        this.setState({ user: null })
-        await clearUserInfo()
-        Toast.show("退出成功",{
-            position:Toast.positions.CENTER
-        })
-        this.props.navigation.dispatch(StackActions.reset({
-            index: 0,
-            actions: [
-                NavigationActions.navigate({
-                    routeName: 'Home',
-                    action: NavigationActions.navigate({ routeName: 'Main' }),
-                })
-            ],
-        }))
-    }
     render() {
-        var { user } = this.state
+        var user=UserStore.user
         return (
             <View style={styles.container}>
                 {user ? (
@@ -189,14 +164,6 @@ export default class PageUser extends React.Component {
                         image={require('../../images/about_us_icon.png')}
                         onPress={() => this.props.navigation.navigate('AboutUs')} />
                 </View>
-                {user && (
-                    <View style={{ marginTop: 6 }}>
-                        <ListMenuItem
-                            text="退出登录"
-                            image={require('../../images/feedback_icon.png')}
-                            onPress={this.logout.bind(this)} />
-                    </View>
-                )}
             </View>
         );
     }

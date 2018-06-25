@@ -13,9 +13,9 @@ import SearchResult from './src/page/SearchResult';
 import User from './src/page/User';
 import UserLogin from './src/page/User/Login';
 import UserOrder from './src/page/User/Order';
+import UserSetting from './src/page/User/Setting';
 import UserSignin from './src/page/User/Signin';
 import { scale } from './src/utils/dimension';
-import { initUser } from './src/utils/user';
 
 console.disableYellowBox = true;
 
@@ -57,6 +57,7 @@ const Routes = createStackNavigator({
 	UserOrder,
 	UserLogin,
 	UserSignin,
+	UserSetting,
 }, {
 		navigationOptions: {
 			headerStyle: {
@@ -76,7 +77,6 @@ const Routes = createStackNavigator({
 
 export default class extends React.Component {
 	componentDidMount() {
-		initUser()
 		WeChat.registerApp('wxd71c7825d6c2ecdd')
 	}
 	render() {

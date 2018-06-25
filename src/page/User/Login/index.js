@@ -3,7 +3,7 @@ import { Alert, Image, Text, TouchableWithoutFeedback, View } from 'react-native
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
 import TextInput from './TextInput';
-import { setUserInfo } from '../../../utils/user'
+import UserStore from '../../../utils/user'
 import request from '../../../utils/request';
 import { NavigationActions, StackActions } from 'react-navigation'
 import Toast from 'react-native-root-toast'
@@ -27,7 +27,7 @@ export default class PageUserLogin extends React.Component {
             Alert.alert(err.message)
             return
         }
-        await setUserInfo(res.data)
+        await UserStore.setUserInfo(res.data)
         Toast.show(res.message,{
             position:Toast.positions.CENTER
         })

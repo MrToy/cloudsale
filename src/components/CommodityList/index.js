@@ -5,8 +5,10 @@ import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import { withNavigation } from 'react-navigation'
 import Toast from 'react-native-root-toast'
-import {getUserInfo} from '../../utils/user'
+import UserStore from '../../utils/user'
+import {observer} from "mobx-react"
 
+@observer
 class CommodityList extends React.Component {
     static propTypes = {
         type: PropTypes.oneOf(["list", "grid"]),
@@ -18,7 +20,7 @@ class CommodityList extends React.Component {
         }))
     }
     async addCart(id){
-        var user=getUserInfo()
+        var user=UserStore.user
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return

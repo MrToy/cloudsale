@@ -4,7 +4,7 @@ import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
 import request from '../../../utils/request';
 import TextInput from '../Login/TextInput';
-import {setUserInfo} from '../../../utils/user'
+import UserStore from '../../../utils/user'
 
 const styles = StyleSheet.create({
     inputLabel: {
@@ -38,7 +38,7 @@ export default class PageUserSignin extends React.Component {
             Alert.alert(err.message)
             return
         }
-        await setUserInfo(res.data)
+        await UserStore.setUserInfo(res.data)
         Alert.alert(res.message,null,[
             {text: 'OK', onPress: () => {
                 this.props.navigation.goBack()

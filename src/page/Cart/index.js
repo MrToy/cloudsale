@@ -4,8 +4,10 @@ import Touchable from 'react-native-platform-touchable';
 import Checkbox from '../../components/Checkbox';
 import NumberPicker from '../../components/NumberPicker';
 import { scale } from '../../utils/dimension';
-import { getUserInfo } from '../../utils/user';
+import UserStore from '../../utils/user'
+import {observer} from "mobx-react"
 
+@observer
 export default class CartPage extends React.Component {
 	static navigationOptions = {
 		title: '购物车',
@@ -26,7 +28,7 @@ export default class CartPage extends React.Component {
 		this._subscribe.remove()
 	}
 	async fetchList() {
-		var user = getUserInfo()
+		var user = UserStore.user
 		if(!user){
             return
         }
@@ -122,6 +124,9 @@ export default class CartPage extends React.Component {
 					goodsList
 				})
 			}
+		}
+		if(!list.length){
+			return
 		}
 		this.props.navigation.navigate('OrderSubmit', { list})
 	}

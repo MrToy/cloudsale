@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, View, TouchableWithoutFeedback, FlatList, Image } from 'react-native';
-import { getUserInfo } from '../../../utils/user';
+import { FlatList, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
 import SearchButton from '../../Main/SearchButton';
-import Touchable from 'react-native-platform-touchable'
-
+import UserStore from '../../../utils/user';
 
 class PayOrder extends React.Component {
     render() {
@@ -72,7 +71,7 @@ export default class PageUserOrder extends React.Component {
         })
     }
     async fetchList() {
-        var user = getUserInfo()
+        var user = UserStore.user
         if(!user){
             this.props.navigation.navigate('UserLogin')
             return
