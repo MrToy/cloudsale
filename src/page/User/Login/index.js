@@ -6,6 +6,7 @@ import TextInput from './TextInput';
 import { setUserInfo } from '../../../utils/user'
 import request from '../../../utils/request';
 import { NavigationActions, StackActions } from 'react-navigation'
+import Toast from 'react-native-root-toast'
 
 export default class PageUserLogin extends React.Component {
     static navigationOptions = {
@@ -27,16 +28,19 @@ export default class PageUserLogin extends React.Component {
             return
         }
         await setUserInfo(res.data)
-        Alert.alert(res.message, null, [
-            {
-                text: 'OK', onPress: () => {
-                    this.props.navigation.dispatch(StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'Home' })],
-                    }))
-                }
-            }
-        ])
+        Toast.show(res.message,{
+            position:Toast.positions.CENTER
+        })
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'Home',
+                    action: NavigationActions.navigate({ routeName: 'Main' }),
+                })
+            ],
+        }))
+        
     }
     render() {
         return (

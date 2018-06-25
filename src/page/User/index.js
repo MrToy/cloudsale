@@ -6,6 +6,7 @@ import { scale } from '../../utils/dimension';
 import { getUserInfo, clearUserInfo } from '../../utils/user'
 import Touchable from 'react-native-platform-touchable'
 import { NavigationActions, StackActions } from 'react-navigation'
+import Toast from 'react-native-root-toast'
 
 const styles = StyleSheet.create({
     container: {
@@ -107,16 +108,18 @@ export default class PageUser extends React.Component {
     async logout() {
         this.setState({ user: null })
         await clearUserInfo()
-        Alert.alert("退出成功", null, [
-            {
-                text: 'OK', onPress: () => {
-                    this.props.navigation.navigate(StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'Home' })],
-                    }))
-                }
-            }
-        ])
+        Toast.show("退出成功",{
+            position:Toast.positions.CENTER
+        })
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'Home',
+                    action: NavigationActions.navigate({ routeName: 'Main' }),
+                })
+            ],
+        }))
     }
     render() {
         var { user } = this.state
