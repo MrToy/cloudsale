@@ -36,9 +36,7 @@ const TabScreens = createBottomTabNavigator({
 	})
 
 
-
 TabScreens.navigationOptions = ({ navigation }) => {
-	// console.log(TabScreens.router.getScreenOptions(navigation))
 	const component = TabScreens.router.getComponentForState(navigation.state);
 	if (typeof component.navigationOptions === 'function') {
 		return component.navigationOptions({ navigation });
