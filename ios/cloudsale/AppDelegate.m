@@ -7,6 +7,7 @@
 
 #import "AppDelegate.h"
 #import "AlipayModule.h"
+#import "SplashScreen.h"
 #import <React/RCTLinkingManager.h>
 
 #import <React/RCTBundleURLProvider.h>
@@ -44,6 +45,11 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  #if !defined(DEBUG)
+  [SplashScreen show];
+  #endif
+  
   return YES;
 }
 

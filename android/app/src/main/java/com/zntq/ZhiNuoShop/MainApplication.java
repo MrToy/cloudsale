@@ -3,6 +3,7 @@ package com.zntq.ZhiNuoShop;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.theweflex.react.WeChatPackage;
 import com.yunpeng.alipay.AlipayPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new FastImageViewPackage(),
             new WeChatPackage(),
             new AlipayPackage()
@@ -45,7 +47,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+      super.onCreate();
+      SoLoader.init(this, /* native exopackage */ false);
   }
 }
