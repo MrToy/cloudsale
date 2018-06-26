@@ -98,7 +98,7 @@ android {
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId 'com.zntq.ZhiNuoShop'
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -145,6 +145,12 @@ android {
         }
     }
     productFlavors {
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.webkit:android-jsc:r224109'
     }
 }
 
