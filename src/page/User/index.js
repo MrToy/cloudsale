@@ -152,7 +152,8 @@ export default class PageUser extends React.Component {
                         image={require('../../images/my_foot_icon.png')} />
                     <ListMenuItem
                         text="地址管理"
-                        image={require('../../images/addr.png')} />
+                        image={require('../../images/addr.png')}
+                        onPress={() => this.props.navigation.navigate('UserAddress')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem
