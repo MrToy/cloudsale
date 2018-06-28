@@ -6,8 +6,8 @@ import { scale } from '../../utils/dimension';
 
 const KeywordList = ({list,onItemPress}) => (
     <View style={{ marginLeft: scale(17), marginRight: scale(17), marginBottom: scale(11), flexDirection: "row", flexWrap: "wrap" }}>
-        {list.map(text => (
-            <Touchable onPress={()=>onItemPress(text)}>
+        {list.map((text,i) => (
+            <Touchable onPress={()=>onItemPress(text)} key={i}>
                 <View style={{ height: scale(24), paddingLeft: scale(10), paddingRight: scale(10), backgroundColor: "#f3f2f8", borderColor: "#ECECEC", borderWidth: 1, borderRadius: scale(3), marginRight: scale(8), marginBottom: scale(11), justifyContent: "center" }}>
                     <Text style={{ color: "#6A617A", fontSize: scale(11) }}>{text}</Text>
                 </View>
