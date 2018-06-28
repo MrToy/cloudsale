@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import { Alert } from 'react-native';
+import Toast from 'react-native-root-toast';
 import * as WeChat from 'react-native-wechat';
 import Alipay from 'react-native-yunpeng-alipay';
 
@@ -12,16 +12,20 @@ export async function wechatPay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Alert.alert(res.message)
+        Toast.show(res.message,{
+            position:Toast.positions.CENTER
+        })
         return
     }
     var _sign = md5(`${res.data.prepayid}${res.data.appid}${res.data.partnerid}${res.data.timestamp}bjzntq2017`)
     if (res.data.sign != _sign) {
-        Alert.alert("签名错误")
+        Toast.show("签名错误",{
+            position:Toast.positions.CENTER
+        })
         return
     }
     try {
-        var data = await WeChat.pay({
+        await WeChat.pay({
             partnerId: res.data.partnerid,
             prepayId: res.data.prepayid,
             nonceStr: res.data.noncestr,
@@ -30,10 +34,15 @@ export async function wechatPay(token, id) {
             sign: res.data.paySign
         })
     } catch (err) {
-        Alert.alert(err.message || "支付失败")
+        if(err.code==-2){
+            return
+        }
+        Toast.show(err.message,{
+            position:Toast.positions.CENTER
+        })
         return
     }
-    Alert.alert("支付成功")
+    Toast.show("支付成功")
 }
 
 export async function alipay(token, id) {
@@ -45,14 +54,23 @@ export async function alipay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Alert.alert(res.message || "支付失败")
+        Toast.show(res.message,{
+            position:Toast.positions.CENTER
+        })
         return
     }
     try {
-        var res = await Alipay.pay(res.data)
+        await Alipay.pay(res.data)
     } catch (err) {
-        Alert.alert(err.message || "支付失败")
+        // if(err.code==6001){
+        //     return
+        // }
+        // Toast.show(err.message,{
+        //     position:Toast.positions.CENTER
+        // })
         return
     }
-    Alert.alert("支付成功")
+    Toast.show("支付成功",{
+        position:Toast.positions.CENTER
+    })
 }

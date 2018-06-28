@@ -1,9 +1,11 @@
 import React from 'react';
-import { FlatList, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Image, Text, TouchableWithoutFeedback, View, Modal,Animated,Easing } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
 import SearchButton from '../../Main/SearchButton';
 import UserStore from '../../../utils/user';
+import { alipay, wechatPay } from '../../../utils/pay';
+import {observer} from "mobx-react"
 
 class PayOrder extends React.Component {
     render() {
@@ -43,7 +45,7 @@ class PayOrder extends React.Component {
                     <Touchable style={{ width: scale(100), height: scale(31), marginRight: scale(13), backgroundColor: "#ECE4F8", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
                         <Text style={{ color: "#781EFD", fontSize: scale(13) }}>取消订单</Text>
                     </Touchable>
-                    <Touchable onPress={()=>this.props.onPay(order.order_id)} style={{ width: scale(100), height: scale(31), marginRight: scale(18), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
+                    <Touchable onPress={() => this.props.onPay(order.order_code)} style={{ width: scale(100), height: scale(31), marginRight: scale(18), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
                         <Text style={{ color: "#fff", fontSize: scale(13) }}>付款</Text>
                     </Touchable>
                 </View>
@@ -52,7 +54,71 @@ class PayOrder extends React.Component {
     }
 }
 
-export default class PageUserOrder extends React.Component {
+class PayModal extends React.Component {
+    state={
+        top:new Animated.Value(190)
+    }
+    componentDidUpdate(prevProps){
+        if(this.props.visible==prevProps.visible){
+            return
+        }
+        if(this.props.visible){
+            Animated.timing(this.state.top, {
+                toValue: 0,
+                duration:200, 
+                easing: Easing.easing
+            }).start()
+        }
+    }
+    close(){
+        Animated.timing(this.state.top, {
+            toValue: 190,
+            duration: 200, 
+            easing: Easing.easing
+        }).start(()=>{
+            this.props.onClose()
+        })
+    }
+    render() {
+        const { visible, onPay }=this.props
+        return (
+            <Modal
+                animationType='fade'
+                transparent={true}
+                visible={visible}
+            >
+                <View style={{ backgroundColor: "rgba(0,0,0,0.25)", height: "100%", justifyContent: "flex-end" }}>
+                    <Animated.View style={{ backgroundColor: "#fff", paddingTop: scale(19), paddingLeft: scale(13), paddingRight: scale(13), height: scale(190), transform: [{ translateY: this.state.top }] }}>
+                        <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
+                            <Text style={{ color: "#6A617A", fontSize: scale(14) }}>请选择支付方式</Text>
+                            <Touchable onPress={this.close.bind(this)}>
+                                <Image source={require('../../../images/删除按钮.png')} />
+                            </Touchable>
+                        </View>
+                        <View style={{ justifyContent: "space-between", flexDirection: "row", marginTop: scale(18) }}>
+                            <Touchable onPress={() => onPay("wechat")}>
+                                <View style={{ width: scale(150), height: scale(111), backgroundColor: "#F6F6F6", justifyContent: "center", alignItems: "center" }}>
+                                    <Image source={require('../../../images/wechatpay.png')} />
+                                    <Text style={{ fontSize: scale(14), marginTop: scale(8), color: "#6A617A" }}>微信支付</Text>
+                                </View>
+                            </Touchable>
+                            <Touchable onPress={() => onPay("alipay")}>
+                                <View style={{ width: scale(150), height: scale(111), backgroundColor: "#F6F6F6", justifyContent: "center", alignItems: "center" }}>
+                                    <Image source={require('../../../images/alipay.png')} />
+                                    <Text style={{ fontSize: scale(14), marginTop: scale(8), color: "#6A617A" }}>支付宝支付</Text>
+                                </View>
+                            </Touchable>
+                        </View>
+                    </Animated.View>
+                </View>
+            </Modal>
+        )
+    }
+}
+
+
+
+class PageUserOrder extends React.Component {
     static navigationOptions = {
         title: '我的订单',
         headerRight: <View />,
@@ -61,13 +127,13 @@ export default class PageUserOrder extends React.Component {
         type: 4,
         searchKey: "",
         list: [],
-        order_id:null,
-        loading:false
+        order_id: null,
+        loading: false
     }
     componentDidMount() {
         var type = this.props.navigation.getParam('type')
-        if(type===null){
-            type=4
+        if (type === null) {
+            type = 4
         }
         this.onTab(type)
     }
@@ -77,7 +143,7 @@ export default class PageUserOrder extends React.Component {
         })
     }
     async fetchList() {
-        this.setState({loading:true})
+        this.setState({ loading: true })
         var user = UserStore.user
         if (!user) {
             this.props.navigation.navigate('UserLogin')
@@ -92,8 +158,18 @@ export default class PageUserOrder extends React.Component {
         }).then(res => res.json())
         this.setState({
             list: res.data || [],
-            loading:false,
+            loading: false,
         })
+    }
+    async onPay(type) {
+        var orderId=this.state.order_id
+        var user = UserStore.user
+        if (type == "alipay") {
+            await alipay(user.tokeninfo, orderId)
+        }
+        if (type == "wechat") {
+            await wechatPay(user.tokeninfo, orderId)
+        }
     }
     render() {
         return (
@@ -121,10 +197,16 @@ export default class PageUserOrder extends React.Component {
                     refreshing={this.state.loading}
                     onRefresh={this.fetchList.bind(this)}
                     data={this.state.list}
-                    renderItem={({ item }) =>(
-                        <PayOrder data={item} key={item.order_id} onPay={id=>this.setState({order_id:id})} />
+                    renderItem={({ item }) => (
+                        <PayOrder data={item} key={item.order_id} onPay={id => this.setState({ order_id: id })} />
                     )} />
+                <PayModal
+                    visible={this.state.order_id != null}
+                    onClose={() => this.setState({ order_id: null })}
+                    onPay={this.onPay.bind(this)} />
             </View>
         );
     }
 }
+
+export default observer(PageUserOrder)
