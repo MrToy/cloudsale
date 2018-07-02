@@ -1,6 +1,7 @@
 import React from 'react';
 import * as WeChat from 'react-native-wechat';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import SplashScreen from 'react-native-splash-screen'
 import { scale } from './src/utils/dimension';
 import AboutUs from './src/page/AboutUs';
 import Cart from './src/page/Cart';
@@ -17,7 +18,8 @@ import UserOrder from './src/page/User/Order';
 import UserSetting from './src/page/User/Setting';
 import UserSignin from './src/page/User/Signin';
 import UserAddress from './src/page/User/Address'
-import SplashScreen from 'react-native-splash-screen'
+import Ticketing from './src/page/Ticketing'
+
 
 console.disableYellowBox = true;
 
@@ -61,6 +63,7 @@ const Routes = createStackNavigator({
 	UserSignin,
 	UserSetting,
 	UserAddress,
+	Ticketing,
 }, {
 		navigationOptions: {
 			headerStyle: {

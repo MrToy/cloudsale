@@ -81,8 +81,7 @@ class NavMenuItem extends React.Component {
     }
 }
 
-@observer
-export default class PageUser extends React.Component {
+class PageUser extends React.Component {
     static navigationOptions = ({navigation})=>({
         title: '个人中心',
         tabBarLabel: '我的',
@@ -142,6 +141,11 @@ export default class PageUser extends React.Component {
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem
+                        text="票务订单"
+                        image={require('../../images/category_icon12.png')} />
+                </View>
+                <View style={{ marginTop: 6 }}>
+                    <ListMenuItem
                         text="我的消息"
                         image={require('../../images/my_message_icon.png')} />
                     <ListMenuItem
@@ -169,3 +173,7 @@ export default class PageUser extends React.Component {
         );
     }
 }
+
+
+
+export default observer(PageUser)

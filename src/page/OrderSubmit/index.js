@@ -5,10 +5,9 @@ import Toast from 'react-native-root-toast';
 import { scale } from '../../utils/dimension';
 import { alipay, wechatPay } from '../../utils/pay';
 import UserStore from '../../utils/user'
-import {observer} from "mobx-react"
+import { observer } from "mobx-react"
 
-@observer
-export default class OrderSubmitPage extends React.Component {
+class OrderSubmitPage extends React.Component {
     static navigationOptions = {
         title: '确认订单',
         headerRight: <View />,
@@ -36,7 +35,7 @@ export default class OrderSubmitPage extends React.Component {
     }
     async onConfirm(type) {
         var user = UserStore.user
-        if(!user){
+        if (!user) {
             this.props.navigation.navigate('UserLogin')
             return
         }
@@ -81,20 +80,21 @@ export default class OrderSubmitPage extends React.Component {
     render() {
         return (
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
-                <ScrollView style={{ flex: 1 }}>
+                <ScrollView>
                     <Image source={require("../../images/color_line_icon.png")} style={{ width: "100%", height: scale(4), marginTop: 1 }} />
                     <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
-                        <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22) }} />
-                        <View>
-                            <Text>收货人: </Text>
-                            <Text>收货地址: </Text>
+                        <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22),marginLeft:scale(18),marginRight:scale(15) }} />
+                        <View style={{flex:1}}>
+                            <Text style={{color:"#6A617A",fontSize:scale(15),marginBottom:scale(9)}}>收货人: </Text>
+                            <Text style={{color:"#A4A0AA",fontSize:scale(13)}} numberOfLines={2}>收货地址: </Text>
                         </View>
-                        <Image source={require("../../images/right_indicator.png")} style={{ width: scale(7), height: scale(12.4) }} />
+                        <Image source={require("../../images/right_indicator.png")} style={{marginRight:scale(20),marginLeft:scale(15) }} />
                     </View>
                     {this.state.list.map((it, i) => (
-                        <View key={i} style={{ backgroundColor: "#fff", padding: scale(10) }}>
+                        <View key={i} style={{ backgroundColor: "#fff",marginTop:scale(5) }}>
                             <View style={{ flexDirection: "row", alignItems: "center", height: scale(39) }}>
-                                <Text>{it.shopName}</Text>
+                                <Image source={require('../../images/shop_icon.png')} style={{marginLeft:scale(17),marginRight:scale(10)}} />
+                                <Text style={{color:"#6A617A",fontSize:scale(13)}}>{it.shopName}</Text>
                             </View>
                             {(it.goodsList || []).map((itit, ii) => (
                                 <View key={ii} style={{ flexDirection: "row", alignItems: "center", borderTopColor: "#ECECEC", borderTopWidth: 1 }}>
@@ -111,20 +111,23 @@ export default class OrderSubmitPage extends React.Component {
                             ))}
                         </View>
                     ))}
-                </ScrollView>
-                <View style={{ backgroundColor: "#fff", padding:scale(18) }}>
-                    <View style={{flexDirection:"row",justifyContent:"flex-end",marginBottom:scale(24)}}>
-                        <Text>实付金额 :  </Text>
-                        <Text style={{color:"#E339D3"}}>¥ {this.getSelectPrice()}</Text>
+                    <View style={{ backgroundColor: "#fff", padding: scale(18) }}>
+                        <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: scale(24) }}>
+                            <Text>实付金额 :  </Text>
+                            <Text style={{ color: "#E339D3" }}>¥ {this.getSelectPrice()}</Text>
+                        </View>
+                        <Touchable onPress={() => this.onConfirm("alipay")} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center", marginBottom: scale(10) }}>
+                            <Text style={{ color: "#fff", fontSize: scale(16) }}>支付宝支付</Text>
+                        </Touchable>
+                        <Touchable onPress={() => this.onConfirm("wechat")} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center" }}>
+                            <Text style={{ color: "#fff", fontSize: scale(16) }}>微信支付</Text>
+                        </Touchable>
                     </View>
-                    <Touchable onPress={() => this.onConfirm("alipay")} style={{height:scale(40),backgroundColor:"#781EFD",borderRadius:scale(5),justifyContent:"center",alignItems:"center",marginBottom:scale(10)}}>
-                        <Text style={{color:"#fff",fontSize:scale(16)}}>支付宝支付</Text>
-                    </Touchable>
-                    <Touchable onPress={() => this.onConfirm("wechat")} style={{height:scale(40),backgroundColor:"#781EFD",borderRadius:scale(5),justifyContent:"center",alignItems:"center"}}>
-                        <Text style={{color:"#fff",fontSize:scale(16)}}>微信支付</Text>
-                    </Touchable>
-                </View>
+                </ScrollView>
             </View>
         );
     }
 }
+
+
+export default observer(OrderSubmitPage)

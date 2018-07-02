@@ -44,6 +44,13 @@ export default class extends React.Component {
         this.setState(data)
         await AsyncStorage.setItem('main.data', JSON.stringify(data))
     }
+    onCate(id){
+        if(id==9){
+            this.props.navigation.navigate('Ticketing')
+            return
+        }
+        this.props.navigation.navigate('SearchResult',{categoryId:id})
+    }
     render() {
         const { banner, category, categoryList, choice, hot } = this.state
         const {navigation}=this.props
@@ -57,7 +64,7 @@ export default class extends React.Component {
                         ) : null}
                     </View>
                     <View style={{ height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
-                        <NavMenus list={category} onItemPress={id => navigation.navigate('SearchResult',{categoryId:id})} />
+                        <NavMenus list={category} onItemPress={this.onCate.bind(this)} />
                     </View>
                     <FloorTitle label="热门频道" color="#66ABF3" />
                     <View style={{ backgroundColor: '#fff', paddingBottom: scale(9), marginBottom: scale(7) }}>
