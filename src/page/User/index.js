@@ -142,7 +142,8 @@ class PageUser extends React.Component {
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem
                         text="票务订单"
-                        image={require('../../images/category_icon12.png')} />
+                        image={require('../../images/category_icon12.png')}
+                        onPress={() => this.props.navigation.navigate('TicketingList')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem

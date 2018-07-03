@@ -22,6 +22,7 @@ import Ticketing from './src/page/Ticketing'
 import UserMessage from './src/page/User/Message'
 import UserFavor from './src/page/User/Favor'
 import UserFootprint from './src/page/User/Footprint'
+import TicketingList from './src/page/TicketingList'
 
 
 console.disableYellowBox = true;
@@ -70,6 +71,7 @@ const Routes = createStackNavigator({
 	UserFavor,
 	UserFootprint,
 	Ticketing,
+	TicketingList,
 }, {
 		navigationOptions: {
 			headerStyle: {
