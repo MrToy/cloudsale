@@ -151,10 +151,12 @@ class PageUser extends React.Component {
                         onPress={() => this.props.navigation.navigate('UserMessage')} />
                     <ListMenuItem
                         text="我的收藏"
-                        image={require('../../images/my_collection_icon.png')} />
+                        image={require('../../images/my_collection_icon.png')}
+                        onPress={() => this.props.navigation.navigate('UserFavor')} />
                     <ListMenuItem
                         text="足迹"
-                        image={require('../../images/my_foot_icon.png')} />
+                        image={require('../../images/my_foot_icon.png')}
+                        onPress={() => this.props.navigation.navigate('UserFootprint')} />
                     <ListMenuItem
                         text="地址管理"
                         image={require('../../images/addr.png')}

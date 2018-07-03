@@ -20,6 +20,8 @@ import UserSignin from './src/page/User/Signin';
 import UserAddress from './src/page/User/Address'
 import Ticketing from './src/page/Ticketing'
 import UserMessage from './src/page/User/Message'
+import UserFavor from './src/page/User/Favor'
+import UserFootprint from './src/page/User/Footprint'
 
 
 console.disableYellowBox = true;
@@ -65,6 +67,8 @@ const Routes = createStackNavigator({
 	UserSetting,
 	UserAddress,
 	UserMessage,
+	UserFavor,
+	UserFootprint,
 	Ticketing,
 }, {
 		navigationOptions: {
