@@ -18,6 +18,8 @@ import UserOrder from './src/page/User/Order';
 import UserSetting from './src/page/User/Setting';
 import UserSignin from './src/page/User/Signin';
 import UserAddress from './src/page/User/Address'
+import UserNewAddress from './src/page/User/Address/NewAddress'
+import UserEditAddress from './src/page/User/Address/EditAddress'
 import Ticketing from './src/page/Ticketing'
 import UserMessage from './src/page/User/Message'
 import UserFavor from './src/page/User/Favor'
@@ -67,6 +69,8 @@ const Routes = createStackNavigator({
 	UserSignin,
 	UserSetting,
 	UserAddress,
+	UserNewAddress,
+	UserEditAddress,
 	UserMessage,
 	UserFavor,
 	UserFootprint,

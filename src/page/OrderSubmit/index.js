@@ -16,7 +16,7 @@ class OrderSubmitPage extends React.Component {
     state = {
         list: [],
         orderId: null,
-        payway:"wechat"
+        payway: "wechat"
     }
     componentDidMount() {
         const list = this.props.navigation.getParam('list')
@@ -41,7 +41,7 @@ class OrderSubmitPage extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var {payway,orderId}=this.state
+        var { payway, orderId } = this.state
         if (!orderId) {
             orderId = await this.createOrder(user.tokeninfo)
             this.setState({ orderId })
@@ -84,14 +84,16 @@ class OrderSubmitPage extends React.Component {
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                 <ScrollView>
                     <Image source={require("../../images/color_line_icon.png")} style={{ width: "100%", height: scale(4), marginTop: 1 }} />
-                    <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
-                        <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22), marginLeft: scale(18), marginRight: scale(15) }} />
-                        <View style={{ flex: 1 }}>
-                            <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: </Text>
-                            <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: </Text>
+                    <Touchable onPress={() => this.props.navigation.navigate('UserAddress')} >
+                        <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
+                            <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22), marginLeft: scale(18), marginRight: scale(15) }} />
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: </Text>
+                                <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: </Text>
+                            </View>
+                            <Image source={require("../../images/right_indicator.png")} style={{ marginRight: scale(20), marginLeft: scale(15) }} />
                         </View>
-                        <Image source={require("../../images/right_indicator.png")} style={{ marginRight: scale(20), marginLeft: scale(15) }} />
-                    </View>
+                    </Touchable>
                     {this.state.list.map((it, i) => (
                         <View key={i} style={{ backgroundColor: "#fff", marginTop: scale(5) }}>
                             <View style={{ flexDirection: "row", alignItems: "center", height: scale(39), borderColor: "#ECECEC", borderBottomWidth: 1 }}>
@@ -119,19 +121,19 @@ class OrderSubmitPage extends React.Component {
                     </View>
                     <View style={{ backgroundColor: "#fff" }}>
                         <View style={{ height: scale(38), justifyContent: "center", paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
-                            <Text style={{fontSize:scale(14),color:"#6A617A"}}>请选择支付方式</Text>
+                            <Text style={{ fontSize: scale(14), color: "#6A617A" }}>请选择支付方式</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", height: scale(45), paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
                             <Image style={{ width: scale(29), height: scale(24) }} source={require('../../images/wechatpay.png')} />
-                            <Text style={{fontSize:scale(14),color:"#6A617A",marginLeft:scale(20),flex:1}}>微信</Text>
-                            <Checkbox value={this.state.payway=='wechat'} onChange={val=>val&&this.setState({payway:"wechat"})} />
+                            <Text style={{ fontSize: scale(14), color: "#6A617A", marginLeft: scale(20), flex: 1 }}>微信</Text>
+                            <Checkbox value={this.state.payway == 'wechat'} onChange={val => val && this.setState({ payway: "wechat" })} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", height: scale(45), paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
                             <Image style={{ width: scale(26), height: scale(26) }} source={require('../../images/alipay.png')} />
-                            <Text style={{fontSize:scale(14),color:"#6A617A",marginLeft:scale(20),flex:1}}>支付宝</Text>
-                            <Checkbox value={this.state.payway=='alipay'} onChange={val=>val&&this.setState({payway:"alipay"})}  />
+                            <Text style={{ fontSize: scale(14), color: "#6A617A", marginLeft: scale(20), flex: 1 }}>支付宝</Text>
+                            <Checkbox value={this.state.payway == 'alipay'} onChange={val => val && this.setState({ payway: "alipay" })} />
                         </View>
-                        <View style={{ paddingLeft: scale(18), paddingRight: scale(18),paddingTop:scale(23),paddingBottom:scale(35)}}>
+                        <View style={{ paddingLeft: scale(18), paddingRight: scale(18), paddingTop: scale(23), paddingBottom: scale(35) }}>
                             <Touchable onPress={() => this.onConfirm()} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center" }}>
                                 <Text style={{ color: "#fff", fontSize: scale(16) }}>立即支付</Text>
                             </Touchable>
