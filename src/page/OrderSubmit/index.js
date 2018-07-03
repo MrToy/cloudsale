@@ -6,6 +6,7 @@ import { scale } from '../../utils/dimension';
 import { alipay, wechatPay } from '../../utils/pay';
 import UserStore from '../../utils/user'
 import { observer } from "mobx-react"
+import Checkbox from '../../components/Checkbox'
 
 class OrderSubmitPage extends React.Component {
     static navigationOptions = {
@@ -14,7 +15,8 @@ class OrderSubmitPage extends React.Component {
     }
     state = {
         list: [],
-        orderId: null
+        orderId: null,
+        payway:"wechat"
     }
     componentDidMount() {
         const list = this.props.navigation.getParam('list')
@@ -33,21 +35,21 @@ class OrderSubmitPage extends React.Component {
         var list = this.getSelectList()
         return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
     }
-    async onConfirm(type) {
+    async onConfirm() {
         var user = UserStore.user
         if (!user) {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var orderId = this.state.orderId
+        var {payway,orderId}=this.state
         if (!orderId) {
             orderId = await this.createOrder(user.tokeninfo)
             this.setState({ orderId })
         }
-        if (type == "alipay") {
+        if (payway == "alipay") {
             await alipay(user.tokeninfo, orderId)
         }
-        if (type == "wechat") {
+        if (payway == "wechat") {
             await wechatPay(user.tokeninfo, orderId)
         }
     }
@@ -83,45 +85,57 @@ class OrderSubmitPage extends React.Component {
                 <ScrollView>
                     <Image source={require("../../images/color_line_icon.png")} style={{ width: "100%", height: scale(4), marginTop: 1 }} />
                     <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
-                        <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22),marginLeft:scale(18),marginRight:scale(15) }} />
-                        <View style={{flex:1}}>
-                            <Text style={{color:"#6A617A",fontSize:scale(15),marginBottom:scale(9)}}>收货人: </Text>
-                            <Text style={{color:"#A4A0AA",fontSize:scale(13)}} numberOfLines={2}>收货地址: </Text>
+                        <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22), marginLeft: scale(18), marginRight: scale(15) }} />
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: </Text>
+                            <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: </Text>
                         </View>
-                        <Image source={require("../../images/right_indicator.png")} style={{marginRight:scale(20),marginLeft:scale(15) }} />
+                        <Image source={require("../../images/right_indicator.png")} style={{ marginRight: scale(20), marginLeft: scale(15) }} />
                     </View>
                     {this.state.list.map((it, i) => (
-                        <View key={i} style={{ backgroundColor: "#fff",marginTop:scale(5) }}>
-                            <View style={{ flexDirection: "row", alignItems: "center", height: scale(39) }}>
-                                <Image source={require('../../images/shop_icon.png')} style={{marginLeft:scale(17),marginRight:scale(10)}} />
-                                <Text style={{color:"#6A617A",fontSize:scale(13)}}>{it.shopName}</Text>
+                        <View key={i} style={{ backgroundColor: "#fff", marginTop: scale(5) }}>
+                            <View style={{ flexDirection: "row", alignItems: "center", height: scale(39), borderColor: "#ECECEC", borderBottomWidth: 1 }}>
+                                <Image source={require('../../images/shop_icon.png')} style={{ marginLeft: scale(17), marginRight: scale(10) }} />
+                                <Text style={{ color: "#6A617A", fontSize: scale(13) }}>{it.shopName}</Text>
                             </View>
                             {(it.goodsList || []).map((itit, ii) => (
-                                <View key={ii} style={{ flexDirection: "row", alignItems: "center", borderTopColor: "#ECECEC", borderTopWidth: 1 }}>
-                                    <Image source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80) }} />
-                                    <View>
-                                        <Text>{itit.smallText}</Text>
-                                        <Text>规格: {itit.specificationsValue}</Text>
-                                    </View>
-                                    <View>
-                                        <Text>¥ {itit.deductPrice}</Text>
-                                        <Text>¥ {itit.price}</Text>
+                                <View key={ii} style={{ flexDirection: "row", alignItems: "center", borderColor: "#ECECEC", borderBottomWidth: 1, marginLeft: scale(18), paddingRight: scale(20), height: scale(106) }}>
+                                    <Image source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 1 }} />
+                                    <View style={{ marginLeft: scale(15), flex: 1 }}>
+                                        <Text style={{ fontSize: scale(12), color: "#6A617A", lineHeight: scale(16), height: scale(32) }} numberOfLines={2}>{itit.smallText}</Text>
+                                        <Text style={{ fontSize: scale(11), color: "#989898", marginTop: scale(6), lineHeight: scale(19) }}>规格: {itit.specificationsValue}</Text>
+                                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: scale(6) }}>
+                                            <Text style={{ fontSize: scale(15), color: "#E339D3", flex: 1 }}>¥ {itit.deductPrice}</Text>
+                                            <Text style={{ fontSize: scale(13), color: "#6A617A" }}>x{itit.count}</Text>
+                                        </View>
                                     </View>
                                 </View>
                             ))}
                         </View>
                     ))}
-                    <View style={{ backgroundColor: "#fff", padding: scale(18) }}>
-                        <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: scale(24) }}>
-                            <Text>实付金额 :  </Text>
-                            <Text style={{ color: "#E339D3" }}>¥ {this.getSelectPrice()}</Text>
+                    <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: scale(24), height: scale(50), backgroundColor: "#fff", marginTop: scale(5), alignItems: "center", paddingRight: scale(18) }}>
+                        <Text style={{ fontSize: scale(14), color: "#6A617A" }}>实付金额 :  </Text>
+                        <Text style={{ color: "#E339D3", fontSize: scale(16) }}>¥ {this.getSelectPrice()}</Text>
+                    </View>
+                    <View style={{ backgroundColor: "#fff" }}>
+                        <View style={{ height: scale(38), justifyContent: "center", paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
+                            <Text style={{fontSize:scale(14),color:"#6A617A"}}>请选择支付方式</Text>
                         </View>
-                        <Touchable onPress={() => this.onConfirm("alipay")} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center", marginBottom: scale(10) }}>
-                            <Text style={{ color: "#fff", fontSize: scale(16) }}>支付宝支付</Text>
-                        </Touchable>
-                        <Touchable onPress={() => this.onConfirm("wechat")} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center" }}>
-                            <Text style={{ color: "#fff", fontSize: scale(16) }}>微信支付</Text>
-                        </Touchable>
+                        <View style={{ flexDirection: "row", alignItems: "center", height: scale(45), paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
+                            <Image style={{ width: scale(29), height: scale(24) }} source={require('../../images/wechatpay.png')} />
+                            <Text style={{fontSize:scale(14),color:"#6A617A",marginLeft:scale(20),flex:1}}>微信</Text>
+                            <Checkbox value={this.state.payway=='wechat'} onChange={val=>val&&this.setState({payway:"wechat"})} />
+                        </View>
+                        <View style={{ flexDirection: "row", alignItems: "center", height: scale(45), paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
+                            <Image style={{ width: scale(26), height: scale(26) }} source={require('../../images/alipay.png')} />
+                            <Text style={{fontSize:scale(14),color:"#6A617A",marginLeft:scale(20),flex:1}}>支付宝</Text>
+                            <Checkbox value={this.state.payway=='alipay'} onChange={val=>val&&this.setState({payway:"alipay"})}  />
+                        </View>
+                        <View style={{ paddingLeft: scale(18), paddingRight: scale(18),paddingTop:scale(23),paddingBottom:scale(35)}}>
+                            <Touchable onPress={() => this.onConfirm()} style={{ height: scale(40), backgroundColor: "#781EFD", borderRadius: scale(5), justifyContent: "center", alignItems: "center" }}>
+                                <Text style={{ color: "#fff", fontSize: scale(16) }}>立即支付</Text>
+                            </Touchable>
+                        </View>
                     </View>
                 </ScrollView>
             </View>

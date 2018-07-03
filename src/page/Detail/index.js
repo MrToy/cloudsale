@@ -123,7 +123,7 @@ export default class extends React.Component {
                         specificationsValue:selectedSpecification?selectedSpecification.value:null,
                         commodityId:this.state.detail.id,
                         thumb:this.state.detail.banner[0].image_url,
-                        commodityName:this.state.detail.small_text
+                        smallText:this.state.detail.small_text
                     }
                 ]
             }
