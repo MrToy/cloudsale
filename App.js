@@ -19,6 +19,7 @@ import UserSetting from './src/page/User/Setting';
 import UserSignin from './src/page/User/Signin';
 import UserAddress from './src/page/User/Address'
 import Ticketing from './src/page/Ticketing'
+import UserMessage from './src/page/User/Message'
 
 
 console.disableYellowBox = true;
@@ -63,6 +64,7 @@ const Routes = createStackNavigator({
 	UserSignin,
 	UserSetting,
 	UserAddress,
+	UserMessage,
 	Ticketing,
 }, {
 		navigationOptions: {
