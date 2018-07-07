@@ -15,7 +15,7 @@ export default class extends React.Component {
                     <TouchableEx key={i} onPress={()=>onItemPress(it.id)}>
                         <View style={{ width: "20%", height: "50%", alignItems: "center", justifyContent: "center" }}>
                             <FastImage style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{uri:it.imageUrl}} />
-                            <Text style={{ fontSize: scale(10) }}>{it.name}</Text>
+                            <Text style={{ fontSize: scale(10),color:"#6A617A" }}>{it.name}</Text>
                         </View>
                     </TouchableEx>
                 ))}
