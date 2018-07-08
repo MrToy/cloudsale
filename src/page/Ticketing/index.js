@@ -176,7 +176,7 @@ export default class extends React.Component {
                 "tokeninfo": UserStore.user.tokeninfo,
                 "client": 2,
                 "pay_way": typeMap[type],
-                "total": 0.1,
+                "total":parseFloat(price),
                 "phone": phone,
                 "departure_date": `${departure_date[0]}-${paddingZero(departure_date[1])}-${paddingZero(departure_date[2])}`,
                 "departure_time": `${paddingZero(departure_time[0])}:${paddingZero(departure_time[1])}`,
