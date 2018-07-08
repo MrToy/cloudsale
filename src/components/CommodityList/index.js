@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View,TouchableWithoutFeedback } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import TouchableEx from '../../components/TouchableEx';
 import addCart from '../../utils/cart';
 import { scale } from '../../utils/dimension';
-
 
 class CommodityList extends React.Component {
     static propTypes = {
@@ -25,12 +24,12 @@ class CommodityList extends React.Component {
                 <View style={{flexWrap:"wrap",flexDirection:"row"}}>
                     {list.map((it, i) => (
                         <View key={i} style={{ width: scale(186), backgroundColor: "#fff",marginRight:i%2==0?scale(3):0,marginBottom:scale(3) }}>
-                            <TouchableEx onPress={()=>navigation.navigate('Detail',{id:it.id})}>
+                            <TouchableWithoutFeedback onPress={()=>navigation.push('Detail',{id:it.id})}>
                                 <View>
                                     <Image style={{ width: scale(160), height: scale(160), marginTop: scale(22),marginLeft:scale(15),marginRight:scale(15),marginBottom:scale(13) }} source={{ uri: it.imageUrl }} />
                                     <Text numberOfLines={2} style={{ fontSize: scale(10), lineHeight: scale(14),height:scale(28), color: "#6A617A",margin:scale(8),marginBottom:0 }}>{it.name}</Text>
                                 </View>
-                            </TouchableEx>
+                            </TouchableWithoutFeedback>
                             <View style={{flexDirection:"row",justifyContent:"space-between",margin:scale(6),height:scale(35),alignItems:"center"}}>
                                 <Text style={{ fontSize: scale(13), lineHeight: scale(18), color: "#E339D3" }}>¥{it.price}</Text>
                                 <TouchableEx onPress={()=>addCart(it.id)}>
