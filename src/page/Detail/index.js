@@ -7,6 +7,7 @@ import NumberPicker from '../../components/NumberPicker';
 import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import Swiper from '../Main/Swiper';
+import addCart from '../../utils/cart';
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -48,7 +49,7 @@ class InfoCard extends React.Component {
 
 class BottomBar extends React.Component {
     render() {
-        const { onBuy } = this.props
+        const { onBuy,onAddCart } = this.props
         return (
             <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
                 <TouchableEx>
@@ -64,7 +65,7 @@ class BottomBar extends React.Component {
                     </View>
                 </TouchableEx>
                 <View style={{ flexDirection: "row" }}>
-                    <TouchableEx>
+                    <TouchableEx onPress={onAddCart}>
                         <View style={{ backgroundColor: "#ECE4F8", height: "100%", width: scale(131), justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontSize: scale(15), color: "#781EFD" }}>加入购物车</Text>
                         </View>
@@ -216,7 +217,7 @@ export default class extends React.Component {
                         ))}
                     </InfoCard>
                 </ScrollView>
-                <BottomBar onBuy={this.onBuy.bind(this)} />
+                <BottomBar onBuy={this.onBuy.bind(this)} onAddCart={()=>addCart(detail.id)} />
             </View>
         );
     }

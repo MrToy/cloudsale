@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, Text, View,Alert,AsyncStorage } from 'react-native';
+import { Image, Text, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import TouchableEx from '../../components/TouchableEx';
+import addCart from '../../utils/cart';
 import { scale } from '../../utils/dimension';
-import { withNavigation } from 'react-navigation'
-import Toast from 'react-native-root-toast'
-import UserStore from '../../utils/user'
-import {observer} from "mobx-react"
 
-@observer
+
 class CommodityList extends React.Component {
     static propTypes = {
         type: PropTypes.oneOf(["list", "grid"]),
@@ -18,24 +16,6 @@ class CommodityList extends React.Component {
             name:PropTypes.string,
             price:PropTypes.number
         }))
-    }
-    async addCart(id){
-        var user=UserStore.user
-        if(!user){
-            this.props.navigation.navigate('UserLogin')
-            return
-        }
-        var res = await fetch("https://www.bjzntq.com:8888/Commodity/addCart/", {
-            method: "POST",
-            body: JSON.stringify({
-                tokeninfo:user.tokeninfo,
-                commodity_id:id,
-                count:1
-            })
-        }).then(res => res.json())
-        Toast.show(res.message,{
-            position:Toast.positions.CENTER
-        })
     }
     render() {
         var { type, list,navigation } = this.props
@@ -53,7 +33,7 @@ class CommodityList extends React.Component {
                             </TouchableEx>
                             <View style={{flexDirection:"row",justifyContent:"space-between",margin:scale(6),height:scale(35),alignItems:"center"}}>
                                 <Text style={{ fontSize: scale(13), lineHeight: scale(18), color: "#E339D3" }}>¥{it.price}</Text>
-                                <TouchableEx onPress={()=>this.addCart(it.id)}>
+                                <TouchableEx onPress={()=>addCart(it.id)}>
                                     <Image style={{width:scale(30),height:scale(35),resizeMode:"contain"}} source={require("../../images/add_cart_icon.png")} />
                                 </TouchableEx>
                             </View>
