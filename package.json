@@ -32,6 +32,7 @@
     "react-native-easy-grid": "^0.1.17",
     "react-native-fast-image": "^4.0.14",
     "react-native-fit-image": "^1.5.4",
+    "react-native-picker": "^4.3.7",
     "react-native-platform-touchable": "^1.1.1",
     "react-native-root-toast": "^3.0.1",
     "react-native-splash-screen": "^3.0.9",

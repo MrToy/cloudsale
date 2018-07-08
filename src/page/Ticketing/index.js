@@ -2,15 +2,16 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../utils/dimension';
-import reqest from '../../utils/request'
-
+import request from '../../utils/request'
+import Picker from 'react-native-picker';
+import UserStore from '../../utils/user';
 
 const styles = StyleSheet.create({
     title: { fontSize: scale(17), color: "#6A617A", lineHeight: scale(24), marginBottom: scale(3) },
     inputBox: { height: scale(42), borderColor: "#C8BEDB", borderWidth: 1, flexDirection: "row", alignItems: "center", padding: scale(5), marginBottom: scale(7) },
     inputText: { fontSize: scale(14), color: "#A5A5A5" },
     labelText: { fontSize: scale(13), color: "#6A617A", marginLeft: scale(5) },
-    textInput: { fontSize: scale(14), flex: 1 }
+    textInput: { fontSize: scale(14), flex: 1,height:scale(42)}
 })
 
 const usage = `注意事项：
@@ -21,73 +22,186 @@ const usage = `注意事项：
 5、如有任何问题请联系：15102346835
 `
 
+class SelectInput extends React.Component {
+    openSelects() {
+        const { selects, onChange, value } = this.props
+        Picker.init({
+            pickerConfirmBtnText: "确定",
+            pickerCancelBtnText: "取消",
+            pickerTitleText: "",
+            pickerConfirmBtnColor: [120, 30, 253, 1],
+            pickerCancelBtnColor: [120, 30, 253, 1],
+            pickerToolBarBg: [255, 255, 255, 1],
+            pickerBg: [255, 255, 255, 1],
+            pickerData: selects,
+            onPickerConfirm: onChange,
+            selectedValue: value||undefined
+        })
+        Picker.show()
+    }
+    componentWillUnmount() {
+        Picker.hide()
+    }
+    render() {
+        var { valueDisplay, value, image, placeholder } = this.props
+        valueDisplay = valueDisplay || (val => val&&val[0])
+        value = valueDisplay(value)
+        return (
+            <Touchable onPress={this.openSelects.bind(this)}>
+                <View style={styles.inputBox}>
+                    <View style={{ width: scale(50) }}>
+                        <Image source={image} />
+                    </View>
+                    <Text style={[styles.inputText, value && { color: "#666" }]}>{value || placeholder}</Text>
+                </View>
+            </Touchable>
+        )
+    }
+}
+
+function genDate() {
+    var year = [2018]
+    var month = []
+    var day = []
+    for (let i = 0; i < 12; i++) {
+        month.push(i + 1)
+    }
+    for (let i = 0; i < 31; i++) {
+        day.push(i + 1)
+    }
+    return [year, month, day]
+}
+
+function genTime() {
+    var hour = []
+    var min = []
+    for (let i = 0; i < 24; i++) {
+        hour.push(i + 1)
+    }
+    for (let i = 0; i < 60; i++) {
+        min.push(i + 1)
+    }
+    return [hour,min]
+}
+
+function paddingZero(str){
+    str+=''
+    return str.length>1?str:('0'+str)
+}
+
 export default class extends React.Component {
     static navigationOptions = {
         title: '旅游票务',
         headerRight: <View />,
     }
-    state = {
-        "departure_place_id":null,
-        "destination_place_id":null
+    state={
+        departure: null,
+        destination: null,
+        departure_date: null,
+        departure_time: null,
+        departureList: [],
+        destinationList: [],
+    }
+    componentDidMount() {
+        if (!UserStore.user) {
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        this.fetchDepartureList()
+        this.fetchDestinationList()
+    }
+    async fetchDepartureList() {
+        var res = await request("https://www.bjzntq.com:8888/Ticket/getUniversityInfo/", {
+            tokeninfo: UserStore.user.tokeninfo
+        })
+        this.setState({
+            departureList: res.data || []
+        })
+    }
+    async fetchDestinationList() {
+        var res = await request("https://www.bjzntq.com:8888/Ticket/getDestinationInfo/", {
+            tokeninfo: UserStore.user.tokeninfo
+        })
+        this.setState({
+            destinationList: res.data || []
+        })
     }
     async onConfirm() {
 
     }
     render() {
+        const now=new Date()
         return (
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                 <ScrollView style={{ padding: scale(15) }}>
                     <Text style={styles.title}>用车信息</Text>
-                    <Touchable>
-                        <View style={styles.inputBox}>
-                            <View style={{ width: scale(50) }}>
-                                <Image source={require('../../images/school.png')} />
-                            </View>
-                            <Text style={styles.inputText}>请选择始发地</Text>
-                        </View>
-                    </Touchable>
-                    <Touchable>
-                        <View style={styles.inputBox}>
-                            <View style={{ width: scale(50) }}>
-                                <Image source={require('../../images/hometown.png')} />
-                            </View>
-                            <Text style={styles.inputText}>请选择目的地</Text>
-                        </View>
-                    </Touchable>
-                    <Touchable>
-                        <View style={styles.inputBox}>
-                            <View style={{ width: scale(50) }}>
-                                <Image source={require('../../images/calendar.png')} />
-                            </View>
-                            <Text style={styles.inputText}>请选择出发日前</Text>
-                        </View>
-                    </Touchable>
-                    <Touchable>
-                        <View style={styles.inputBox}>
-                            <View style={{ width: scale(50) }}>
-                                <Image source={require('../../images/时间.png')} />
-                            </View>
-                            <Text style={styles.inputText}>请选择出发时间</Text>
-                        </View>
-                    </Touchable>
+                    <SelectInput
+                        image={require('../../images/school.png')}
+                        placeholder="请选择始发地"
+                        selects={this.state.departureList.map(it => it.name)}
+                        value={this.state.departure ? [this.state.departure.label] : null}
+                        onChange={val => {
+                            let item=this.state.departureList.find(it => it.name == val[0])
+                            console.log(val)
+                            this.setState({
+                                departure: {
+                                    value: item.id,
+                                    label: val[0],
+                                }
+                            })
+                        }} />
+                    <SelectInput
+                        image={require('../../images/hometown.png')}
+                        placeholder="请选择目的地"
+                        selects={this.state.destinationList.map(it => it.name)}
+                        value={this.state.destination ? [this.state.destination.label] :null}
+                        onChange={val => this.setState({
+                            destination: {
+                                value: this.state.destinationList.find(it => it.name == val[0]).id,
+                                label: val[0],
+                            }
+                        })} />
+                    <SelectInput
+                        image={require('../../images/calendar.png')}
+                        placeholder="请选择出发日期"
+                        selects={genDate()}
+                        valueDisplay={val=>this.state.departure_date&&`${val[0]}-${paddingZero(val[1])}-${paddingZero(val[2])}`}
+                        value={this.state.departure_date||[now.getFullYear(), now.getMonth()+1, now.getDay()+1]}
+                        onChange={val => this.setState({ departure_date: val })} />
+                    <SelectInput
+                        image={require('../../images/时间.png')}
+                        placeholder="请选择出发时间"
+                        selects={genTime()}
+                        valueDisplay={val=>this.state.departure_time&&`${paddingZero(val[0])}:${paddingZero(val[1])}`}
+                        value={this.state.departure_time||[now.getHours(), now.getMinutes()]}
+                        onChange={val => this.setState({ departure_time: val })} />
                     <Text style={styles.title}>乘车人信息</Text>
                     <View style={styles.inputBox}>
                         <View style={{ width: scale(50) }}>
                             <Text style={styles.labelText}>姓名</Text>
                         </View>
-                        <TextInput placeholder="请输入你的姓名" style={styles.textInput} />
+                        <TextInput
+                            underlineColorAndroid='transparent'
+                            placeholder="请输入你的姓名"
+                            style={styles.textInput} />
                     </View>
                     <View style={styles.inputBox}>
                         <View style={{ width: scale(50) }}>
                             <Text style={styles.labelText}>身份证</Text>
                         </View>
-                        <TextInput placeholder="请输入身份证" style={styles.textInput} />
+                        <TextInput
+                            underlineColorAndroid='transparent'
+                            placeholder="请输入身份证"
+                            style={styles.textInput} />
                     </View>
                     <View style={styles.inputBox}>
                         <View style={{ width: scale(50) }}>
                             <Text style={styles.labelText}>电话</Text>
                         </View>
-                        <TextInput placeholder="请输入联系方式" style={styles.textInput} />
+                        <TextInput
+                            underlineColorAndroid='transparent'
+                            placeholder="请输入联系方式"
+                            style={styles.textInput} />
                     </View>
                     <View style={{ flexDirection: "row", marginTop: scale(12) }}>
                         <Text style={{ fontSize: scale(17), color: "#6A617A", flex: 1 }}>费用</Text>

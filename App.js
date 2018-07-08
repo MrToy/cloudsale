@@ -1,6 +1,7 @@
 import React from 'react';
 import * as WeChat from 'react-native-wechat';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import {Image} from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { scale } from './src/utils/dimension';
 import AboutUs from './src/page/AboutUs';
@@ -89,7 +90,9 @@ const Routes = createStackNavigator({
 				alignSelf: 'center',
 				flex: 1,
 				fontSize: scale(17)
-			}
+			},
+			headerBackTitle:null,
+			headerBackImage:<Image style={{marginLeft:scale(16)}} source={require('./src/images/back_icon.png')} />
 		}
 	})
 
