@@ -2,11 +2,8 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../utils/dimension';
-const addrData = [
-    { name: "寒桥", addr: "北京市朝阳区南湖中园一区120号楼9-101", id: 1 },
-    { name: "寒桥", addr: "北京市朝阳区南湖中园一区120号楼9-101", id: 2 },
-    { name: "寒桥", addr: "北京市朝阳区南湖中园一区120号楼9-101", id: 3 },
-]
+import request from '../../../utils/request'
+import UserStore from '../../../utils/user';
 
 const AddrItem = ({ name, addr, selected, onSelect,onEdit }) => (
     <Touchable onPress={onSelect}>
@@ -37,19 +34,37 @@ export default class PageUserAddress extends React.Component {
         ),
     })
     state = {
-        current: 1
+        list:[]
+    }
+    componentDidMount(){
+        this.fetchList()
+    }
+    async fetchList(){
+        var res=await request("https://www.bjzntq.com:8888/Account/getAddressList/",{
+            tokeninfo:UserStore.user.tokeninfo
+        })
+        this.setState({list:res.data||[]})
+    }
+    async setDefault(id){
+        await request("https://www.bjzntq.com:8888/Account/setDefaultAddress/",{
+            tokeninfo:UserStore.user.tokeninfo,
+            address_id:id
+        })
+        this.fetchList()
     }
     render() {
         return (
             <View style={{ backgroundColor: '#f1f1f1', height: "100%", paddingTop: scale(6) }}>
-                {addrData.map(it => (
+                {this.state.list.map(it => (
                     <AddrItem
-                        {...it}
-                        selected={this.state.current == it.id}
-                        onSelect={()=>this.setState({current:it.id})}
-                        onEdit={()=> this.props.navigation.navigate('UserEditAddress')} />
+                        key={it.id}
+                        name={it.recipients}
+                        addr={it.detail}
+                        selected={it.isdefault}
+                        onSelect={()=>this.setDefault(it.id)}
+                        onEdit={()=> this.props.navigation.navigate('UserEditAddress',{callback:this.fetchList.bind(this)})} />
                 ))}
-                <Touchable onPress={() => this.props.navigation.navigate('UserNewAddress')}>
+                <Touchable onPress={() => this.props.navigation.navigate('UserNewAddress',{callback:this.fetchList.bind(this)})}>
                     <View style={{ height: scale(41), backgroundColor: "#fff", flexDirection: "row", alignItems: "center", paddingHorizontal: scale(20) }}>
                         <Image source={require("../../../images/加.png")} />
                         <Text style={{ fontSize: scale(16), color: "#6B6B6B", marginLeft: scale(15), flex: 1 }}>新增地址</Text>
