@@ -47,7 +47,7 @@ export default class PayModal extends React.Component {
                         <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
                             <Text style={{ color: "#6A617A", fontSize: scale(14) }}>请选择支付方式</Text>
                             <Touchable onPress={this.close.bind(this)}>
-                                <Image source={require('../../images/删除按钮.png')} />
+                                <Image source={require('../../images/delbutton.png')} />
                             </Touchable>
                         </View>
                         <View style={{ justifyContent: "space-between", flexDirection: "row", marginTop: scale(18) }}>

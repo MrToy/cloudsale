@@ -27,6 +27,10 @@ export default class PageUserLogin extends React.Component {
         }
         await UserStore.setUserInfo(res.data)
         this.props.navigation.goBack()
+        var callback = this.props.navigation.getParam('callback')
+        if(callback){
+            callback()
+        }
         
     }
     render() {

@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, TextInput, ScrollView,Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, TextInput, ScrollView, Alert } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../utils/dimension';
 import request from '../../utils/request'
 import Picker from 'react-native-picker';
 import UserStore from '../../utils/user';
 import PayModal from '../../components/PayModal'
+import {alipayByInfo,wechatByInfo} from '../../utils/pay'
+import {StackActions,NavigationActions} from 'react-navigation'
 
 const styles = StyleSheet.create({
     title: { fontSize: scale(17), color: "#6A617A", lineHeight: scale(24), marginBottom: scale(3) },
@@ -27,6 +29,7 @@ class SelectInput extends React.Component {
     openSelects() {
         const { selects, onChange, value } = this.props
         Picker.init({
+            pickerTextEllipsisLen:18,
             pickerConfirmBtnText: "确定",
             pickerCancelBtnText: "取消",
             pickerTitleText: "",
@@ -34,7 +37,7 @@ class SelectInput extends React.Component {
             pickerCancelBtnColor: [120, 30, 253, 1],
             pickerToolBarBg: [255, 255, 255, 1],
             pickerBg: [255, 255, 255, 1],
-            pickerData: selects,
+            pickerData: selects||[],
             onPickerConfirm: onChange,
             selectedValue: value || undefined
         })
@@ -60,28 +63,40 @@ class SelectInput extends React.Component {
     }
 }
 
+// function genDate() {
+//     var year = [2018]
+//     var month = []
+//     var day = []
+//     for (let i = 0; i < 12; i++) {
+//         month.push(i + 1)
+//     }
+//     for (let i = 0; i < 31; i++) {
+//         day.push(i + 1)
+//     }
+//     return [year, month, day]
+// }
+
 function genDate() {
     var year = [2018]
-    var month = []
-    var day = []
-    for (let i = 0; i < 12; i++) {
-        month.push(i + 1)
-    }
-    for (let i = 0; i < 31; i++) {
-        day.push(i + 1)
-    }
+    var month = [7]
+    var day = [10, 11, 16, 17, 18, 19, 20, 21, 22]
     return [year, month, day]
 }
 
+// function genTime() {
+//     var hour = []
+//     var min = []
+//     for (let i = 0; i < 24; i++) {
+//         hour.push(i + 1)
+//     }
+//     for (let i = 0; i < 60; i++) {
+//         min.push(i + 1)
+//     }
+//     return [hour, min]
+// }
 function genTime() {
-    var hour = []
-    var min = []
-    for (let i = 0; i < 24; i++) {
-        hour.push(i + 1)
-    }
-    for (let i = 0; i < 60; i++) {
-        min.push(i + 1)
-    }
+    var hour = ['08', '10', '12', '14']
+    var min = ['00']
     return [hour, min]
 }
 
@@ -104,13 +119,18 @@ export default class extends React.Component {
         phone: null,
         name: null,
         idcard: null,
-        paying:false,
+        paying: false,
         departureList: [],
         destinationList: [],
     }
     componentDidMount() {
         if (!UserStore.user) {
-            this.props.navigation.navigate('UserLogin')
+            this.props.navigation.navigate('UserLogin',{
+                callback:()=>{
+                    this.fetchDepartureList()
+                    this.fetchDestinationList()
+                }
+            })
             return
         }
         this.fetchDepartureList()
@@ -133,7 +153,7 @@ export default class extends React.Component {
         })
     }
     async fetchPrice() {
-        if(!this.state.departure||!this.state.departure){
+        if (!this.state.departure || !this.state.destination) {
             return
         }
         var res = await request("https://www.bjzntq.com:8888/Ticket/getTicketPriceInfo/", {
@@ -145,12 +165,44 @@ export default class extends React.Component {
             price: res.data.price
         })
     }
-    async onPay(type){
-
+    async onPay(type) {
+        const typeMap = {
+            wechat: 1,
+            alipay: 2
+        }
+        const { departure, destination, departure_date, departure_time, price, phone, name, idcard } = this.state
+        try {
+            var res = await request("https://www.bjzntq.com:8888/Ticket/commitTicketInfo/", {
+                "tokeninfo": UserStore.user.tokeninfo,
+                "client": 2,
+                "pay_way": typeMap[type],
+                "total": 0.1,
+                "phone": phone,
+                "departure_date": `${departure_date[0]}-${paddingZero(departure_date[1])}-${paddingZero(departure_date[2])}`,
+                "departure_time": `${paddingZero(departure_time[0])}:${paddingZero(departure_time[1])}`,
+                "departure_place_id": departure.value,
+                "destination_place_id": destination.value,
+                "contacts": name,
+                "idcard": idcard
+            })
+        } catch (err) {
+            Alert.alert(err.message)
+            return
+        }
+        if(type=="alipay"){
+            await alipayByInfo(res.data)
+        }
+        if(type=="wechat"){
+            await wechatByInfo(res.data)
+        }
+        this.props.navigation.dispatch(StackActions.reset({ 
+            index: 0, 
+            actions: [NavigationActions.navigate({ routeName: 'Home' })], 
+        }))
     }
     async onConfirm() {
-        const {departure,destination,departure_date,departure_time,price,phone,name,idcard}=this.state
-        if(!departure||!destination||!departure_date||!departure_time||!price||!phone||!name||!idcard){
+        const { departure, destination, departure_date, departure_time, price, phone, name, idcard } = this.state
+        if (!departure || !destination || !departure_date || !departure_time || !price || !phone || !name || !idcard) {
             Alert.alert("信息填写不完整")
             return
         }
