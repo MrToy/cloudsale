@@ -8,6 +8,9 @@ import TouchableEx from '../../components/TouchableEx';
 import { scale } from '../../utils/dimension';
 import Swiper from '../Main/Swiper';
 import addCart from '../../utils/cart';
+import request from '../../utils/request'
+import UserStore from '../../utils/user';
+import Toast from 'react-native-root-toast';
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -49,10 +52,10 @@ class InfoCard extends React.Component {
 
 class BottomBar extends React.Component {
     render() {
-        const { onBuy,onAddCart } = this.props
+        const { onBuy,onAddCart,onFavor } = this.props
         return (
             <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
-                <TouchableEx>
+                <TouchableEx onPress={onFavor}>
                     <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
                         <Image source={require('../../images/my_collection_icon.png')} />
                         <Text style={{ fontSize: scale(12), color: "#F59100", marginTop: scale(3) }}>收藏</Text>
@@ -96,15 +99,26 @@ export default class extends React.Component {
         this.fetchCommodity(id)
     }
     async fetchCommodity(id) {
-        var res = await fetch("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
-            method: "POST",
-            body: JSON.stringify({
-                commodity_id: id
-            })
-        }).then(res => res.json())
+        var res = await request("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
+            commodity_id: id
+        })
         this.setState({
             specifica: res.data.specifications[0] && res.data.specifications[0].id,
             detail: res.data,
+        })
+    }
+    async addFavor(id){
+        var user=UserStore.user
+        if(!user){
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        var res=await request("https://www.bjzntq.com:8888/Commodity/collectCommodity/",{
+            "tokeninfo":user.tokeninfo,
+            "commodity_id":id
+        })
+        Toast.show(res.message,{
+            position:Toast.positions.CENTER
         })
     }
     onBuy(){
@@ -217,7 +231,10 @@ export default class extends React.Component {
                         ))}
                     </InfoCard>
                 </ScrollView>
-                <BottomBar onBuy={this.onBuy.bind(this)} onAddCart={()=>addCart(detail.id)} />
+                <BottomBar
+                    onBuy={this.onBuy.bind(this)}
+                    onAddCart={()=>addCart(detail.id)}
+                    onFavor={()=>this.addFavor(detail.id)} />
             </View>
         );
     }
