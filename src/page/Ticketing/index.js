@@ -157,7 +157,7 @@ export default class extends React.Component {
             return
         }
         var res = await request("https://www.bjzntq.com:8888/Ticket/getTicketPriceInfo/", {
-            "tokeninfo": "12$北极$$0$$$",
+            "tokeninfo": UserStore.user.tokeninfo,
             "departure_id": this.state.departure.value,
             "destination_id": this.state.destination.value
         })
