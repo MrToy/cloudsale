@@ -93,8 +93,7 @@ const Routes = createStackNavigator({
 				flex: 1,
 				fontSize: scale(17)
 			},
-			headerBackTitle:null,
-			headerBackImage:<Image style={{marginLeft:scale(16)}} source={require('./src/images/back_icon.png')} />
+			headerBackTitle:null
 		}
 	})
 
