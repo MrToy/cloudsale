@@ -1,7 +1,10 @@
 import React from 'react';
-import { Text, View, Image, FlatList } from 'react-native';
+import { Text, View, Image, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../../utils/dimension';
 import Touchable from 'react-native-platform-touchable'
+import request from '../../../utils/request'
+import UserStore from '../../../utils/user';
+import { withNavigation } from 'react-navigation';
 
 const SwitchBar = ({ list, onTab, current }) => (
     <View style={{ height: scale(49), flexDirection: "row", backgroundColor: "#fff" }}>
@@ -15,50 +18,91 @@ const SwitchBar = ({ list, onTab, current }) => (
     </View>
 )
 
-const CommodityItem = ({ image, name, spec, price, deduct_price }) => (
-    <View style={{ flexDirection: "row",height:scale(94),alignItems:"center",backgroundColor:"#fff",marginTop:scale(5) }}>
-        <Image source={{ uri: image }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 0.5 }} />
-        <View style={{ flex: 1, marginLeft: scale(9) }}>
-            <Text style={{ fontSize: scale(12), lineHeight: scale(16), color: "#6A617A" }} numberOfLines={2}>{name}</Text>
-            <Text style={{ fontSize: scale(11), lineHeight: scale(19), color: "#989898" }}>规格: {spec}</Text>
-            <View style={{flexDirection:"row"}}>
-                <Text style={{ fontSize: scale(13), lineHeight: scale(19), color: "#E339D3"}}>¥{price}</Text>
-                <Text style={{ fontSize: scale(13), lineHeight: scale(19), color: "#A1A1A1",marginLeft:scale(30),textDecorationLine:"line-through" }}>¥{deduct_price}</Text>
+const CommodityItem = ({ id, image, name, spec, price, deduct_price, navigation }) => (
+    <TouchableWithoutFeedback onPress={() => navigation.push('Detail', { id })}>
+        <View style={{ flexDirection: "row", height: scale(94), alignItems: "center", backgroundColor: "#fff", marginTop: scale(5), paddingHorizontal: scale(17) }}>
+            <Image source={{ uri: image }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 0.5 }} />
+            <View style={{ flex: 1, marginLeft: scale(9) }}>
+                <Text style={{ fontSize: scale(12), lineHeight: scale(16), color: "#6A617A" }} numberOfLines={2}>{name}</Text>
+                <Text style={{ fontSize: scale(11), lineHeight: scale(19), color: "#989898" }}>规格: {spec}</Text>
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: scale(13), lineHeight: scale(19), color: "#E339D3" }}>¥{price}</Text>
+                    <Text style={{ fontSize: scale(13), lineHeight: scale(19), color: "#A1A1A1", marginLeft: scale(30), textDecorationLine: "line-through" }}>¥{deduct_price}</Text>
+                </View>
             </View>
         </View>
-    </View>
+    </TouchableWithoutFeedback>
 )
 
-const CommodityData = [
-    {
-        image: "https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg",
-        name: "三只松鼠坚果炒货零食每日坚果炭烧腰果, 每日坚果90g/袋",
-        spec: "炭烧腰果90g",
-        price: 99,
-        deduct_price: 89
-    },
-    {
-        image: "https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg",
-        name: "三只松鼠坚果炒货零食每日坚果炭烧腰果, 每日坚果90g/袋",
-        spec: "炭烧腰果90g",
-        price: 99,
-        deduct_price: 89
-    },
-    {
-        image: "https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg",
-        name: "三只松鼠坚果炒货零食每日坚果炭烧腰果, 每日坚果90g/袋",
-        spec: "炭烧腰果90g",
-        price: 99,
-        deduct_price: 89
-    },
-    {
-        image: "https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg",
-        name: "三只松鼠坚果炒货零食每日坚果炭烧腰果, 每日坚果90g/袋",
-        spec: "炭烧腰果90g",
-        price: 99,
-        deduct_price: 89
+
+class CommodityList extends React.Component {
+    state = {
+        list: []
     }
-]
+    componentDidMount() {
+        this.fetchList()
+    }
+    async fetchList() {
+        var res = await request("https://www.bjzntq.com:8888/Commodity/getCollectCommodityList/", {
+            tokeninfo: UserStore.user.tokeninfo
+        })
+        this.setState({ list: res.data || [] })
+    }
+    render() {
+        return (
+            <FlatList
+                data={this.state.list}
+                renderItem={({ item }) => (
+                    <CommodityItem
+                        navigation={this.props.navigation}
+                        id={item.id}
+                        image={item.image_url}
+                        name={item.small_text}
+                        spec={item.specification_value}
+                        price={item.original_price}
+                        deduct_price={item.deduct_price} />
+                )} />
+        )
+    }
+}
+
+const ShopItem = ({ logo, address, shop_id, name,navigation }) => (
+    <TouchableWithoutFeedback onPress={() => navigation.push('ShopDetail', { shopId: shop_id,shopName:name })}>
+        <View style={{ flexDirection: "row", height: scale(94), alignItems: "center", backgroundColor: "#fff", marginTop: scale(5), paddingHorizontal: scale(17) }}>
+            <Image source={{ uri: logo }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 0.5 }} />
+            <View style={{ flex: 1, marginLeft: scale(9) }}>
+                <Text style={{ fontSize: scale(12), lineHeight: scale(16), color: "#6A617A" }} numberOfLines={2}>{name}</Text>
+                <Text style={{ fontSize: scale(11), lineHeight: scale(19), color: "#989898" }}>{address}</Text>
+            </View>
+        </View>
+    </TouchableWithoutFeedback>
+)
+
+
+class ShopList extends React.Component {
+    state = {
+        list: []
+    }
+    componentDidMount() {
+        this.fetchList()
+    }
+    async fetchList() {
+        var res = await request("https://www.bjzntq.com:8888/ShopMall/getCollectShopList/", {
+            tokeninfo: UserStore.user.tokeninfo
+        })
+        this.setState({ list: res.data || [] })
+    }
+    render() {
+        return (
+            <FlatList
+                data={this.state.list}
+                renderItem={({ item }) => (
+                    <ShopItem {...item} navigation={this.props.navigation} />
+                )} />
+        )
+    }
+}
+
 
 export default class PageUserFavor extends React.Component {
     static navigationOptions = {
@@ -66,7 +110,8 @@ export default class PageUserFavor extends React.Component {
         headerRight: <View />,
     }
     state = {
-        tab: 0
+        tab: 0,
+
     }
     render() {
         const list = [
@@ -79,9 +124,11 @@ export default class PageUserFavor extends React.Component {
                     list={list}
                     current={this.state.tab}
                     onTab={id => this.setState({ tab: id })} />
-                <FlatList
-                    data={CommodityData}
-                    renderItem={({ item }) => <CommodityItem {...item} />} />
+                {this.state.tab == 0 ? (
+                    <CommodityList navigation={this.props.navigation} />
+                ) : (
+                        <ShopList navigation={this.props.navigation} />
+                    )}
             </View>
         )
     }

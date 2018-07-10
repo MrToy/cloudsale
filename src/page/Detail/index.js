@@ -11,6 +11,7 @@ import request from '../../utils/request'
 import UserStore from '../../utils/user';
 import Toast from 'react-native-root-toast';
 import Touchable from 'react-native-platform-touchable'
+import {setFootprint} from '../../utils/footprint';
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -76,6 +77,7 @@ export default class extends React.Component {
             isCollect: res.data.is_collect == 1,
             isShopCollect: res.data.shop_collected == 1
         })
+        setFootprint(res.data)
     }
     async addFavor(id) {
         var user = UserStore.user
