@@ -25,10 +25,10 @@ const AddrItem = ({ name, addr, selected, onSelect,onEdit }) => (
 )
 
 export default class PageUserAddress extends React.Component {
-    static navigationOptions = ({navigation})=>({
+    static navigationOptions = {
         title: '我的地址',
         headerRight: <View />,
-    })
+    }
     state = {
         list:[]
     }
@@ -58,7 +58,7 @@ export default class PageUserAddress extends React.Component {
                         addr={it.detail}
                         selected={it.isdefault}
                         onSelect={()=>this.setDefault(it.id)}
-                        onEdit={()=> this.props.navigation.navigate('UserEditAddress',{callback:this.fetchList.bind(this)})} />
+                        onEdit={()=> this.props.navigation.navigate('UserEditAddress',{callback:this.fetchList.bind(this),addr:it})} />
                 ))}
                 <Touchable onPress={() => this.props.navigation.navigate('UserNewAddress',{callback:this.fetchList.bind(this)})}>
                     <View style={{ height: scale(41), backgroundColor: "#fff", flexDirection: "row", alignItems: "center", paddingHorizontal: scale(20) }}>

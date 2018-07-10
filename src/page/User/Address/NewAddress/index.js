@@ -29,6 +29,7 @@ export default class PageUserNewAddress extends React.Component {
         phone:null,
         addr:null,
         detail:null,
+        postcode:null,
     }
     constructor(props){
         super(props)
@@ -86,7 +87,9 @@ export default class PageUserNewAddress extends React.Component {
                     onChangeText={str=>this.setState({detail:str})}  />
                 <InputItem
                     label="邮政编码"
-                    placeholder="邮政编码" />
+                    placeholder="邮政编码"
+                    value={this.state.postcode}
+                    onChangeText={str=>this.setState({postcode:str})} />
             </View>
         )
     }

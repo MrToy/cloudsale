@@ -78,7 +78,7 @@ export default class PageSelectAddress extends React.Component {
                         addr={it.detail}
                         selected={this.state.current==i}
                         onSelect={()=>this.setState({current:i})}
-                        onEdit={()=> this.props.navigation.navigate('UserEditAddress',{callback:this.fetchList.bind(this)})} />
+                        onEdit={()=> this.props.navigation.navigate('UserEditAddress',{callback:this.fetchList.bind(this),addr:it})} />
                 ))}
                 <Touchable onPress={() => this.props.navigation.navigate('UserNewAddress',{callback:this.fetchList.bind(this)})}>
                     <View style={{ height: scale(41), backgroundColor: "#fff", flexDirection: "row", alignItems: "center", paddingHorizontal: scale(20) }}>
