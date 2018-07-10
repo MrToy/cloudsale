@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View,Alert } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
 import { scale } from '../../utils/dimension';
@@ -7,6 +7,7 @@ import { alipay, wechatPay } from '../../utils/pay';
 import UserStore from '../../utils/user'
 import { observer } from "mobx-react"
 import Checkbox from '../../components/Checkbox'
+import request from '../../utils/request'
 
 class OrderSubmitPage extends React.Component {
     static navigationOptions = {
@@ -16,11 +17,22 @@ class OrderSubmitPage extends React.Component {
     state = {
         list: [],
         orderId: null,
-        payway: "wechat"
+        payway: "wechat",
+        addr:null,
     }
     componentDidMount() {
         const list = this.props.navigation.getParam('list')
         this.setState({ list: list || [] })
+        this.fetchAddr()
+    }
+    async fetchAddr(){
+        var res=await request("https://www.bjzntq.com:8888/Account/getDefaultAddress/",{
+            "tokeninfo":UserStore.user.tokeninfo
+        })
+        if(!res.data||!res.data.id){
+            return
+        }
+        this.setState({addr:res.data})
     }
     getSelectList() {
         var list = []
@@ -36,6 +48,10 @@ class OrderSubmitPage extends React.Component {
         return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
     }
     async onConfirm() {
+        if(!this.state.addr){
+            Alert.alert("请选择一个地址")
+            return
+        }
         var user = UserStore.user
         if (!user) {
             this.props.navigation.navigate('UserLogin')
@@ -43,7 +59,7 @@ class OrderSubmitPage extends React.Component {
         }
         var { payway, orderId } = this.state
         if (!orderId) {
-            orderId = await this.createOrder(user.tokeninfo)
+            orderId = await this.createOrder(user.tokeninfo,this.state.addr.id)
             this.setState({ orderId })
         }
         if (payway == "alipay") {
@@ -53,7 +69,15 @@ class OrderSubmitPage extends React.Component {
             await wechatPay(user.tokeninfo, orderId)
         }
     }
-    async createOrder(token) {
+    selectAddress(){
+        this.props.navigation.navigate('SelectAddress',{
+            onSelect:(addr)=>{
+                this.setState({addr})
+            },
+            currentId:this.state.addr?this.state.addr.id:null
+        })
+    }
+    async createOrder(token,addrId) {
         var goods = []
         this.state.list.forEach(it => {
             it.goodsList.forEach(good => {
@@ -67,7 +91,7 @@ class OrderSubmitPage extends React.Component {
                 order_commodity_id: goods.map(it => it.commodityId || 'null').join(","),
                 order_commodity_num: goods.map(it => it.count || 'null').join(","),
                 specifications_value_id: goods.map(it => it.specificationsId || 'null').join(","),
-                address_id: 16,
+                address_id: addrId,
                 total: goods.map(it => it.deductPrice).reduce((a, b) => a + b)
             })
         }).then(res => res.json())
@@ -84,12 +108,12 @@ class OrderSubmitPage extends React.Component {
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                 <ScrollView>
                     <Image source={require("../../images/color_line_icon.png")} style={{ width: "100%", height: scale(4), marginTop: 1 }} />
-                    <Touchable onPress={() => this.props.navigation.navigate('UserAddress')} >
+                    <Touchable onPress={this.selectAddress.bind(this)} >
                         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
                             <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22), marginLeft: scale(18), marginRight: scale(15) }} />
                             <View style={{ flex: 1 }}>
-                                <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: </Text>
-                                <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: </Text>
+                                <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: {this.state.addr&&this.state.addr.recipients}</Text>
+                                <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: {this.state.addr&&this.state.addr.detail}</Text>
                             </View>
                             <Image source={require("../../images/right_indicator.png")} style={{ marginRight: scale(20), marginLeft: scale(15) }} />
                         </View>

@@ -1,7 +1,6 @@
 import React from 'react';
 import * as WeChat from 'react-native-wechat';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-import {Image} from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { scale } from './src/utils/dimension';
 import AboutUs from './src/page/AboutUs';
@@ -21,13 +20,14 @@ import UserSignin from './src/page/User/Signin';
 import UserAddress from './src/page/User/Address'
 import UserNewAddress from './src/page/User/Address/NewAddress'
 import UserEditAddress from './src/page/User/Address/EditAddress'
+import SelectAddress from './src/page/User/Address/SelectAddress'
+
 import Ticketing from './src/page/Ticketing'
 import UserMessage from './src/page/User/Message'
 import UserFavor from './src/page/User/Favor'
 import UserFootprint from './src/page/User/Footprint'
 import TicketingList from './src/page/TicketingList'
 import ShopDetail from './src/page/ShopDetail'
-
 
 console.disableYellowBox = true;
 
@@ -73,6 +73,7 @@ const Routes = createStackNavigator({
 	UserAddress,
 	UserNewAddress,
 	UserEditAddress,
+	SelectAddress,
 	UserMessage,
 	UserFavor,
 	UserFootprint,
