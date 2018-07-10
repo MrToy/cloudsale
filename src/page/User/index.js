@@ -137,7 +137,7 @@ class PageUser extends React.Component {
                         style={{ borderLeftWidth: scale(0.5), borderLeftColor: "#F2F2F2" }}
                         text="全部订单"
                         image={require('../../images/all_order_icon.png')}
-                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 4 })} />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 5 })} />
                 </View>
                 <View style={{ marginTop: 6 }}>
                     <ListMenuItem

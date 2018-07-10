@@ -63,7 +63,7 @@ class PageUserOrder extends React.Component {
         headerRight: <View />,
     }
     state = {
-        type: 4,
+        type: 5,
         searchKey: "",
         list: [],
         order_id: null,
@@ -72,7 +72,7 @@ class PageUserOrder extends React.Component {
     componentDidMount() {
         var type = this.props.navigation.getParam('type')
         if (type === null) {
-            type = 4
+            type = 5
         }
         this.onTab(type)
     }
@@ -118,7 +118,7 @@ class PageUserOrder extends React.Component {
                 </View>
                 <View style={{ height: scale(49), flexDirection: "row", backgroundColor: "#fff", marginTop: scale(5) }}>
                     {[
-                        { type: 4, text: "全部订单" },
+                        { type: 5, text: "全部订单" },
                         { type: 0, text: "待付款" },
                         { type: 1, text: "待收货" },
                         { type: 2, text: "待评价" },
