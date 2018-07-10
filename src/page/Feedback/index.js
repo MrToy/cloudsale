@@ -20,7 +20,7 @@ class ListMenuItem extends React.Component {
     }
 }
 
-export default class extends React.Component {
+export default class PageFeedback extends React.Component {
     static navigationOptions = {
         title: '意见反馈',
         headerRight: <View />,
@@ -84,7 +84,7 @@ export default class extends React.Component {
                                 placeholder="如果您对我们有什么建议、想法和期望，请告诉我们" />
                         </View>
                         <View style={{justifyContent:"flex-end",flexDirection:"row",paddingHorizontal:scale(13),paddingVertical:scale(5)}}>
-                            <Text style={{color:"#A4A0AA",fontSize:scale(12),lineHeight:scale(17)}}>{this.state.message.length}/500</Text>
+                            <Text style={{color:"#A4A0AA",fontSize:scale(12),lineHeight:scale(17)}}>{this.state.message&&this.state.message.length}/500</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: "row", height: scale(39), marginTop: 1, backgroundColor: "#fff",alignItems:"center",paddingHorizontal:scale(14) }}>
