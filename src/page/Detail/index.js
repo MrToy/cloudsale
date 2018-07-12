@@ -2,16 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import FitImage from 'react-native-fit-image';
+import Touchable from 'react-native-platform-touchable';
+import Toast from 'react-native-root-toast';
 import CommodityList from '../../components/CommodityList';
 import NumberPicker from '../../components/NumberPicker';
-import { scale } from '../../utils/dimension';
-import Swiper from '../Main/Swiper';
 import addCart from '../../utils/cart';
-import request from '../../utils/request'
+import { scale } from '../../utils/dimension';
+import request from '../../utils/request';
 import UserStore from '../../utils/user';
-import Toast from 'react-native-root-toast';
-import Touchable from 'react-native-platform-touchable'
-import {setFootprint} from '../../utils/footprint';
+import Swiper from '../Main/Swiper';
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -66,18 +65,27 @@ export default class extends React.Component {
     componentDidMount() {
         const id = this.props.navigation.getParam('id')
         this.fetchCommodity(id)
+        this.addRecord(id)
+    }
+    async addRecord(id){
+        if(!UserStore.user){
+            return
+        }
+        await request("https://www.bjzntq.com:8888/Commodity/addBrowseRecord/", {
+            commodity_id: id,
+            tokeninfo:UserStore.user.tokeninfo
+        })
     }
     async fetchCommodity(id) {
         var res = await request("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
             commodity_id: id
         })
         this.setState({
-            specifica: res.data.specifications[0] && res.data.specifications[0].id,
+            specifica: res.data.specifications &&res.data.specifications[0] && res.data.specifications[0].id,
             detail: res.data,
             isCollect: res.data.is_collect == 1,
             isShopCollect: res.data.shop_collected == 1
         })
-        setFootprint(res.data)
     }
     async addFavor(id) {
         var user = UserStore.user

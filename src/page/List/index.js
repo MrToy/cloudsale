@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View,AsyncStorage } from 'react-native';
 import { scale } from '../../utils/dimension';
 import SearchButton from '../Main/SearchButton';
+import request from '../../utils/request';
 
 
 const styles = StyleSheet.create({
@@ -101,23 +102,13 @@ export default class extends React.Component {
         this.onVisibleChange=this.onVisibleChange.bind(this)
     }
     async fetchList() {
-        var data
-        try{
-            data=JSON.parse(await AsyncStorage.getItem('list.data'))
-        }catch(err){
-            //
-        }
-        if(!data){
-            var res = await fetch("https://www.bjzntq.com:8888//Commodity/getCategoryList/", { method: "POST" }).then(res => res.json())
-            if (res.result != 200) {
-                return
-            }
-            data=res.data
-        }
+        var res = await request("https://www.bjzntq.com:8888//Commodity/getCategoryList/")
         this.setState({
-            list:data
+            list:res.data||[]
         })
-        await AsyncStorage.setItem('list.data', JSON.stringify(data))
+        if(res.data){
+            await AsyncStorage.setItem('list.data', JSON.stringify(res.data))
+        }
     }
     onIndex(i){
         this._CateList.scrollToIndex({index:i,viewOffset:-1,animated:false})
@@ -128,7 +119,18 @@ export default class extends React.Component {
             this.setState({cateIndex:info.viewableItems[0].index})
         }
     }
+    async preFetchList(){
+        try{
+            var data=JSON.parse(await AsyncStorage.getItem('list.data'))
+        }catch(err){
+            return
+        }
+        if(!this.state.list.length){
+            this.setState({list:data})
+        }
+    }
     componentDidMount() {
+        this.preFetchList()
         this.fetchList()
     }
     render() {

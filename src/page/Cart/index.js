@@ -8,9 +8,9 @@ import NumberPicker from '../../components/NumberPicker';
 import { scale } from '../../utils/dimension';
 import request from '../../utils/request';
 import UserStore from '../../utils/user';
+import {StackActions,NavigationActions} from 'react-navigation'
 
-@observer
-export default class CartPage extends React.Component {
+class CartPage extends React.Component {
 	static navigationOptions = {
 		title: '购物车',
 		tabBarIcon: ({ focused }) => (
@@ -155,7 +155,25 @@ export default class CartPage extends React.Component {
 			position: Toast.positions.CENTER
 		})
 	}
+	goHome(){
+		this.props.navigation.dispatch(StackActions.reset({ 
+            index: 0, 
+            actions: [NavigationActions.navigate({ routeName: 'Home' })], 
+        }))
+	}
 	render() {
+		if (!this.state.list.length) {
+			return (
+				<View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}>
+					<Image source={require('../../images/empty_cart.png')} />
+					<View style={{ paddingHorizontal: scale(20),width:"100%" }}>
+						<Touchable style={{ width: "100%", height: scale(42), borderRadius: scale(21), backgroundColor: "#781EFD", justifyContent: "center", alignItems: "center", marginTop: scale(14) }} onPress={this.goHome.bind(this)}>
+							<Text style={{ color: "#fff", fontSize: scale(15) }}>去逛逛～</Text>
+						</Touchable>
+					</View>
+				</View>
+			)
+		}
 		return (
 			<View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
 				<ScrollView style={{ flex: 1, margin: scale(5) }}>
@@ -203,3 +221,5 @@ export default class CartPage extends React.Component {
 		);
 	}
 }
+
+export default observer(CartPage)

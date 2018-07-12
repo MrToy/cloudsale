@@ -2,6 +2,9 @@ import React from 'react';
 import { Image, Text, View,TextInput,Alert } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { scale } from '../../../../utils/dimension';
+import request from '../../../../utils/request';
+import Toast from 'react-native-root-toast';
+import UserStore from '../../../../utils/user';
 
 const InputItem=({label,placeholder,rightItem,numberOfLines,value,onChangeText})=>(
     <View style={{backgroundColor:"#fff",flexDirection:"row",alignItems:"center",paddingLeft:scale(17),paddingRight:scale(26),paddingVertical:scale(12),marginBottom:1}}>
@@ -34,7 +37,24 @@ export default class PageUserEditAddress extends React.Component {
         this.setState({addr})
     }
     async onSave(){
-        Alert.alert("暂不支持修改地址")
+        const {recipients,county,area,province,phone,detail,municipality,id}=this.state.addr
+        if(!recipients||!phone||!province||!detail){
+            Alert.alert("请填写完整")
+            return
+        }
+        var res=await request("https://www.bjzntq.com:8888/Account/updateAddress/",{
+            tokeninfo:UserStore.user.tokeninfo,
+            address_id:id,
+            recipients,county,area,province,phone,detail,municipality
+        })
+        Toast.show(res.message, {
+			position: Toast.positions.CENTER
+        })
+        this.props.navigation.goBack()
+        var callback = this.props.navigation.getParam('callback')
+        if(callback){
+            callback()
+        }
     }
     setAddr(data){
         this.setState({addr:{
@@ -68,11 +88,11 @@ export default class PageUserEditAddress extends React.Component {
                     value={this.state.addr.detail}
                     onChangeText={str=>this.setAddr({detail:str})}
                     placeholder="街道门牌信息" />
-                <InputItem
+                {/* <InputItem
                     label="邮政编码"
                     placeholder="邮政编码"
                     value={this.state.addr.postcode}
-                    onChangeText={str=>this.setAddr({postcode:str})} />
+                    onChangeText={str=>this.setAddr({postcode:str})} /> */}
             </View>
         )
     }

@@ -2,6 +2,8 @@ import React from 'react';
 import { Image, ScrollView, Text, View,TouchableWithoutFeedback } from 'react-native';
 import { scale } from '../../../utils/dimension';
 import { getFootprintList } from '../../../utils/footprint';
+import request from '../../../utils/request';
+import UserStore from '../../../utils/user'
 
 
 const CommodityItem = ({ id, image, name, spec, price, deduct_price, navigation }) => (
@@ -32,8 +34,15 @@ export default class PageUserFavor extends React.Component {
         this.fetchList()
     }
     async fetchList() {
-        var list = await getFootprintList()
-        this.setState({ list })
+        var user = UserStore.user
+        if (!user) {
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        var res = await request("https://www.bjzntq.com:8888/Commodity/getBrowseRecord/",{
+            tokeninfo:user.tokeninfo
+        })
+        this.setState({ list:res.data||[] })
     }
     render() {
         return (
@@ -42,10 +51,10 @@ export default class PageUserFavor extends React.Component {
                     <View>
                         {this.state.list.map(item => (
                             <CommodityItem
-                                key={item.id}
+                                key={item.commodity_id}
                                 navigation={this.props.navigation}
-                                id={item.id}
-                                image={item.banner&&item.banner[0].image_url}
+                                id={item.commodity_id}
+                                image={item.image_url}
                                 name={item.small_text}
                                 spec={item.specification_value}
                                 price={item.original_price}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { scale } from '../../../utils/dimension';
+import request from '../../../utils/request';
 
 
 const TimeTip = ({ time }) => (
@@ -31,27 +32,31 @@ export default class PageUserMessage extends React.Component {
         title: '我的消息',
         headerRight: <View />,
     }
+    state={
+        list:[]
+    }
+    async fetchList(){
+        var user = UserStore.user
+        if (!user) {
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        var res=await request("https://www.bjzntq.com:8888/ShopMall/getMessageList/",{
+            tokeninfo:user.tokeninfo
+        })
+        this.setState({ list:res.data||[] })
+    }
     render() {
         return (
             <View style={{ backgroundColor: '#f1f1f1', height: "100%", paddingTop: scale(10) }}>
-                <TimeTip time="2018年3月15日" />
-                <MessageBox
-                    tip="订单派送中…"
-                    name="珀莱雅 （PROYA ）海洋透皙白特惠装提亮肤色"
-                    image="https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg"
-                    code="17676888765" />
-                <TimeTip time="2018年3月15日" />
-                <MessageBox
-                    tip="订单签收中…"
-                    name="珀莱雅 （PROYA ）海洋透皙白特惠装提亮肤色"
-                    image="https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg"
-                    code="17676888765" />
-                <TimeTip time="2018年3月15日" />
-                <MessageBox
-                    tip="退款提醒：您的10元退款进度更新"
-                    name="珀莱雅 （PROYA ）海洋透皙白特惠装提亮肤色"
-                    image="https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg"
-                    code="17676888765" />
+                <TimeTip time="2018年7月13日" />
+                {this.state.list.map(it=>(
+                     <MessageBox
+                        tip="订单派送中…"
+                        name="珀莱雅 （PROYA ）海洋透皙白特惠装提亮肤色"
+                        image="https://img12.360buyimg.com/mobilecms/s220x220_jfs/t20665/271/1729059806/78454/8fe47314/5b333b1cN3a338857.jpg"
+                        code="17676888765" />
+                ))}
             </View>
         )
     }
