@@ -1,12 +1,14 @@
+import { observer } from "mobx-react";
 import React from 'react';
-import { FlatList, Image, Text, TouchableWithoutFeedback, View, Modal,Animated,Easing } from 'react-native';
+import { Alert, FlatList, Image, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
+import Toast from 'react-native-root-toast';
+import PayModal from '../../../components/PayModal';
 import { scale } from '../../../utils/dimension';
-import SearchButton from '../../Main/SearchButton';
-import UserStore from '../../../utils/user';
 import { alipay, wechatPay } from '../../../utils/pay';
-import {observer} from "mobx-react"
-import PayModal from '../../../components/PayModal'
+import request from '../../../utils/request';
+import UserStore from '../../../utils/user';
+import SearchButton from '../../Main/SearchButton';
 
 class PayOrder extends React.Component {
     render() {
@@ -43,7 +45,7 @@ class PayOrder extends React.Component {
                     <Text style={{ color: "#E339D3", fontSize: scale(16) }}>¥{order.order_total}</Text>
                 </View>
                 <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", marginBottom: scale(13) }}>
-                    <Touchable style={{ width: scale(100), height: scale(31), marginRight: scale(13), backgroundColor: "#ECE4F8", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
+                    <Touchable onPress={() => this.props.onCancle(order.order_code)} style={{ width: scale(100), height: scale(31), marginRight: scale(13), backgroundColor: "#ECE4F8", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
                         <Text style={{ color: "#781EFD", fontSize: scale(13) }}>取消订单</Text>
                     </Touchable>
                     <Touchable onPress={() => this.props.onPay(order.order_code)} style={{ width: scale(100), height: scale(31), marginRight: scale(18), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(4) }}>
@@ -80,6 +82,28 @@ class PageUserOrder extends React.Component {
         this.setState({ type }, () => {
             this.fetchList()
         })
+    }
+    async removeOrder(index){
+        var res=await request("https://www.bjzntq.com:8888/Order/CancelOrder/",{
+            tokeninfo: UserStore.user.tokeninfo,
+            order_code:this.state.list[index].order_code
+        })
+        Toast.show(res.message, {
+            position: Toast.positions.CENTER
+        })
+        var list=[...this.state.list]
+        list.splice(index,1)
+        this.setState({list})
+    }
+    onCancle(index){
+        Alert.alert("确认删除?", null, [
+			{ text: "取消" },
+			{
+				text: "确定", onPress: () => {
+					this.removeOrder(index)
+				}
+			}
+		])
     }
     async fetchList() {
         this.setState({ loading: true })
@@ -136,8 +160,8 @@ class PageUserOrder extends React.Component {
                     refreshing={this.state.loading}
                     onRefresh={this.fetchList.bind(this)}
                     data={this.state.list}
-                    renderItem={({ item }) => (
-                        <PayOrder data={item} key={item.order_id} onPay={id => this.setState({ order_id: id })} />
+                    renderItem={({ item,index }) => (
+                        <PayOrder data={item} key={item.order_id} onPay={id => this.setState({ order_id: id })} onCancle={()=>this.onCancle(index)} />
                     )} />
                 <PayModal
                     visible={this.state.order_id != null}
