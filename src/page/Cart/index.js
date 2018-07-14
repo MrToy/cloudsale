@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import React from 'react';
+import LoadImage from '../../components/LoadImage';
 import { Alert, Image, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
@@ -97,7 +98,6 @@ class CartPage extends React.Component {
 		var selects = this.state.selects
 		var list = []
 		for (let j = 0; j < this.state.list.length; j++) {
-			let goodsList = []
 			for (let i = 0; i < this.state.list[j].goodsList.length; i++) {
 				if (selects[this.state.list[j].goodsList[i].commodityId]) {
 					list.push(this.state.list[j].goodsList[i])
@@ -105,6 +105,14 @@ class CartPage extends React.Component {
 			}
 		}
 		return list
+	}
+	getSelectListLength(){
+		var i=0
+		var list=this.getSelectList()
+		list.forEach(it=>{
+			i+=it.count||0
+		})
+		return i
 	}
 	getSelectPrice() {
 		var list = this.getSelectList()
@@ -187,7 +195,7 @@ class CartPage extends React.Component {
 								<TouchableWithoutFeedback key={ii} onPress={() => this.props.navigation.push('Detail', { id: itit.commodityId })}>
 									<View style={{ flexDirection: "row", alignItems: "center", borderTopColor: "#ECECEC", borderTopWidth: 1, padding: scale(10) }}>
 										<Checkbox value={!!this.state.selects[itit.commodityId]} onChange={v => this.onSelect(itit.commodityId, v)} />
-										<Image source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80), marginLeft: scale(10), marginRight: scale(8) }} />
+										<LoadImage source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80), marginLeft: scale(10), marginRight: scale(8) }} />
 										<View style={{ height: "100%", flex: 1 }}>
 											<Text numLines={2} style={{ fontSize: scale(12), color: '#6A617A', height: scale(32), width: scale(145) }}>{itit.smallText}</Text>
 											<Text style={{ fontSize: scale(11), color: '#989898', marginTop: 1, flex: 1 }}>规格: {itit.specificationsValue}</Text>
@@ -211,7 +219,7 @@ class CartPage extends React.Component {
 				</ScrollView>
 				<View style={{ flexDirection: "row", alignItems: "center", height: scale(60), backgroundColor: "#fff", padding: scale(10) }}>
 					<Checkbox value={this.isSelectGroupAll()} onChange={v => this.onSelectGroupAll(v)} />
-					<Text style={{ fontSize: scale(15), color: '#6A617A', marginLeft: scale(11), flex: 1 }}>全选 ({this.getSelectList().length})</Text>
+					<Text style={{ fontSize: scale(15), color: '#6A617A', marginLeft: scale(11), flex: 1 }}>全选 ({this.getSelectListLength()})</Text>
 					<Text style={{ fontSize: scale(17), color: '#E339D3', marginRight: scale(17) }}>¥ {this.getSelectPrice()}</Text>
 					<Touchable onPress={this.submit.bind(this)} style={{ justifyContent: "center", alignItems: "center", width: scale(68), height: scale(31), backgroundColor: "#781efd", borderRadius: scale(4) }}>
 						<Text style={{ color: "#fff" }}>结算</Text>
