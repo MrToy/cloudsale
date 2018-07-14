@@ -9,7 +9,7 @@ import UserStore from '../../../../utils/user';
 const InputItem=({label,placeholder,rightItem,numberOfLines,value,onChangeText})=>(
     <View style={{backgroundColor:"#fff",flexDirection:"row",alignItems:"center",paddingLeft:scale(17),paddingRight:scale(26),paddingVertical:scale(12),marginBottom:1}}>
         <Text style={{width:scale(73),fontSize:scale(14),color:"#020202"}}>{label}</Text>
-        <TextInput style={{flex:1}} placeholder={placeholder} onChangeText={onChangeText} value={value} />
+        <TextInput style={{flex:1}} placeholder={placeholder} onChangeText={onChangeText} value={value} underlineColorAndroid="transparent" />
         {rightItem}
     </View>
 )
