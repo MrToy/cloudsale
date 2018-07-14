@@ -67,21 +67,22 @@ export default class extends React.Component {
         this.fetchCommodity(id)
         this.addRecord(id)
     }
-    async addRecord(id){
-        if(!UserStore.user){
+    async addRecord(id) {
+        if (!UserStore.user) {
             return
         }
         await request("https://www.bjzntq.com:8888/Commodity/addBrowseRecord/", {
             commodity_id: id,
-            tokeninfo:UserStore.user.tokeninfo
+            tokeninfo: UserStore.user.tokeninfo
         })
     }
     async fetchCommodity(id) {
         var res = await request("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
-            commodity_id: id
+            commodity_id: id,
+            tokeninfo: UserStore.user ? UserStore.user.tokeninfo : null
         })
         this.setState({
-            specifica: res.data.specifications &&res.data.specifications[0] && res.data.specifications[0].id,
+            specifica: res.data.specifications && res.data.specifications[0] && res.data.specifications[0].id,
             detail: res.data,
             isCollect: res.data.is_collect == 1,
             isShopCollect: res.data.shop_collected == 1
@@ -100,14 +101,34 @@ export default class extends React.Component {
         Toast.show(res.message, {
             position: Toast.positions.CENTER
         })
-    }
-    setSpecifica(it){
         this.setState({
-            specifica:it.id,
-            detail:{
+            isCollect: true
+        })
+    }
+    async removeFavor(id) {
+        var user = UserStore.user
+        if (!user) {
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        var res = await request("https://www.bjzntq.com:8888/Commodity/cancelCollectCommodity/", {
+            "tokeninfo": user.tokeninfo,
+            "commodity_id": id
+        })
+        Toast.show(res.message, {
+            position: Toast.positions.CENTER
+        })
+        this.setState({
+            isCollect: false
+        })
+    }
+    setSpecifica(it) {
+        this.setState({
+            specifica: it.id,
+            detail: {
                 ...this.state.detail,
-                deduct_price:it.deduct_price,
-                original_price:it.original_price
+                deduct_price: it.deduct_price,
+                original_price: it.original_price
             }
         })
     }
@@ -123,6 +144,26 @@ export default class extends React.Component {
         })
         Toast.show(res.message, {
             position: Toast.positions.CENTER
+        })
+        this.setState({
+            isShopCollect: true
+        })
+    }
+    async removeShopFavor(id) {
+        var user = UserStore.user
+        if (!user) {
+            this.props.navigation.navigate('UserLogin')
+            return
+        }
+        var res = await request("https://www.bjzntq.com:8888/ShopMall/cancelCollectShop/", {
+            "tokeninfo": user.tokeninfo,
+            "shop_id": id
+        })
+        Toast.show(res.message, {
+            position: Toast.positions.CENTER
+        })
+        this.setState({
+            isShopCollect: false
         })
     }
     onBuy() {
@@ -196,27 +237,36 @@ export default class extends React.Component {
                     </InfoCard>
                     <InfoCard label="商铺信息">
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(15) }}>
-                            <View style={{ flexDirection: "row", flex: 1,alignItems:"center" }}>
+                            <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
                                 <Image style={{ marginRight: scale(10) }} source={require("../../images/shop_icon.png")} />
-                                <Text style={{color:"#6A617A",fontSize:scale(12)}}>{detail.shop_name}</Text>
+                                <Text style={{ color: "#6A617A", fontSize: scale(12) }}>{detail.shop_name}</Text>
                             </View>
-                            <Touchable onPress={()=>this.props.navigation.navigate('ShopDetail',{shopId:detail.shop_id,shopName:detail.shop_name})}>
+                            <Touchable onPress={() => this.props.navigation.navigate('ShopDetail', { shopId: detail.shop_id, shopName: detail.shop_name })}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Text style={{color:"#6A617A",fontSize:scale(12)}}>进入店铺</Text>
+                                    <Text style={{ color: "#6A617A", fontSize: scale(12) }}>进入店铺</Text>
                                     <Image style={{ marginTop: 3 }} source={require("../../images/right_indicator.png")} />
                                 </View>
                             </Touchable>
                         </View>
                         <View style={{ flexDirection: "row" }}>
                             <View style={{ flex: 1 }}>
-                                <Text style={{color:"#6A617A",fontSize:scale(12)}}>全部商品：{detail.shop_allgoods_count}</Text>
+                                <Text style={{ color: "#6A617A", fontSize: scale(12) }}>全部商品：{detail.shop_allgoods_count}</Text>
                             </View>
-                            <Touchable onPress={()=>this.addShopFavor(detail.shop_id)}>
-                                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Image style={{ marginRight: scale(5) }} source={require("../../images/shop_collection_icon.png")} />
-                                    <Text style={{ marginRight: scale(5),color:"#6A617A",fontSize:scale(12) }}>收藏店铺</Text>
-                                </View>
-                            </Touchable>
+                            {this.state.isShopCollect ? (
+                                <Touchable onPress={() => this.removeShopFavor(detail.shop_id)}>
+                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <Image style={{ marginRight: scale(5),width:scale(16),height:scale(16) }} source={require("../../images/collected_icon.png")} />
+                                        <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>已收藏店铺</Text>
+                                    </View>
+                                </Touchable>
+                            ) : (
+                                    <Touchable onPress={() => this.addShopFavor(detail.shop_id)}>
+                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                            <Image style={{ marginRight: scale(5),width:scale(16),height:scale(16) }} source={require("../../images/shop_collection_icon.png")} />
+                                            <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>收藏店铺</Text>
+                                        </View>
+                                    </Touchable>
+                                )}
                         </View>
                     </InfoCard>
                     <InfoCard label="猜你喜欢" noPadding>
@@ -237,21 +287,23 @@ export default class extends React.Component {
                 </ScrollView>
 
                 <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
-                    <Touchable onPress={() => this.addFavor(detail.id)}  style={{flex: 1 }}>
-                        {this.state.isCollect ? (
-                            <View style={{ alignItems: "center", justifyContent: "center",height:"100%"}}>
-                                <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/my_collection_icon.png')} />
-                                <Text style={{ fontSize: scale(12), color: "#F59100", marginTop: scale(3) }}>取消收藏</Text>
+                    {this.state.isCollect ? (
+                        <Touchable onPress={() => this.removeFavor(detail.id)} style={{ flex: 1 }}>
+                            <View style={{ alignItems: "center", justifyContent: "center", height: "100%" }}>
+                                <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/collected_icon.png')} />
+                                <Text style={{ fontSize: scale(12), color: "#F59100", marginTop: scale(3) }}>已收藏</Text>
                             </View>
-                        ) : (
-                                <View style={{ alignItems: "center", justifyContent: "center",height:"100%"}}>
+                        </Touchable>
+                    ) : (
+                            <Touchable onPress={() => this.addFavor(detail.id)} style={{ flex: 1 }}>
+                                <View style={{ alignItems: "center", justifyContent: "center", height: "100%" }}>
                                     <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/my_collection_icon.png')} />
                                     <Text style={{ fontSize: scale(12), color: "#F59100", marginTop: scale(3) }}>收藏</Text>
                                 </View>
-                            )}
-                    </Touchable>
-                    <Touchable style={{flex: 1 }}>
-                        <View style={{ alignItems: "center", justifyContent: "center",height:"100%" }}>
+                            </Touchable>
+                        )}
+                    <Touchable style={{ flex: 1 }}>
+                        <View style={{ alignItems: "center", justifyContent: "center", height: "100%" }}>
                             <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/contact_icon.png')} />
                             <Text style={{ fontSize: scale(12), color: "#F76F8E", marginTop: scale(3) }}>客服</Text>
                         </View>

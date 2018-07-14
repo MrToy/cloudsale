@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Swiper from 'react-native-swiper';
 import { scale } from '../../utils/dimension';
+import LoadImage from '../../components/LoadImage'
 
 export default class extends React.Component {
     render() {
@@ -22,7 +23,7 @@ export default class extends React.Component {
                     )
                 }}>
                 {this.props.list.map((it, i) => (
-                    <FastImage key={i} style={{ width: "100%", height: "100%" }} source={{ uri: it.imageUrl }} />
+                    <LoadImage key={i} style={{ width: "100%", height: "100%" }} source={{ uri: it.imageUrl }} />
                 ))}
             </Swiper>
         );

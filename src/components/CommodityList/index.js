@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, Text, View,TouchableWithoutFeedback } from 'react-native';
+import LoadImage from '../LoadImage'
 import { withNavigation } from 'react-navigation';
 import TouchableEx from '../../components/TouchableEx';
 import addCart from '../../utils/cart';
@@ -26,7 +27,7 @@ class CommodityList extends React.Component {
                         <View key={i} style={{ width: scale(186), backgroundColor: "#fff",marginRight:i%2==0?scale(3):0,marginBottom:scale(3) }}>
                             <TouchableWithoutFeedback onPress={()=>navigation.push('Detail',{id:it.id})}>
                                 <View>
-                                    <Image style={{ width: scale(160), height: scale(160), marginTop: scale(22),marginLeft:scale(15),marginRight:scale(15),marginBottom:scale(13) }} source={{ uri: it.imageUrl }} />
+                                    <LoadImage style={{ width: scale(160), height: scale(160), marginTop: scale(22),marginLeft:scale(15),marginRight:scale(15),marginBottom:scale(13) }} source={{ uri: it.imageUrl }} />
                                     <Text numberOfLines={2} style={{ fontSize: scale(10), lineHeight: scale(14),height:scale(28), color: "#6A617A",margin:scale(8),marginBottom:0 }}>{it.name}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -46,7 +47,7 @@ class CommodityList extends React.Component {
                     {list.map((it, i) => (
                         <View key={i} style={{ width: scale(168), backgroundColor: "#FAF5E2", marginBottom: scale(0.5) }}>
                             <TouchableEx>
-                                <Image style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: it.imageUrl }} />
+                                <LoadImage style={{ width: scale(146), height: scale(146), marginTop: scale(20) }} source={{ uri: it.imageUrl }} />
                             </TouchableEx>
                             <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#C49572" }}>{it.name}</Text>
                             <Text style={{ fontSize: scale(15), lineHeight: scale(21), color: "#C49572" }}>¥{it.price}</Text>

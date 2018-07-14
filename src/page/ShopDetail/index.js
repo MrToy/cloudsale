@@ -41,9 +41,9 @@ export default class extends React.Component {
             position: Toast.positions.CENTER
         })
         this.setState({
-            detail:{
+            detail: {
                 ...this.state.detail,
-                is_collect:true
+                is_collect: true
             }
         })
     }
@@ -61,9 +61,9 @@ export default class extends React.Component {
             position: Toast.positions.CENTER
         })
         this.setState({
-            detail:{
+            detail: {
                 ...this.state.detail,
-                is_collect:false
+                is_collect: false
             }
         })
     }
@@ -84,14 +84,14 @@ export default class extends React.Component {
                     {detail.is_collect ? (
                         <Touchable onPress={() => this.removeShopFavor(detail.shopinfo.id)}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <Image style={{ marginRight: scale(5) }} source={require("../../images/shop_collection_icon.png")} />
-                                <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>取消收藏</Text>
+                                <Image style={{ marginRight: scale(5), width: scale(16), height: scale(16) }} source={require("../../images/collected_icon.png")} />
+                                <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>已收藏店铺</Text>
                             </View>
                         </Touchable>
                     ) : (
                             <Touchable onPress={() => this.addShopFavor(detail.shopinfo.id)}>
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                    <Image style={{ marginRight: scale(5) }} source={require("../../images/shop_collection_icon.png")} />
+                                    <Image style={{ marginRight: scale(5), width: scale(16), height: scale(16) }} source={require("../../images/shop_collection_icon.png")} />
                                     <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>收藏店铺</Text>
                                 </View>
                             </Touchable>
