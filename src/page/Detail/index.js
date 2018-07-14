@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View,Linking } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
@@ -79,7 +79,7 @@ export default class extends React.Component {
     async fetchCommodity(id) {
         var res = await request("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
             commodity_id: id,
-            tokeninfo: UserStore.user ? UserStore.user.tokeninfo : null
+            tokeninfo: UserStore.user ? UserStore.user.tokeninfo : undefined
         })
         this.setState({
             specifica: res.data.specifications && res.data.specifications[0] && res.data.specifications[0].id,
@@ -165,6 +165,9 @@ export default class extends React.Component {
         this.setState({
             isShopCollect: false
         })
+    }
+    contact(num){
+        Linking.openURL(`tel:${num}`)
     }
     onBuy() {
         if (!this.state.detail.original_price) {
@@ -302,7 +305,7 @@ export default class extends React.Component {
                                 </View>
                             </Touchable>
                         )}
-                    <Touchable style={{ flex: 1 }}>
+                    <Touchable style={{ flex: 1 }} onPress={()=>this.contact(detail.contacts)}>
                         <View style={{ alignItems: "center", justifyContent: "center", height: "100%" }}>
                             <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/contact_icon.png')} />
                             <Text style={{ fontSize: scale(12), color: "#F76F8E", marginTop: scale(3) }}>客服</Text>
