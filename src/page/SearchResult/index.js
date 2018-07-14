@@ -40,7 +40,7 @@ export default class extends React.Component {
     }
     render() {
         return (
-            <View style={{ backgroundColor: '#f1f1f1' }}>
+            <View style={{ backgroundColor: '#f1f1f1',height:"100%" }}>
                 <View style={{ height: scale(34), alignItems: "center", justifyContent: "center", backgroundColor: "#fff", paddingLeft: scale(11), paddingRight: scale(11),marginBottom:scale(2) }}>
                     <SearchButton onPress={() => this.props.navigation.navigate('Search')} placeholder={this.state.keyword} style={{ backgroundColor: "#F3F2F8" }} />
                 </View>

@@ -101,6 +101,16 @@ export default class extends React.Component {
             position: Toast.positions.CENTER
         })
     }
+    setSpecifica(it){
+        this.setState({
+            specifica:it.id,
+            detail:{
+                ...this.state.detail,
+                deduct_price:it.deduct_price,
+                original_price:it.original_price
+            }
+        })
+    }
     async addShopFavor(id) {
         var user = UserStore.user
         if (!user) {
@@ -165,7 +175,7 @@ export default class extends React.Component {
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(11) }}>
                             <Text style={{ marginRight: scale(19) }}>规格</Text>
                             {(detail.specifications || []).map(it => (
-                                <Touchable key={it.id} onPress={() => this.setState({ specifica: it.id })}>
+                                <Touchable key={it.id} onPress={() => this.setSpecifica(it)}>
                                     <View style={[styles.selectItem, specifica == it.id && styles.selectItemActive]}>
                                         <Text style={[styles.selectItemText, specifica == it.id && styles.selectItemTextActive]}>{it.value}</Text>
                                     </View>
