@@ -121,12 +121,16 @@ export default class extends React.Component {
     }
     async preFetchList(){
         try{
-            var data=JSON.parse(await AsyncStorage.getItem('list.data'))
+            var str=await AsyncStorage.getItem('list.data')
+            if(!str){
+                return
+            }
+            var data=JSON.parse(str)
         }catch(err){
             return
         }
         if(!this.state.list.length){
-            this.setState({list:data})
+            this.setState({list:data||[]})
         }
     }
     componentDidMount() {
