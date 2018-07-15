@@ -1,13 +1,13 @@
 import React from 'react';
-import { StatusBar, StyleSheet, View, Image, ScrollView,AsyncStorage } from 'react-native';
+import { AsyncStorage, Image, ScrollView, StatusBar, View } from 'react-native';
+import CommodityList from '../../components/CommodityList';
+import FloorTitle from '../../components/FloorTitle';
 import { scale } from '../../utils/dimension';
+import CategoryGrid from './CategoryGrid';
+import ChannelGrid from './ChannelGrid';
 import NavMenus from './NavMenus';
+import SearchButton from './SearchButton';
 import Swiper from './Swiper';
-import FloorTitle from '../../components/FloorTitle'
-import SearchButton from './SearchButton'
-import CategoryGrid from './CategoryGrid'
-import ChannelGrid from './ChannelGrid'
-import CommodityList from '../../components/CommodityList'
 
 export default class extends React.Component {
     static navigationOptions = {
@@ -60,7 +60,7 @@ export default class extends React.Component {
                 <ScrollView style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                     <View style={{ height: scale(163), marginBottom: scale(10) }}>
                         {banner.length ? (
-                            <Swiper list={banner} />
+                            <Swiper list={banner} useFastImage />
                         ) : null}
                     </View>
                     <View style={{ height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>

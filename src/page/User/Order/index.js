@@ -145,6 +145,7 @@ class PageUserOrder extends React.Component {
         }
         this.setState({order_id:null})
         this.fetchList()
+        this.props.navigation.navigate('OrderDetail',{orderCode:orderId})
     }
     render() {
         return (

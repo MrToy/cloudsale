@@ -1,4 +1,4 @@
-import FastImage from 'react-native-fast-image';
+import Image from 'react-native-fast-image';
 import React from 'react';
 
 
@@ -23,7 +23,7 @@ export default class LoadImage extends React.Component {
         const props = this.props
         var isEnd=isExist(props.source)&&!this.state.isError
         return (
-            <FastImage
+            <Image
                 {...props}
                 resizeMode={isEnd?props.resizeMode:'contain'}
                 style={isEnd?props.style:{...props.style,backgroundColor:'#fff'}}

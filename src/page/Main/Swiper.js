@@ -22,8 +22,10 @@ export default class extends React.Component {
                         </View>
                     )
                 }}>
-                {this.props.list.map((it, i) => (
+                {this.props.list.map((it, i) => this.props.useFastImage?(
                     <LoadImage key={i} style={{ width: "100%", height: "100%" }} source={{ uri: it.imageUrl }} />
+                ):(
+                    <FastImage key={i} style={{ width: "100%", height: "100%" }} source={{ uri: it.imageUrl }} />
                 ))}
             </Swiper>
         );
