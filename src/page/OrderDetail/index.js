@@ -113,7 +113,7 @@ export default class extends React.Component {
             })
             return
         }
-        this.setState({showPay:false})
+        this.setState({ showPay: false })
         this.fetchDetail()
     }
     onCancle(order_code) {
@@ -146,7 +146,9 @@ export default class extends React.Component {
             <View style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
                 <ScrollView>
                     <View style={styles.formBox}>
-                        <FloatButton onPress={() => this.setState({ showPay: true })}>去支付</FloatButton>
+                        {order_info.status == 0 && (
+                            <FloatButton onPress={() => this.setState({ showPay: true })}>去支付</FloatButton>
+                        )}
                         <View style={styles.formLine}>
                             <Text style={styles.label}>订单状态：</Text>
                             <Text style={[styles.content, { color: "#E339D3" }]}>{OrderStatusMap[order_info.status]}</Text>
