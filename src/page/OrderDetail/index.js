@@ -67,8 +67,8 @@ const Button = ({ children, onPress }) => (
 )
 
 const FloatButton = ({ children, onPress }) => (
-    <Touchable onPress={onPress}>
-        <View style={{ position: "absolute", top: 0, right: scale(20), width: scale(73), height: scale(30), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
+    <Touchable onPress={onPress} style={{position: "absolute",zIndex:2, top: scale(14),right: scale(20)}}>
+        <View style={{  width: scale(73), height: scale(30), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
             <Text style={{ fontSize: scale(12), color: "#fff", letterSpacing: scale(0.2) }}>{children}</Text>
         </View>
     </Touchable>
