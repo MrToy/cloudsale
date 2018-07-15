@@ -68,6 +68,7 @@ class OrderSubmitPage extends React.Component {
         if (payway == "wechat") {
             await wechatPay(user.tokeninfo, orderId)
         }
+        this.props.navigation.replace('OrderDetail',{orderId})
     }
     selectAddress(){
         this.props.navigation.navigate('SelectAddress',{
