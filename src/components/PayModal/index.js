@@ -41,6 +41,7 @@ export default class PayModal extends React.Component {
                 animationType='fade'
                 transparent={true}
                 visible={visible}
+                onRequestClose={this.props.onClose}
             >
                 <View style={{ backgroundColor: "rgba(0,0,0,0.25)", height: "100%", justifyContent: "flex-end" }}>
                     <Animated.View style={{ backgroundColor: "#fff", paddingTop: scale(19), paddingLeft: scale(13), paddingRight: scale(13), height: scale(190), transform: [{ translateY: this.state.top }] }}>

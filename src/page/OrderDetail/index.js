@@ -98,13 +98,13 @@ export default class extends React.Component {
     }
     async onPay(type) {
         const order_info = this.state.detail.order_info || {}
-        var orderId = order_info.id
+        var order_code = order_info.order_code
         var user = UserStore.user
         if (type == "alipay") {
-            await alipay(user.tokeninfo, orderId)
+            await alipay(user.tokeninfo, order_code)
         }
         if (type == "wechat") {
-            await wechatPay(user.tokeninfo, orderId)
+            await wechatPay(user.tokeninfo, order_code)
         }
         this.fetchDetail()
     }
