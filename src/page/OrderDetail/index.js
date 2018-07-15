@@ -88,9 +88,11 @@ export default class extends React.Component {
     }
     async fetchDetail() {
         const orderId = this.props.navigation.getParam('orderId')
+        const orderCode = this.props.navigation.getParam('orderCode')
         var res = await request("https://www.bjzntq.com:8888/Order/GetOrderInfo/", {
             tokeninfo: UserStore.user.tokeninfo,
-            id: orderId
+            id: orderId||undefined,
+            order_code:orderCode||undefined
         })
         this.setState({ detail: res.data || {} })
     }

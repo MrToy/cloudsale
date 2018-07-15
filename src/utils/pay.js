@@ -12,12 +12,9 @@ export async function wechatPay(token, id) {
         })
     }).then(res => res.json())
     if (res.result != 200) {
-        Toast.show(res.message,{
-            position:Toast.positions.CENTER
-        })
-        return
+        throw new Error(res.message)
     }
-    wechatByInfo(res.data)
+    await wechatByInfo(res.data)
 }
 export async function alipay(token, id) { 
     var res = await fetch("https://www.bjzntq.com:8888/APP/Pay/AppOrderAliPay/ ", { 
@@ -28,12 +25,9 @@ export async function alipay(token, id) {
         }) 
     }).then(res => res.json()) 
     if (res.result != 200) { 
-        Toast.show(res.message,{ 
-            position:Toast.positions.CENTER 
-        }) 
-        return 
+        throw new Error(res.message)
     } 
-    alipayByInfo(res.data)
+    await alipayByInfo(res.data)
 }
 
 export async function alipayByInfo(data) {
@@ -43,10 +37,7 @@ export async function alipayByInfo(data) {
 export async function wechatByInfo(data) {
     var _sign = md5(`${data.prepayid}${data.appid}${data.partnerid}${data.timestamp}bjzntq2017`)
     if (data.sign != _sign) {
-        Toast.show("签名错误",{
-            position:Toast.positions.CENTER
-        })
-        return
+        throw new Error("签名错误")
     }
     try {
         await WeChat.pay({
@@ -61,10 +52,7 @@ export async function wechatByInfo(data) {
         if(err.code==-2){
             return
         }
-        Toast.show(err.message,{
-            position:Toast.positions.CENTER
-        })
-        return
+        throw new Error(err.message)
     }
     Toast.show("支付成功")
 }

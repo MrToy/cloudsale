@@ -16,7 +16,7 @@ class OrderSubmitPage extends React.Component {
     }
     state = {
         list: [],
-        orderId: null,
+        orderCode: null,
         payway: "wechat",
         addr:null,
     }
@@ -45,7 +45,7 @@ class OrderSubmitPage extends React.Component {
     }
     getSelectPrice() {
         var list = this.getSelectList()
-        return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
+        return list.map(it => (it.deductPrice*100 || 0) * it.count/100).reduce(((a, b) => a + b), 0).toFixed(2)
     }
     async onConfirm() {
         if(!this.state.addr){
@@ -57,18 +57,25 @@ class OrderSubmitPage extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var { payway, orderId } = this.state
-        if (!orderId) {
-            orderId = await this.createOrder(user.tokeninfo,this.state.addr.id)
-            this.setState({ orderId })
+        var { payway, orderCode } = this.state
+        if (!orderCode) {
+            orderCode = await this.createOrder(user.tokeninfo,this.state.addr.id)
+            this.setState({ orderCode })
         }
-        if (payway == "alipay") {
-            await alipay(user.tokeninfo, orderId)
+        try{
+            if (payway == "alipay") {
+                await alipay(user.tokeninfo, orderCode)
+            }
+            if (payway == "wechat") {
+                await wechatPay(user.tokeninfo, orderCode)
+            }
+        }catch(err){
+            Toast.show(err.message, {
+                position: Toast.positions.CENTER
+            })
+            return
         }
-        if (payway == "wechat") {
-            await wechatPay(user.tokeninfo, orderId)
-        }
-        this.props.navigation.replace('OrderDetail',{orderId})
+        this.props.navigation.replace('OrderDetail',{orderCode})
     }
     selectAddress(){
         this.props.navigation.navigate('SelectAddress',{
@@ -132,7 +139,7 @@ class OrderSubmitPage extends React.Component {
                                         <Text style={{ fontSize: scale(12), color: "#6A617A", lineHeight: scale(16), height: scale(32) }} numberOfLines={2}>{itit.smallText}</Text>
                                         <Text style={{ fontSize: scale(11), color: "#989898", marginTop: scale(6), lineHeight: scale(19) }}>规格: {itit.specificationsValue}</Text>
                                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: scale(6) }}>
-                                            <Text style={{ fontSize: scale(15), color: "#E339D3", flex: 1 }}>¥ {itit.deductPrice}</Text>
+                                            <Text style={{ fontSize: scale(15), color: "#E339D3", flex: 1 }}>¥ {itit.deductPrice.toFixed(2)}</Text>
                                             <Text style={{ fontSize: scale(13), color: "#6A617A" }}>x{itit.count}</Text>
                                         </View>
                                     </View>

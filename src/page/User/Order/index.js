@@ -130,12 +130,21 @@ class PageUserOrder extends React.Component {
     async onPay(type) {
         var orderId = this.state.order_id
         var user = UserStore.user
-        if (type == "alipay") {
-            await alipay(user.tokeninfo, orderId)
+        try {
+            if (type == "alipay") {
+                await alipay(user.tokeninfo, orderId)
+            }
+            if (type == "wechat") {
+                await wechatPay(user.tokeninfo, orderId)
+            }
+        } catch (err) {
+            Toast.show(err.message, {
+                position: Toast.positions.CENTER
+            })
+            return
         }
-        if (type == "wechat") {
-            await wechatPay(user.tokeninfo, orderId)
-        }
+        this.setState({order_id:null})
+        this.fetchList()
     }
     render() {
         return (

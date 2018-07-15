@@ -116,7 +116,7 @@ class CartPage extends React.Component {
 	}
 	getSelectPrice() {
 		var list = this.getSelectList()
-		return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0)
+		return list.map(it => (it.deductPrice || 0) * it.count).reduce(((a, b) => a + b), 0).toFixed(2)
 	}
 	submit() {
 		var selects = this.state.selects
@@ -197,16 +197,16 @@ class CartPage extends React.Component {
 										<Checkbox value={!!this.state.selects[itit.commodityId]} onChange={v => this.onSelect(itit.commodityId, v)} />
 										<LoadImage source={{ uri: itit.thumb }} style={{ width: scale(80), height: scale(80), marginLeft: scale(10), marginRight: scale(8) }} />
 										<View style={{ height: "100%", flex: 1 }}>
-											<Text numLines={2} style={{ fontSize: scale(12), color: '#6A617A', height: scale(32), width: scale(145) }}>{itit.smallText}</Text>
+											<Text numLines={2} style={{ fontSize: scale(12), color: '#6A617A', height: scale(32), width: scale(145) }} numberOfLines={2}>{itit.smallText}</Text>
 											<Text style={{ fontSize: scale(11), color: '#989898', marginTop: 1, flex: 1 }}>规格: {itit.specificationsValue}</Text>
 											<NumberPicker value={itit.count} onChange={v => this.setCount(i, ii, v)} min={itit.min_count} max={itit.max_count} />
 										</View>
 										<View style={{ height: "100%", alignItems: "flex-end", justifyContent: "flex-start" }}>
 											<Text style={{ fontSize: scale(12), color: "#E339D3" }}>
 												<Text>¥ </Text>
-												<Text style={{ fontSize: scale(15) }}>{itit.deductPrice}</Text>
+												<Text style={{ fontSize: scale(15) }}>{(itit.deductPrice*itit.count).toFixed(2)}</Text>
 											</Text>
-											<Text style={{ fontSize: scale(11), color: "#A1A1A1", flex: 1, textDecorationLine: "line-through" }}>¥ {itit.price}</Text>
+											<Text style={{ fontSize: scale(11), color: "#A1A1A1", flex: 1, textDecorationLine: "line-through" }}>¥ {(itit.price*itit.count).toFixed(2)}</Text>
 											<TouchableWithoutFeedback onPress={() => this.onRemoveItem(itit.card_id)}>
 												<Image source={require("../../images/delete_icon.png")} />
 											</TouchableWithoutFeedback>
