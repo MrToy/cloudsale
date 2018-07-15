@@ -67,8 +67,8 @@ const Button = ({ children, onPress }) => (
 )
 
 const FloatButton = ({ children, onPress }) => (
-    <Touchable onPress={onPress} style={{position: "absolute",zIndex:2, top: scale(14),right: scale(20)}}>
-        <View style={{  width: scale(73), height: scale(30), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
+    <Touchable onPress={onPress} style={{ position: "absolute", zIndex: 2, top: scale(14), right: scale(20) }}>
+        <View style={{ width: scale(73), height: scale(30), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
             <Text style={{ fontSize: scale(12), color: "#fff", letterSpacing: scale(0.2) }}>{children}</Text>
         </View>
     </Touchable>
@@ -91,8 +91,8 @@ export default class extends React.Component {
         const orderCode = this.props.navigation.getParam('orderCode')
         var res = await request("https://www.bjzntq.com:8888/Order/GetOrderInfo/", {
             tokeninfo: UserStore.user.tokeninfo,
-            id: orderId||undefined,
-            order_code:orderCode||undefined
+            id: orderId || undefined,
+            order_code: orderCode || undefined
         })
         this.setState({ detail: res.data || {} })
     }
@@ -100,12 +100,20 @@ export default class extends React.Component {
         const order_info = this.state.detail.order_info || {}
         var order_code = order_info.order_code
         var user = UserStore.user
-        if (type == "alipay") {
-            await alipay(user.tokeninfo, order_code)
+        try {
+            if (type == "alipay") {
+                await alipay(user.tokeninfo, order_code)
+            }
+            if (type == "wechat") {
+                await wechatPay(user.tokeninfo, order_code)
+            }
+        } catch (err) {
+            Toast.show(err.message, {
+                position: Toast.positions.CENTER
+            })
+            return
         }
-        if (type == "wechat") {
-            await wechatPay(user.tokeninfo, order_code)
-        }
+        this.setState({showPay:false})
         this.fetchDetail()
     }
     onCancle(order_code) {
