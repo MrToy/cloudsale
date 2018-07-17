@@ -312,7 +312,7 @@ export default class extends React.Component {
                         </View>
                     </Touchable>
                     <View style={{ flexDirection: "row" }}>
-                        <Touchable onPress={() => addCart(detail.id)}>
+                        <Touchable onPress={() => addCart(detail.id,this.state.selectedNum,this.state.specifica)}>
                             <View style={{ backgroundColor: "#ECE4F8", height: "100%", width: scale(131), justifyContent: "center", alignItems: "center" }}>
                                 <Text style={{ fontSize: scale(15), color: "#781EFD" }}>加入购物车</Text>
                             </View>

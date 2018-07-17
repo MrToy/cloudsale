@@ -1,7 +1,7 @@
 import Toast from 'react-native-root-toast';
 import UserStore from './user';
 
-export default async function addCart(id){
+export default async function addCart(id,count,specifications_id){
     var user=UserStore.user
     if(!user){
         this.props.navigation.navigate('UserLogin')
@@ -12,7 +12,8 @@ export default async function addCart(id){
         body: JSON.stringify({
             tokeninfo:user.tokeninfo,
             commodity_id:id,
-            count:1
+            count:count||1,
+            specifications_id:specifications_id||undefined
         })
     }).then(res => res.json())
     Toast.show(res.message,{
