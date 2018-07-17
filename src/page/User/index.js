@@ -124,15 +124,14 @@ class PageUser extends React.Component {
                     <NavMenuItem
                         text="待收货"
                         image={require('../../images/wait_receive_icon.png')}
-                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 1 })} />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 2 })} />
                     <NavMenuItem
                         text="待评价"
                         image={require('../../images/wait_evaluate_icon.png')}
-                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 2 })} />
+                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 3 })} />
                     <NavMenuItem
                         text="退换/售后"
-                        image={require('../../images/shouhou_icon.png')}
-                        onPress={() => this.props.navigation.navigate('UserOrder', { type: 3 })} />
+                        image={require('../../images/shouhou_icon.png')} />
                     <NavMenuItem
                         style={{ borderLeftWidth: scale(0.5), borderLeftColor: "#F2F2F2" }}
                         text="全部订单"

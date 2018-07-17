@@ -55,6 +55,20 @@ class PayOrder extends React.Component {
                             </Touchable>
                         </View>
                     )}
+                    {order.order_status == 1 && (
+                        <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", marginBottom: scale(13) }}>
+                            <View style={{ width: scale(100), height: scale(31), marginRight: scale(18), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(4)  }}>
+                                <Text style={{ color: "#fff", fontSize: scale(13) }}>正在出库</Text>
+                            </View>
+                        </View>
+                    )}
+                    {order.order_status == 2 && (
+                        <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", marginBottom: scale(13) }}>
+                            <View style={{ width: scale(100), height: scale(31), marginRight: scale(18), backgroundColor: "#781EFD", alignItems: "center", justifyContent: "center", borderRadius: scale(4)  }}>
+                                <Text style={{ color: "#fff", fontSize: scale(13) }}>已收货</Text>
+                            </View>
+                        </View>
+                    )}
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -157,8 +171,8 @@ class PageUserOrder extends React.Component {
                     {[
                         { type: 5, text: "全部订单" },
                         { type: 0, text: "待付款" },
-                        { type: 1, text: "待收货" },
-                        { type: 2, text: "待评价" },
+                        { type: 2, text: "待收货" },
+                        { type: 3, text: "待评价" },
                     ].map((tab, i) => (
                         <TouchableWithoutFeedback key={i} onPress={() => this.onTab(tab.type)}>
                             <View style={{ height: "100%", flex: 1, paddingLeft: scale(10), paddingRight: scale(10) }}>
