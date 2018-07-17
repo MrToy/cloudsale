@@ -4,12 +4,12 @@ import { scale } from '../../../utils/dimension';
 import { getFootprintList } from '../../../utils/footprint';
 import request from '../../../utils/request';
 import UserStore from '../../../utils/user'
-
+import LoadImage from '../../../components/LoadImage';
 
 const CommodityItem = ({ id, image, name, spec, price, deduct_price, navigation }) => (
     <TouchableWithoutFeedback onPress={() => navigation.push('Detail', { id })}>
         <View style={{ flexDirection: "row", height: scale(94), alignItems: "center", backgroundColor: "#fff", marginTop: scale(5), paddingHorizontal: scale(17) }}>
-            <Image source={{ uri: image }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 0.5 }} />
+            <LoadImage source={{ uri: image }} style={{ width: scale(80), height: scale(80), borderColor: "#ECECEC", borderWidth: 0.5 }} />
             <View style={{ flex: 1, marginLeft: scale(9) }}>
                 <Text style={{ fontSize: scale(12), lineHeight: scale(16), color: "#6A617A" }} numberOfLines={2}>{name}</Text>
                 <Text style={{ fontSize: scale(11), lineHeight: scale(19), color: "#989898" }}>规格: {spec}</Text>
