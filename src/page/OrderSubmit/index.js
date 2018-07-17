@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, Text, View,Alert } from 'react-native';
+import { Image, ScrollView, Text, View, Alert } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
 import { scale } from '../../utils/dimension';
@@ -18,21 +18,21 @@ class OrderSubmitPage extends React.Component {
         list: [],
         orderCode: null,
         payway: "wechat",
-        addr:null,
+        addr: null,
     }
     componentDidMount() {
         const list = this.props.navigation.getParam('list')
         this.setState({ list: list || [] })
         this.fetchAddr()
     }
-    async fetchAddr(){
-        var res=await request("https://www.bjzntq.com:8888/Account/getDefaultAddress/",{
-            "tokeninfo":UserStore.user.tokeninfo
+    async fetchAddr() {
+        var res = await request("https://www.bjzntq.com:8888/Account/getDefaultAddress/", {
+            "tokeninfo": UserStore.user.tokeninfo
         })
-        if(!res.data||!res.data.id){
+        if (!res.data || !res.data.id) {
             return
         }
-        this.setState({addr:res.data})
+        this.setState({ addr: res.data })
     }
     getSelectList() {
         var list = []
@@ -45,10 +45,10 @@ class OrderSubmitPage extends React.Component {
     }
     getSelectPrice() {
         var list = this.getSelectList()
-        return list.map(it => (it.deductPrice*100 || 0) * it.count/100).reduce(((a, b) => a + b), 0).toFixed(2)
+        return list.map(it => (it.deductPrice * 100 || 0) * it.count / 100).reduce(((a, b) => a + b), 0)
     }
     async onConfirm() {
-        if(!this.state.addr){
+        if (!this.state.addr) {
             Alert.alert("请选择一个地址")
             return
         }
@@ -59,56 +59,54 @@ class OrderSubmitPage extends React.Component {
         }
         var { payway, orderCode } = this.state
         if (!orderCode) {
-            orderCode = await this.createOrder(user.tokeninfo,this.state.addr.id)
-            this.setState({ orderCode })
+            try {
+                orderCode = await this.createOrder(user.tokeninfo, this.state.addr.id)
+                this.setState({ orderCode })
+            } catch (err) {
+                Toast.show(err.message, {
+                    position: Toast.positions.CENTER
+                })
+                return
+            }
         }
-        try{
+        try {
             if (payway == "alipay") {
                 await alipay(user.tokeninfo, orderCode)
             }
             if (payway == "wechat") {
                 await wechatPay(user.tokeninfo, orderCode)
             }
-        }catch(err){
+        } catch (err) {
             Toast.show(err.message, {
                 position: Toast.positions.CENTER
             })
             return
         }
-        this.props.navigation.replace('OrderDetail',{orderCode})
+        this.props.navigation.replace('OrderDetail', { orderCode })
     }
-    selectAddress(){
-        this.props.navigation.navigate('SelectAddress',{
-            onSelect:(addr)=>{
-                this.setState({addr})
+    selectAddress() {
+        this.props.navigation.navigate('SelectAddress', {
+            onSelect: (addr) => {
+                this.setState({ addr })
             },
-            currentId:this.state.addr?this.state.addr.id:null
+            currentId: this.state.addr ? this.state.addr.id : null
         })
     }
-    async createOrder(token,addrId) {
+    async createOrder(token, addrId) {
         var goods = []
         this.state.list.forEach(it => {
             it.goodsList.forEach(good => {
                 goods.push(good)
             })
         })
-        var res = await fetch("https://www.bjzntq.com:8888/Order/CreateOrder/", {
-            method: "POST",
-            body: JSON.stringify({
-                tokeninfo: token,
-                order_commodity_id: goods.map(it => it.commodityId || 'null').join(","),
-                order_commodity_num: goods.map(it => it.count || 'null').join(","),
-                specifications_value_id: goods.map(it => it.specificationsId || 'null').join(","),
-                address_id: addrId,
-                total: goods.map(it => it.deductPrice).reduce((a, b) => a + b)
-            })
-        }).then(res => res.json())
-        if (res.result != 200) {
-            Toast.show(res.message, {
-                position: Toast.positions.CENTER
-            })
-            return
-        }
+        var res = await request("https://www.bjzntq.com:8888/Order/CreateOrder/", {
+            tokeninfo: token,
+            order_commodity_id: goods.map(it => it.commodityId || 'null').join(","),
+            order_commodity_num: goods.map(it => it.count || 'null').join(","),
+            specifications_value_id: goods.map(it => it.specificationsId || 'null').join(","),
+            address_id: addrId,
+            total: this.getSelectPrice()
+        })
         return res.data
     }
     render() {
@@ -120,8 +118,8 @@ class OrderSubmitPage extends React.Component {
                         <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#fff", height: scale(90) }}>
                             <Image source={require("../../images/location_icon.png")} style={{ width: scale(16), height: scale(22), marginLeft: scale(18), marginRight: scale(15) }} />
                             <View style={{ flex: 1 }}>
-                                <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: {this.state.addr&&this.state.addr.recipients}</Text>
-                                <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: {this.state.addr&&this.state.addr.detail}</Text>
+                                <Text style={{ color: "#6A617A", fontSize: scale(15), marginBottom: scale(9) }}>收货人: {this.state.addr && this.state.addr.recipients}</Text>
+                                <Text style={{ color: "#A4A0AA", fontSize: scale(13) }} numberOfLines={2}>收货地址: {this.state.addr && this.state.addr.detail}</Text>
                             </View>
                             <Image source={require("../../images/right_indicator.png")} style={{ marginRight: scale(20), marginLeft: scale(15) }} />
                         </View>
@@ -149,7 +147,7 @@ class OrderSubmitPage extends React.Component {
                     ))}
                     <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: scale(24), height: scale(50), backgroundColor: "#fff", marginTop: scale(5), alignItems: "center", paddingRight: scale(18) }}>
                         <Text style={{ fontSize: scale(14), color: "#6A617A" }}>实付金额 :  </Text>
-                        <Text style={{ color: "#E339D3", fontSize: scale(16) }}>¥ {this.getSelectPrice()}</Text>
+                        <Text style={{ color: "#E339D3", fontSize: scale(16) }}>¥ {this.getSelectPrice().toFixed(2)}</Text>
                     </View>
                     <View style={{ backgroundColor: "#fff" }}>
                         <View style={{ height: scale(38), justifyContent: "center", paddingLeft: scale(18), paddingRight: scale(18), borderColor: "#EEEDF3", borderBottomWidth: 1 }}>
