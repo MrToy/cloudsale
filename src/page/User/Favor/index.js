@@ -55,7 +55,7 @@ class CommodityList extends React.Component {
                 renderItem={({ item }) => (
                     <CommodityItem
                         navigation={this.props.navigation}
-                        id={item.id}
+                        id={item.commodity_id}
                         image={item.image_url}
                         name={item.small_text}
                         spec={item.specification_value}

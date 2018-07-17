@@ -99,7 +99,7 @@ export default class extends React.Component {
                 </View>
                 <ScrollView>
                     <CommodityList list={detail.commoditys.map(it => ({
-                        id: it.commodity_id,
+                        id: it.id,
                         imageUrl: it.commodity_image,
                         name: it.small_text,
                         price: it.deduct_price

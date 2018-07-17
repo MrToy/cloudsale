@@ -7,6 +7,7 @@ import UserStore from '../../utils/user'
 import PayModal from '../../components/PayModal';
 import { alipay, wechatPay } from '../../utils/pay';
 import Toast from 'react-native-root-toast';
+import LoadImage from '../../components/LoadImage';
 
 
 const ShopCommidity = ({ list }) => (
@@ -19,7 +20,7 @@ const ShopCommidity = ({ list }) => (
                 </View>
                 {shop.commodity_list.map((good, ii) => (
                     <View key={ii} style={{ flexDirection: "row", alignItems: "center", borderColor: "#ECECEC", borderBottomWidth: 1, marginLeft: scale(17), marginRight: scale(17), paddingTop: scale(12), paddingBottom: scale(12) }}>
-                        <Image source={{ uri: good.commodity_url || 'https://misc.360buyimg.com/mtd/pc/common/img/blank.png' }} style={{ width: scale(80), height: scale(80), marginRight: scale(15) }} />
+                        <LoadImage source={{ uri: good.commodity_url }} style={{ width: scale(80), height: scale(80), marginRight: scale(15) }} />
                         <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: scale(12), color: "#6A617A", lineHeight: scale(16) }} numberOfLines={2}>{good.commodity_name}</Text>
                             <Text style={{ fontSize: scale(11), color: "#989898", lineHeight: scale(19), marginTop: scale(6) }}>规格: {good.specifications_value}</Text>
@@ -59,8 +60,8 @@ const styles = StyleSheet.create({
 })
 
 const Button = ({ children, onPress }) => (
-    <Touchable onPress={onPress}>
-        <View style={{ width: scale(160), height: scale(30), backgroundColor: "#ECE4F8", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
+    <Touchable onPress={onPress} style={{width:"100%"}}>
+        <View style={{ height: scale(30), backgroundColor: "#ECE4F8", alignItems: "center", justifyContent: "center", borderRadius: scale(5) }}>
             <Text style={{ fontSize: scale(12), color: "#781EFD", letterSpacing: scale(0.2) }}>{children}</Text>
         </View>
     </Touchable>
@@ -162,9 +163,9 @@ export default class extends React.Component {
                             <Text style={styles.content}>{order_info.create_time}</Text>
                         </View>
                         {order_info.status == 0 && (
-                            <View style={{ paddingHorizontal: scale(18), flexDirection: "row", justifyContent: "space-between", marginTop: scale(5) }}>
-                                <Button onPress={() => this.onCancle(order_info.order_code)}>取消申请订单</Button>
-                                <Button>重新下单</Button>
+                            <View style={{ paddingHorizontal: scale(28), flexDirection: "row", marginTop: scale(5)}}>
+                                <Button onPress={() => this.onCancle(order_info.order_code)}>申请取消订单</Button>
+                                {/* <Button>重新下单</Button> */}
                             </View>
                         )}
                     </View>
@@ -183,7 +184,7 @@ export default class extends React.Component {
                             <Text style={styles.content}>{order_address.recipients} {order_address.phone}</Text>
                         </View>
                     </View>
-                    <View style={styles.formBox}>
+                    {/* <View style={styles.formBox}>
                         <View style={styles.formLine}>
                             <Text style={styles.label}>发票类型：</Text>
                             <Text style={styles.content}>普通发票</Text>
@@ -196,7 +197,7 @@ export default class extends React.Component {
                             <Text style={styles.label}>发票内容：</Text>
                             <Text style={styles.content}>商品明细</Text>
                         </View>
-                    </View>
+                    </View> */}
                     <ShopCommidity list={commodity_list} />
                     <View style={{ height: scale(45), marginTop: scale(7), paddingHorizontal: scale(17), flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "#fff" }}>
                         <Text style={{ fontSize: scale(14), color: "#6A617A" }}>应付金额:</Text>
