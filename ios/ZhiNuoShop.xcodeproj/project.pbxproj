@@ -1464,7 +1464,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.xinyunlingshou;
 				PRODUCT_NAME = ZhiNuoShop;
 				PROVISIONING_PROFILE = "91f19d6d-5390-4d65-a54e-db4847fc5e45";
 				PROVISIONING_PROFILE_SPECIFIER = ZhiNuoShop;
@@ -1497,7 +1497,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.ZhiNuoShop;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zntq.xinyunlingshou;
 				PRODUCT_NAME = ZhiNuoShop;
 				PROVISIONING_PROFILE = "91f19d6d-5390-4d65-a54e-db4847fc5e45";
 				PROVISIONING_PROFILE_SPECIFIER = ZhiNuoShop;

@@ -97,7 +97,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId 'com.zntq.ZhiNuoShop'
+        applicationId 'com.zntq.xinyunlingshou'
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
