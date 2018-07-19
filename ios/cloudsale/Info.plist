@@ -42,6 +42,16 @@
 				<string>wxd71c7825d6c2ecdd</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>zntq.xinyun</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>zntq.xinyun</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

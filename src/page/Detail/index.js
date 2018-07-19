@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View,Linking } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View, Linking,Share } from 'react-native';
 import FitImage from 'react-native-fit-image';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
@@ -63,7 +63,11 @@ export default class extends React.Component {
         selectedNum: 1
     }
     componentDidMount() {
-        const id = this.props.navigation.getParam('id')
+        var id = this.props.navigation.getParam('id')
+        if(!id){
+            return
+        }
+        id=parseInt(id)
         this.fetchCommodity(id)
         this.addRecord(id)
     }
@@ -166,7 +170,7 @@ export default class extends React.Component {
             isShopCollect: false
         })
     }
-    contact(num){
+    contact(num) {
         Linking.openURL(`tel:${num}`)
     }
     onBuy() {
@@ -193,6 +197,12 @@ export default class extends React.Component {
         ]
         this.props.navigation.navigate('OrderSubmit', { list })
     }
+    share(){
+        Share.share({
+            title:"test-title",
+            url:"zntq.xinyun://Detail?id=247"
+        })
+    }
     render() {
         const banner = (this.state.detail.banner || []).map(it => ({
             imageUrl: it.image_url,
@@ -214,6 +224,12 @@ export default class extends React.Component {
                         </View>
                         <Text style={{ fontSize: scale(14), lineHeight: scale(19), marginTop: scale(7), color: "#6A617A" }}>{detail.name}</Text>
                         <Text style={{ marginTop: scale(9), color: "#959595" }}>免邮费</Text>
+                        <Touchable onPress={()=>this.share()} style={{ position: "absolute", right: scale(10), top: scale(5)}}>
+                            <View style={{alignItems: "center" }}>
+                                <Image source={require('../../images/share_icon.png')} />
+                                <Text style={{ color: "#781EFD", fontSize: scale(11), marginTop: scale(3) }}>分享给好友</Text>
+                            </View>
+                        </Touchable>
                     </View>
                     <InfoCard label={`已选 ${selectedNum}个`}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: scale(11) }}>
@@ -258,14 +274,14 @@ export default class extends React.Component {
                             {this.state.isShopCollect ? (
                                 <Touchable onPress={() => this.removeShopFavor(detail.shop_id)}>
                                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <Image style={{ marginRight: scale(5),width:scale(16),height:scale(16) }} source={require("../../images/collected_icon.png")} />
+                                        <Image style={{ marginRight: scale(5), width: scale(16), height: scale(16) }} source={require("../../images/collected_icon.png")} />
                                         <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>已收藏店铺</Text>
                                     </View>
                                 </Touchable>
                             ) : (
                                     <Touchable onPress={() => this.addShopFavor(detail.shop_id)}>
                                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            <Image style={{ marginRight: scale(5),width:scale(16),height:scale(16) }} source={require("../../images/shop_collection_icon.png")} />
+                                            <Image style={{ marginRight: scale(5), width: scale(16), height: scale(16) }} source={require("../../images/shop_collection_icon.png")} />
                                             <Text style={{ marginRight: scale(5), color: "#6A617A", fontSize: scale(12) }}>收藏店铺</Text>
                                         </View>
                                     </Touchable>
@@ -305,14 +321,14 @@ export default class extends React.Component {
                                 </View>
                             </Touchable>
                         )}
-                    <Touchable style={{ flex: 1 }} onPress={()=>this.contact(detail.contacts)}>
+                    <Touchable style={{ flex: 1 }} onPress={() => this.contact(detail.contacts)}>
                         <View style={{ alignItems: "center", justifyContent: "center", height: "100%" }}>
                             <Image style={{ width: scale(25), height: scale(25) }} source={require('../../images/contact_icon.png')} />
                             <Text style={{ fontSize: scale(12), color: "#F76F8E", marginTop: scale(3) }}>客服</Text>
                         </View>
                     </Touchable>
                     <View style={{ flexDirection: "row" }}>
-                        <Touchable onPress={() => addCart(detail.id,this.state.selectedNum,this.state.specifica)}>
+                        <Touchable onPress={() => addCart(detail.id, this.state.selectedNum, this.state.specifica)}>
                             <View style={{ backgroundColor: "#ECE4F8", height: "100%", width: scale(131), justifyContent: "center", alignItems: "center" }}>
                                 <Text style={{ fontSize: scale(15), color: "#781EFD" }}>加入购物车</Text>
                             </View>

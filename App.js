@@ -1,4 +1,5 @@
 import React from 'react';
+import {Platform} from 'react-native'
 import * as WeChat from 'react-native-wechat';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen'
@@ -64,7 +65,10 @@ const Routes = createStackNavigator({
 	SearchResult,
 	AboutUs,
 	Feedback,
-	Detail,
+	Detail:{
+		screen: Detail,
+		path: 'detail/:id',
+	},
 	OrderSubmit,
 	OrderDetail,
 	UserOrder,
@@ -105,6 +109,7 @@ export default class extends React.Component {
 		SplashScreen.hide()
 	}
 	render() {
-		return <Routes />
+		const prefix = Platform.OS == 'android' ? 'zntq.xinyun://zntq.xinyun/' : 'zntq.xinyun://';
+		return <Routes uriPrefix={prefix} />
 	}
 }
