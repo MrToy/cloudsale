@@ -11,6 +11,7 @@ import { scale } from '../../utils/dimension';
 import request from '../../utils/request';
 import UserStore from '../../utils/user';
 import Swiper from '../Main/Swiper';
+import ShareModal from '../../components/ShareModal'
 
 const styles = StyleSheet.create({
     selectItem: {
@@ -60,7 +61,8 @@ export default class extends React.Component {
         specifica: null,
         isCollect: false,
         isShopCollect: false,
-        selectedNum: 1
+        selectedNum: 1,
+        showShare:false
     }
     componentDidMount() {
         var id = this.props.navigation.getParam('id')
@@ -198,10 +200,11 @@ export default class extends React.Component {
         this.props.navigation.navigate('OrderSubmit', { list })
     }
     share(){
-        Share.share({
-            title:"test-title",
-            url:"zntq.xinyun://Detail?id=247"
-        })
+        // Share.share({
+        //     title:this.state.detail.small_text,
+        //     url:`zntq.xinyun://detail/${this.state.detail.id}`
+        // })
+        this.setState({showShare:true})
     }
     render() {
         const banner = (this.state.detail.banner || []).map(it => ({
@@ -224,7 +227,7 @@ export default class extends React.Component {
                         </View>
                         <Text style={{ fontSize: scale(14), lineHeight: scale(19), marginTop: scale(7), color: "#6A617A" }}>{detail.name}</Text>
                         <Text style={{ marginTop: scale(9), color: "#959595" }}>免邮费</Text>
-                        <Touchable onPress={()=>this.share()} style={{ position: "absolute", right: scale(10), top: scale(5)}}>
+                        <Touchable onPress={()=>this.share()} style={{ position: "absolute", paddingHorizontal:scale(10),right:0, top: scale(5)}}>
                             <View style={{alignItems: "center" }}>
                                 <Image source={require('../../images/share_icon.png')} />
                                 <Text style={{ color: "#781EFD", fontSize: scale(11), marginTop: scale(3) }}>分享给好友</Text>
@@ -304,7 +307,6 @@ export default class extends React.Component {
                         ))}
                     </InfoCard>
                 </ScrollView>
-
                 <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%", height: scale(55), backgroundColor: "#fff" }}>
                     {this.state.isCollect ? (
                         <Touchable onPress={() => this.removeFavor(detail.id)} style={{ flex: 1 }}>
@@ -340,6 +342,7 @@ export default class extends React.Component {
                         </Touchable>
                     </View>
                 </View>
+                <ShareModal visible={this.state.showShare} onClose={()=>this.setState({showShare:false})} />
             </View>
         );
     }
