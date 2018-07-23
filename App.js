@@ -105,7 +105,7 @@ const Routes = createStackNavigator({
 
 export default class extends React.Component {
 	componentDidMount() {
-		WeChat.registerApp('wxd71c7825d6c2ecdd')
+		WeChat.registerApp('wx4ce1c582fe5f6137')
 		SplashScreen.hide()
 	}
 	render() {

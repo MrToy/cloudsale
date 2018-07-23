@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Animated, Easing, Modal, TouchableWithoutFeedback, View, Dimensions } from 'react-native';
+import { Animated, Easing, Modal, TouchableWithoutFeedback, View, Dimensions ,StatusBar} from 'react-native';
 import { scale } from '../../utils/dimension';
 
 export default class PayModal extends React.Component {
@@ -10,7 +10,8 @@ export default class PayModal extends React.Component {
     }
     constructor(props) {
         super(props)
-        this._windowHeight = Dimensions.get('window').height
+        var statusHeight=StatusBar.currentHeight||0
+        this._windowHeight = Dimensions.get('window').height-statusHeight
         this.state = {
             top: new Animated.Value(this._windowHeight),
             boxHeight: 0,

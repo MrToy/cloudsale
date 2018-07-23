@@ -29,7 +29,7 @@
 			<string>alipay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>2018050960085156</string>
+				<string>2018060960348096</string>
 			</array>
 		</dict>
 		<dict>
@@ -39,7 +39,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxd71c7825d6c2ecdd</string>
+				<string>wx4ce1c582fe5f6137</string>
 			</array>
 		</dict>
 		<dict>

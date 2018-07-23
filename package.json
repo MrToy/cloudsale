@@ -14,7 +14,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "build:android": "cd android && ./gradlew assembleRelease",
-    "install:android": "adb -s M960SDR5SA2HB install ./android/app/build/outputs/apk/release/app-release.apk",
+    "install:android": "adb -s M960SDR5SA2HB install -r ./android/app/build/outputs/apk/release/app-release.apk",
     "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/jsbundle/main.jsbundle --assets-dest ios/jsbundle/",
     "test": "jest"
   },
