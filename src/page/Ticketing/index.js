@@ -137,7 +137,7 @@ export default class extends React.Component {
         this.fetchDestinationList()
     }
     async fetchDepartureList() {
-        var res = await request("https://www.bjzntq.com:8888/Ticket/getUniversityInfo/", {
+        var res = await request("https://www.xinyun.shop:8888/Ticket/getUniversityInfo/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({
@@ -145,7 +145,7 @@ export default class extends React.Component {
         })
     }
     async fetchDestinationList() {
-        var res = await request("https://www.bjzntq.com:8888/Ticket/getDestinationInfo/", {
+        var res = await request("https://www.xinyun.shop:8888/Ticket/getDestinationInfo/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({
@@ -156,7 +156,7 @@ export default class extends React.Component {
         if (!this.state.departure || !this.state.destination) {
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/Ticket/getTicketPriceInfo/", {
+        var res = await request("https://www.xinyun.shop:8888/Ticket/getTicketPriceInfo/", {
             "tokeninfo": UserStore.user.tokeninfo,
             "departure_id": this.state.departure.value,
             "destination_id": this.state.destination.value
@@ -172,7 +172,7 @@ export default class extends React.Component {
         }
         const { departure, destination, departure_date, departure_time, price, phone, name, idcard } = this.state
         try {
-            var res = await request("https://www.bjzntq.com:8888/Ticket/commitTicketInfo/", {
+            var res = await request("https://www.xinyun.shop:8888/Ticket/commitTicketInfo/", {
                 "tokeninfo": UserStore.user.tokeninfo,
                 "client": 2,
                 "pay_way": typeMap[type],

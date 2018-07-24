@@ -102,7 +102,7 @@ export default class extends React.Component {
         this.onVisibleChange=this.onVisibleChange.bind(this)
     }
     async fetchList() {
-        var res = await request("https://www.bjzntq.com:8888//Commodity/getCategoryList/")
+        var res = await request("https://www.xinyun.shop:8888//Commodity/getCategoryList/")
         this.setState({
             list:res.data||[]
         })

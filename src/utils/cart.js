@@ -7,7 +7,7 @@ export default async function addCart(id,count,specifications_id){
         this.props.navigation.navigate('UserLogin')
         return
     }
-    var res = await fetch("https://www.bjzntq.com:8888/Commodity/addCart/", {
+    var res = await fetch("https://www.xinyun.shop:8888/Commodity/addCart/", {
         method: "POST",
         body: JSON.stringify({
             tokeninfo:user.tokeninfo,

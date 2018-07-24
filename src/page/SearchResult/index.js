@@ -28,7 +28,7 @@ export default class extends React.Component {
         })
     }
     async fetchList() {
-        var res = await fetch("https://www.bjzntq.com:8888/Commodity/GetCommodityByCategory/", {
+        var res = await fetch("https://www.xinyun.shop:8888/Commodity/GetCommodityByCategory/", {
             method: "POST",
             body: JSON.stringify({
                 keyword: this.state.keyword || null,

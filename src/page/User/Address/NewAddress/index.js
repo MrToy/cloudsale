@@ -41,7 +41,7 @@ export default class PageUserNewAddress extends React.Component {
             Alert.alert("请填写完整")
             return
         }
-        var res=await request("https://www.bjzntq.com:8888/Account/addAddress/",{
+        var res=await request("https://www.xinyun.shop:8888/Account/addAddress/",{
             "tokeninfo":UserStore.user.tokeninfo,
             "user_id":UserStore.user.user_id,
             "isdefault":false,

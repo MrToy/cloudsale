@@ -28,7 +28,7 @@ export default class PageUserSignin extends React.Component {
     }
     async signin() {
         try {
-            var res = await request("https://www.bjzntq.com:8888/Account/appUserRegister/", {
+            var res = await request("https://www.xinyun.shop:8888/Account/appUserRegister/", {
                 "accountname": this.state.user,
                 "password": this.state.pass,
                 "phone":this.state.phone,
@@ -51,7 +51,7 @@ export default class PageUserSignin extends React.Component {
             if (!phone.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
                 throw new Error("请输入合法的手机号")
             }
-            var res = await request("https://www.bjzntq.com:8888/Account/getAppIdentifyCode/", {
+            var res = await request("https://www.xinyun.shop:8888/Account/getAppIdentifyCode/", {
                 phone
             })
         } catch (err) {

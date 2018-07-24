@@ -33,7 +33,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/Collect_Shop/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/Collect_Shop/", {
             "tokeninfo": user.tokeninfo,
             "shop_id": id
         })
@@ -53,7 +53,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/cancelCollectShop/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/cancelCollectShop/", {
             "tokeninfo": user.tokeninfo,
             "shop_id": id
         })
@@ -68,7 +68,7 @@ export default class extends React.Component {
         })
     }
     async fetchShop() {
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/GetShopInfo/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/GetShopInfo/", {
             "tokeninfo": UserStore.user.tokeninfo,
             "shop_id": this.state.shopId
         })

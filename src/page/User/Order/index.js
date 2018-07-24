@@ -106,7 +106,7 @@ class PageUserOrder extends React.Component {
             { text: "取消" },
             {
                 text: "确定", onPress: async () => {
-                    var res = await request("https://www.bjzntq.com:8888/Order/CancelOrder/", {
+                    var res = await request("https://www.xinyun.shop:8888/Order/CancelOrder/", {
                         tokeninfo: UserStore.user.tokeninfo,
                         order_code: this.state.list[index].order_code
                     })
@@ -129,7 +129,7 @@ class PageUserOrder extends React.Component {
             })
             return
         }
-        var res = await fetch("https://www.bjzntq.com:8888/Order/GetAllOrders/", {
+        var res = await fetch("https://www.xinyun.shop:8888/Order/GetAllOrders/", {
             method: "POST",
             body: JSON.stringify({
                 tokeninfo: user.tokeninfo,

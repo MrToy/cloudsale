@@ -90,7 +90,7 @@ export default class extends React.Component {
     async fetchDetail() {
         const orderId = this.props.navigation.getParam('orderId')
         const orderCode = this.props.navigation.getParam('orderCode')
-        var res = await request("https://www.bjzntq.com:8888/Order/GetOrderInfo/", {
+        var res = await request("https://www.xinyun.shop:8888/Order/GetOrderInfo/", {
             tokeninfo: UserStore.user.tokeninfo,
             id: orderId || undefined,
             order_code: orderCode || undefined
@@ -122,7 +122,7 @@ export default class extends React.Component {
             { text: "取消" },
             {
                 text: "确定", onPress: async () => {
-                    var res = await request("https://www.bjzntq.com:8888/Order/CancelOrder/", {
+                    var res = await request("https://www.xinyun.shop:8888/Order/CancelOrder/", {
                         tokeninfo: UserStore.user.tokeninfo,
                         order_code
                     })

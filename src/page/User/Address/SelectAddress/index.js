@@ -57,7 +57,7 @@ export default class PageSelectAddress extends React.Component {
         this.fetchList()
     }
     async fetchList(){
-        var res=await request("https://www.bjzntq.com:8888/Account/getAddressList/",{
+        var res=await request("https://www.xinyun.shop:8888/Account/getAddressList/",{
             tokeninfo:UserStore.user.tokeninfo
         })
         var list=res.data||[]

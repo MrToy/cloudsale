@@ -35,7 +35,7 @@ export default class extends React.Component {
             //
         }
         if(!data){
-            var res = await fetch("https://www.bjzntq.com:8888/Commodity/GetHomeData", { method: "POST" }).then(res => res.json())
+            var res = await fetch("https://www.xinyun.shop:8888/Commodity/GetHomeData", { method: "POST" }).then(res => res.json())
             if (res.result != 200) {
                 return
             }

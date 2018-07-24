@@ -17,7 +17,7 @@ export default class PageUserLogin extends React.Component {
     }
     async login() {
         try {
-            var res = await request("https://www.bjzntq.com:8888/Account/appUserLogin/", {
+            var res = await request("https://www.xinyun.shop:8888/Account/appUserLogin/", {
                 "accountname": this.state.user,
                 "password": this.state.pass
             })

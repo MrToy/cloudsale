@@ -45,7 +45,7 @@ export default class PageUserAddress extends React.Component {
         this.fetchList()
     }
     async fetchList() {
-        var res = await request("https://www.bjzntq.com:8888/Account/getAddressList/", {
+        var res = await request("https://www.xinyun.shop:8888/Account/getAddressList/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({ list: res.data || [] })
@@ -55,7 +55,7 @@ export default class PageUserAddress extends React.Component {
             { text: "取消" },
             {
                 text: "确定", onPress: async () => {
-                    var res=await request("https://www.bjzntq.com:8888/Account/setDefaultAddress/", {
+                    var res=await request("https://www.xinyun.shop:8888/Account/setDefaultAddress/", {
                         tokeninfo: UserStore.user.tokeninfo,
                         address_id: this.state.list[i].id
                     })
@@ -78,7 +78,7 @@ export default class PageUserAddress extends React.Component {
             { text: "取消" },
             {
                 text: "确定", onPress: async () => {
-                    var res=await request("https://www.bjzntq.com:8888/Account/deleteAddress/", {
+                    var res=await request("https://www.xinyun.shop:8888/Account/deleteAddress/", {
                         tokeninfo: UserStore.user.tokeninfo,
                         address_id: this.state.list[i].id
                     })

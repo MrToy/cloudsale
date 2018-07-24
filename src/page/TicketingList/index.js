@@ -52,7 +52,7 @@ export default class extends React.Component {
         this.fetchList()
     }
     async fetchList() {
-        var res = await request("https://www.bjzntq.com:8888/Ticket/getTicketOrderList/", {
+        var res = await request("https://www.xinyun.shop:8888/Ticket/getTicketOrderList/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({

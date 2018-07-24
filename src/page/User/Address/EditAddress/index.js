@@ -42,7 +42,7 @@ export default class PageUserEditAddress extends React.Component {
             Alert.alert("请填写完整")
             return
         }
-        var res=await request("https://www.bjzntq.com:8888/Account/updateAddress/",{
+        var res=await request("https://www.xinyun.shop:8888/Account/updateAddress/",{
             tokeninfo:UserStore.user.tokeninfo,
             address_id:id,
             recipients,county,area,province,phone,detail,municipality

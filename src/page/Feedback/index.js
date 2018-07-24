@@ -40,7 +40,7 @@ export default class PageFeedback extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/addFeedback/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/addFeedback/", {
             "message": this.state.message,
             "message_type": this.state.type,
             "phone":this.state.phone,

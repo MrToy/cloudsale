@@ -39,7 +39,7 @@ export default class PageUserFavor extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/Commodity/getBrowseRecord/",{
+        var res = await request("https://www.xinyun.shop:8888/Commodity/getBrowseRecord/",{
             tokeninfo:user.tokeninfo
         })
         this.setState({ list:res.data||[] })

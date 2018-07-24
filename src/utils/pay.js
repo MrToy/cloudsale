@@ -4,7 +4,7 @@ import * as WeChat from 'react-native-wechat';
 import Alipay from 'react-native-yunpeng-alipay';
 
 export async function wechatPay(token, id) {
-    var res = await fetch("https://www.bjzntq.com:8888/APP/Pay/AppOrderWxPay/", {
+    var res = await fetch("https://www.xinyun.shop:8888/APP/Pay/AppOrderWxPay/", {
         method: "POST",
         body: JSON.stringify({
             tokeninfo: token,
@@ -17,7 +17,7 @@ export async function wechatPay(token, id) {
     await wechatByInfo(res.data)
 }
 export async function alipay(token, id) { 
-    var res = await fetch("https://www.bjzntq.com:8888/APP/Pay/AppOrderAliPay/ ", { 
+    var res = await fetch("https://www.xinyun.shop:8888/APP/Pay/AppOrderAliPay/ ", { 
         method: "POST", 
         body: JSON.stringify({ 
             tokeninfo: token, 

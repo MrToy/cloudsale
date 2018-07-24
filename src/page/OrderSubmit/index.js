@@ -26,7 +26,7 @@ class OrderSubmitPage extends React.Component {
         this.fetchAddr()
     }
     async fetchAddr() {
-        var res = await request("https://www.bjzntq.com:8888/Account/getDefaultAddress/", {
+        var res = await request("https://www.xinyun.shop:8888/Account/getDefaultAddress/", {
             "tokeninfo": UserStore.user.tokeninfo
         })
         if (!res.data || !res.data.id) {
@@ -99,7 +99,7 @@ class OrderSubmitPage extends React.Component {
                 goods.push(good)
             })
         })
-        var res = await request("https://www.bjzntq.com:8888/Order/CreateOrder/", {
+        var res = await request("https://www.xinyun.shop:8888/Order/CreateOrder/", {
             tokeninfo: token,
             order_commodity_id: goods.map(it => it.commodityId || 'null').join(","),
             order_commodity_num: goods.map(it => it.count || 'null').join(","),

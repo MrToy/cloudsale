@@ -62,7 +62,8 @@ export default class extends React.Component {
         isCollect: false,
         isShopCollect: false,
         selectedNum: 1,
-        showShare:false
+        showShare:false,
+        shareData:null
     }
     componentDidMount() {
         var id = this.props.navigation.getParam('id')
@@ -77,13 +78,13 @@ export default class extends React.Component {
         if (!UserStore.user) {
             return
         }
-        await request("https://www.bjzntq.com:8888/Commodity/addBrowseRecord/", {
+        await request("https://www.xinyun.shop:8888/Commodity/addBrowseRecord/", {
             commodity_id: id,
             tokeninfo: UserStore.user.tokeninfo
         })
     }
     async fetchCommodity(id) {
-        var res = await request("https://www.bjzntq.com:8888/Commodity/getCommodityDetail/", {
+        var res = await request("https://www.xinyun.shop:8888/Commodity/getCommodityDetail/", {
             commodity_id: id,
             tokeninfo: UserStore.user ? UserStore.user.tokeninfo : undefined
         })
@@ -100,7 +101,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/Commodity/collectCommodity/", {
+        var res = await request("https://www.xinyun.shop:8888/Commodity/collectCommodity/", {
             "tokeninfo": user.tokeninfo,
             "commodity_id": id
         })
@@ -117,7 +118,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/Commodity/cancelCollectCommodity/", {
+        var res = await request("https://www.xinyun.shop:8888/Commodity/cancelCollectCommodity/", {
             "tokeninfo": user.tokeninfo,
             "commodity_id": id
         })
@@ -144,7 +145,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/Collect_Shop/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/Collect_Shop/", {
             "tokeninfo": user.tokeninfo,
             "shop_id": id
         })
@@ -161,7 +162,7 @@ export default class extends React.Component {
             this.props.navigation.navigate('UserLogin')
             return
         }
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/cancelCollectShop/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/cancelCollectShop/", {
             "tokeninfo": user.tokeninfo,
             "shop_id": id
         })
@@ -204,7 +205,12 @@ export default class extends React.Component {
         //     title:this.state.detail.small_text,
         //     url:`zntq.xinyun://detail/${this.state.detail.id}`
         // })
-        this.setState({showShare:true})
+        var shareData={
+            type: 'news', 
+            description: this.state.detail.small_text,
+            webpageUrl:`zntq.xinyun://detail/${this.state.detail.id}`
+        }
+        this.setState({showShare:true,shareData})
     }
     render() {
         const banner = (this.state.detail.banner || []).map(it => ({
@@ -342,7 +348,7 @@ export default class extends React.Component {
                         </Touchable>
                     </View>
                 </View>
-                <ShareModal visible={this.state.showShare} onClose={()=>this.setState({showShare:false})} />
+                <ShareModal data={this.state.shareData} visible={this.state.showShare} onClose={()=>this.setState({showShare:false})} />
             </View>
         );
     }

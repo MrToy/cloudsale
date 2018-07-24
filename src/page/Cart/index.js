@@ -35,7 +35,7 @@ class CartPage extends React.Component {
 		if (!user) {
 			return
 		}
-		var res = await fetch("https://www.bjzntq.com:8888/Commodity/getCartCommodity/", {
+		var res = await fetch("https://www.xinyun.shop:8888/Commodity/getCartCommodity/", {
 			method: "POST",
 			body: JSON.stringify({
 				tokeninfo: user.tokeninfo,
@@ -154,7 +154,7 @@ class CartPage extends React.Component {
 		])
 	}
 	async removeItem(id) {
-		var res = await request('https://www.bjzntq.com:8888/Commodity/deleteCartCommodity/', {
+		var res = await request('https://www.xinyun.shop:8888/Commodity/deleteCartCommodity/', {
 			"tokeninfo": UserStore.user.tokeninfo,
 			"cart_id": id
 		})

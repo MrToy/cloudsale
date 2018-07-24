@@ -43,7 +43,7 @@ class CommodityList extends React.Component {
         this.fetchList()
     }
     async fetchList() {
-        var res = await request("https://www.bjzntq.com:8888/Commodity/getCollectCommodityList/", {
+        var res = await request("https://www.xinyun.shop:8888/Commodity/getCollectCommodityList/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({ list: res.data || [] })
@@ -87,7 +87,7 @@ class ShopList extends React.Component {
         this.fetchList()
     }
     async fetchList() {
-        var res = await request("https://www.bjzntq.com:8888/ShopMall/getCollectShopList/", {
+        var res = await request("https://www.xinyun.shop:8888/ShopMall/getCollectShopList/", {
             tokeninfo: UserStore.user.tokeninfo
         })
         this.setState({ list: res.data || [] })
