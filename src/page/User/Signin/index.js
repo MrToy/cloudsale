@@ -58,7 +58,6 @@ export default class PageUserSignin extends React.Component {
             Alert.alert(err.message)
             return
         }
-        this.setState({ code: "9999" })
         this.setState({ countdown: 60 })
         this._timer = setInterval(() => {
             if (this.state.countdown < 1) {
