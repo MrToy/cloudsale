@@ -13,7 +13,7 @@ export default class extends React.Component {
             <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                 {list.map((it, i) => (
                     <TouchableEx key={i} onPress={()=>onItemPress(it.id)}>
-                        <View style={{ width: "20%", height: "50%", alignItems: "center", justifyContent: "center" }}>
+                        <View style={{ width: "25%", height: "50%", alignItems: "center", justifyContent: "center" }}>
                             <FastImage style={{ width: scale(25), height: scale(25), marginBottom: scale(7) }} source={{uri:it.imageUrl}} />
                             <Text style={{ fontSize: scale(10),color:"#6A617A" }}>{it.name}</Text>
                         </View>
