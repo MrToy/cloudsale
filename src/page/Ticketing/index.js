@@ -251,7 +251,7 @@ export default class extends React.Component {
                         value={this.state.departure_date || [now.getFullYear(), now.getMonth() + 1, now.getDay() + 1]}
                         onChange={val => this.setState({ departure_date: val })} />
                     <SelectInput
-                        image={require('../../images/时间.png')}
+                        image={require('../../images/time.png')}
                         placeholder="请选择出发时间"
                         selects={genTime()}
                         valueDisplay={val => this.state.departure_time && `${paddingZero(val[0])}:${paddingZero(val[1])}`}

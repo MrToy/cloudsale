@@ -59,12 +59,12 @@ export default class extends React.Component {
             <View>
                 <StatusBar backgroundColor="#781EFD" barStyle="light-content" />
                 <ScrollView style={{ backgroundColor: '#f1f1f1', height: "100%" }}>
-                    <View style={{ height: scale(163), marginBottom: scale(10) }}>
+                    <View style={{ height: scale(163) }}>
                         {banner.length ? (
                             <Swiper list={banner} useFastImage />
                         ) : null}
                     </View>
-                    <View style={{ height: scale(140), marginBottom: scale(10), backgroundColor: '#fff' }}>
+                    <View style={{ height: scale(140), marginBottom: scale(4), backgroundColor: '#fff' }}>
                         <NavMenus list={category} onItemPress={this.onCate.bind(this)} />
                     </View>
                     {/* <FloorTitle label="热门频道" color="#66ABF3" />
@@ -73,7 +73,7 @@ export default class extends React.Component {
                     </View> */}
                     <FloorTitle label="精选类目" color="#E339D3" />
                     {categoryList.map((category, i) => (
-                        <CategoryGrid key={i} data={category} style={{ marginBottom: scale(6) }}
+                        <CategoryGrid key={i} data={category}
                             onItemPress={id => navigation.navigate('SearchResult', { categoryId: id })}
                             onSubItemPress={(id, subid) => navigation.navigate('SearchResult', { categoryId: id, subcategoryId: subid })}
                             onGoodsPress={id => navigation.navigate('Detail', { id })} />

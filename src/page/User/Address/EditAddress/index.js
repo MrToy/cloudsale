@@ -70,7 +70,7 @@ export default class PageUserEditAddress extends React.Component {
                     placeholder="名字"
                     value={this.state.addr.recipients}
                     onChangeText={str=>this.setAddr({recipients:str})}
-                    rightItem={<Image source={require('../../../../images/通讯录.png')} />} />
+                    rightItem={<Image source={require('../../../../images/contact.png')} />} />
                 <InputItem
                     label="手机号码"
                     placeholder="11位手机号"
@@ -81,7 +81,7 @@ export default class PageUserEditAddress extends React.Component {
                     placeholder="地区信息"
                     value={this.state.addr.province}
                     onChangeText={str=>this.setAddr({province:str})}
-                    rightItem={<Image source={require('../../../../images/定位2.png')} />} />
+                    rightItem={<Image source={require('../../../../images/local2.png')} />} />
                 <InputItem
                     mutil
                     label="详细地址"

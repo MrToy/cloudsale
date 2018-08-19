@@ -82,7 +82,7 @@ export default class PageSelectAddress extends React.Component {
                 ))}
                 <Touchable onPress={() => this.props.navigation.navigate('UserNewAddress',{callback:this.fetchList.bind(this)})}>
                     <View style={{ height: scale(41), backgroundColor: "#fff", flexDirection: "row", alignItems: "center", paddingHorizontal: scale(20) }}>
-                        <Image source={require("../../../../images/加.png")} />
+                        <Image source={require("../../../../images/add.png")} />
                         <Text style={{ fontSize: scale(16), color: "#6B6B6B", marginLeft: scale(15), flex: 1 }}>新增地址</Text>
                         <Image source={require("../../../../images/Path3.png")} />
                     </View>
