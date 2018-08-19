@@ -145,10 +145,10 @@ class PageUser extends React.Component {
                         onPress={() => this.props.navigation.navigate('TicketingList')} />
                 </View>
                 <View style={{ marginTop: 6 }}>
-                    <ListMenuItem
+                    {/* <ListMenuItem
                         text="我的消息"
                         image={require('../../images/my_message_icon.png')}
-                        onPress={() => this.props.navigation.navigate('UserMessage')} />
+                        onPress={() => this.props.navigation.navigate('UserMessage')} /> */}
                     <ListMenuItem
                         text="我的收藏"
                         image={require('../../images/my_collection_icon.png')}

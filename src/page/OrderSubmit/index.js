@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, Text, View, Alert } from 'react-native';
+import { Image, ScrollView, Text, View, Alert,AsyncStorage } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import Toast from 'react-native-root-toast';
 import { scale } from '../../utils/dimension';
@@ -26,6 +26,16 @@ class OrderSubmitPage extends React.Component {
         this.fetchAddr()
     }
     async fetchAddr() {
+        try{
+            var str=await AsyncStorage.getItem('addr.lastSelect')
+            if(str){
+                var addr=JSON.parse(str)
+                this.setState({ addr})
+                return
+            }
+        }catch(err){
+        }
+
         var res = await request("https://www.xinyun.shop:8888/Account/getDefaultAddress/", {
             "tokeninfo": UserStore.user.tokeninfo
         })
@@ -88,10 +98,12 @@ class OrderSubmitPage extends React.Component {
         this.props.navigation.navigate('SelectAddress', {
             onSelect: (addr) => {
                 this.setState({ addr })
+                AsyncStorage.setItem('addr.lastSelect', JSON.stringify(addr))
             },
             currentId: this.state.addr ? this.state.addr.id : null
         })
     }
+
     async createOrder(token, addrId) {
         var goods = []
         this.state.list.forEach(it => {

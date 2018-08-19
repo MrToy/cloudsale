@@ -207,6 +207,7 @@ export default class extends React.Component {
         // })
         var shareData={
             type: 'news', 
+            thumbImage:this.state.detail.banner[0].image_url,
             description: this.state.detail.small_text,
             webpageUrl:`zntq.xinyun://detail/${this.state.detail.id}`
         }

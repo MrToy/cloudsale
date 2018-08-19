@@ -29,7 +29,7 @@ export default class PageUserSignin extends React.Component {
     share(){
         var shareData={
             type: 'news', 
-            description:"新云零售～",
+            description:"新云零售",
             webpageUrl:`zntq.xinyun://`
         }
         this.setState({showShare:true,shareData})
